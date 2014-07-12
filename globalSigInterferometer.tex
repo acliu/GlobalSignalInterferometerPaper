@@ -1,0 +1,113 @@
+%\documentclass[preprint]{aastex}
+\documentclass[twolcolumn,apj]{emulateapj}
+\usepackage{ctable}
+\usepackage{amsmath}
+\usepackage{graphicx}
+%\usepackage[figuresright]{rotating}
+%\usepackage{rotating}
+%\usepackage{natbib}
+%\usepackage{pdflscape}
+%\usepackage{lscape}
+%\citestyle{aa}
+
+\def\b{\mathbf{b}}
+\def\k{\mathbf{k}}
+\def\r{\mathbf{r}}
+\def\q{\mathbf{q}}
+\def\b{\mathbf{b}}
+\def\kp{\mathbf{k}^\prime}
+\def\kpp{\mathbf{k}^{\prime\prime}}
+\def\V{\mathbb{V}}
+\def\At{\tilde{A}}
+\def\Vt{\tilde{V}}
+\def\Tt{\tilde{T}}
+\def\tb{\langle T_b\rangle}
+\newcommand{\vis}{\mathbf{v}}
+\newcommand{\x}{\mathbf{x}}
+\newcommand{\xhat}{\hat{\mathbf{x}}}
+\newcommand{\A}{\mathbf{A}}
+\newcommand{\N}{\mathbf{N}}
+\newcommand{\rhat}{\hat{\mathbf{r}}}
+
+\renewcommand{\topfraction}{0.85}
+\renewcommand{\bottomfraction}{0.1}
+
+\begin{document}
+
+%\title{What Power Spectrum Measurements From the Next Generation of 21~cm Experiments Can Teach Us About the Epoch of Reionization}
+\title{Global signal interferometer (XXX: replace with better title)}
+
+\author{Morgan E. Presley\altaffilmark{1},
+}
+\altaffiltext{1}{Department of Astrophysical Sciences, Princeton University, Princeton NJ}
+
+\begin{abstract}
+Really great abstract
+\end{abstract}
+
+
+\keywords{reionization, dark ages, first stars --- techniques: interferometric}
+
+\section{Introduction}
+\begin{itemize}
+\item Say why 21cm is important.
+\item Narrow focus to global signal.
+\item Survey of current instruments and efforts.
+\item Challenge of foregrounds.
+\item Why an interferometer might be helpful plus why we're not crazy (Ekers + Rots Theorem?).  Angular info helps with foreground suppression.
+\item Preview results (exquisite extraction; great foreground mitigation; high significance detection).
+\item ``The rest of this paper is organized as follows..."
+\end{itemize}
+
+\section{Why we're really not crazy}
+\begin{itemize}
+\item Cartoon / qualitative picture?
+\item Simple eqn. showing that there is non-zero response?
+\item Intuitive, qualitative description of what sort of arrays are good.  (Preview for later sections).
+\item Discussion of noise bias and other problems with single dipole experiments?
+\end{itemize}
+
+\section{Mathematical formalism}
+\begin{itemize}
+\item How does one actually get from visibilities to a global signal measurement.
+\item The error statistics that come for free.
+\item Quantification of leakage from other spherical harmonics.
+\end{itemize}
+
+\section{Exploration of arrays}
+\begin{itemize}
+\item Show plots of different arrays that we tried.
+\item (Maybe spherical harmonic plots with fringe patterns overlaid on spherical harmonics).
+\item Reasoning behind our crazier-looking arrays.
+\item Rules of thumb for designing a global signal interferometer.
+\end{itemize}
+
+\section{Foregrounds and their mitigation}
+\begin{itemize}
+\item General characteristics of foregrounds.
+\item Desire to avoid using too much spectral information because the signal itself is a spectrum.
+\item How to use angular information.
+\item (Modifications to array design to account for foregrounds).
+\end{itemize}
+
+\section{Monte carlo / foreground simulation results}
+\begin{itemize}
+\item $\mathbf{N}_\textrm{fg}$ might not be properly modeled, so we can't use $[\mathbf{Q}^\dagger \mathbf{N}^{-1} \mathbf{Q}]^{-1}$ as a reliable indicator of the errors.  (Although recall that it's a perfectly fine choice for extracting the signal).
+\item To get reliable estimates...Monte Carlo!
+\item Really great results! (Error bars and covariance on the recovered spectra).
+\end{itemize}
+
+\section{Fisher matrix results}
+\begin{itemize}
+\item Fisher matrix formalism for translating error statistics from recovered spectra to parameterizations of the signal.
+\end{itemize}
+
+\section{Conclusions}
+\begin{itemize}
+\item This is a great way to do this measurement.  It will produce lots of great science! And eternal glory!
+\end{itemize}
+
+\bibliographystyle{apj}
+%\bibliography{nextgen}{}
+
+\end{document}
