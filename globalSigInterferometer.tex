@@ -74,6 +74,42 @@ Really great abstract
 \item Quantification of leakage from other spherical harmonics.
 \end{itemize}
 
+In order to obtain a global signal measurement from visibilities, it is necessary to invert the linear equation 
+\begin{equation}
+\mathbf{y} = \textrm{Q} \mathbf{x} + \mathbf{n}
+\end{equation}
+where $\mathbf{y}$ is a vector of length $N_{\textrm{bl}}$ containing the visibilities measured at different baselines, $\mathbf{n}$ is the contribution of noise from both foregrounds and systematics, and $\mathbf{x}$ is a projection of the true sky onto the spherical harmonics, $Y_{lm}(\theta,\phi)$. As such, $\mathbf{x}$ has length $(l_{\textrm{max}}+1)^2$, where $l_{\textrm{max}}$ is the largest $l$ value used in the model of the true sky. The matrix $\textrm{Q}$ is the beam response of an array at different baselines (rows) and different spherical harmonics (columns). $\textrm{Q}$ is determined by 
+\begin{equation}
+\textrm{Q}_{j,lm} = \int d \boldsymbol \theta^2 A(\boldsymbol \theta) Y_{lm}(\boldsymbol \theta) e^{2\pi i \frac{\mathbf{b_\textit{j}}}{\lambda} \cdot \boldsymbol \theta}
+\end{equation}
+where $\boldsymbol \theta$ is the angular position on the sky, $A$ is the beam amplitude [is that what this is called?] for the antennas, $\mathbf{b_{\textit{j}}}$ is the $j$th baseline, and $\lambda$ is the wavelength of observation. Since $\textrm{Q}$ is not in general invertible, we cannot solve for $\mathbf{x}$ directly and instead can only recover an estimator for $\mathbf{x}$. We can define a general estimator of the form 
+\begin{equation}
+\mathbf{\hat x} = \textrm{M} \textrm{Q}^\dagger \textrm{N}^{-1} \mathbf{y}
+\end{equation}
+where N is the total noise covariance matrix and M is some matrix chosen by the data analyst. One useful choice for M is 
+\begin{equation}
+\textrm{M} = [\textrm{Q}^\dagger \textrm{N}^{-1} \textrm{Q}]^{-1}
+\end{equation}
+which is obtained through a least-squares derivation that minimizes $\chi^2 \equiv (\mathbf{y}-\textrm{Q} \mathbf{\hat x})^\dagger \textrm{N}^{-1} (\mathbf{y}-\textrm{Q} \mathbf{\hat x})$. Note that for this choice of M, the ensemble average of $\mathbf{\hat x}$ is $\mathbf{x}$.
+%\begin{equation}
+%\begin{split}
+%<\mathbf{\hat x}> & = < [\textrm{Q}^\dagger \textrm{N}^{-1} \textrm{Q}]^{-1} \textrm{Q}^\dagger \textrm{N}^{-1} \mathbf{y} > \\
+%& = [\textrm{Q}^\dagger \textrm{N}^{-1} \textrm{Q}]^{-1} \textrm{Q}^\dagger \textrm{N}^{-1} ( < \textrm{Q} \mathbf{x} > + <\mathbf{n} >) \\
+%& =  [\textrm{Q}^\dagger \textrm{N}^{-1} \textrm{Q}]^{-1} [\textrm{Q}^\dagger \textrm{N}^{-1} \textrm{Q}] <\mathbf{x} > \\
+%& = <\mathbf{x}>
+%\end{split}
+%\end{equation}
+Using this fact, we can directly find the covariance of $\mathbf{\hat x}$ to be 
+\begin{equation}
+\textrm{Cov}(\mathbf{\hat x}) = [\textrm{Q}^\dagger \textrm{N}^{-1} \textrm{Q}]^{-1}
+\end{equation}
+[Should I include the derivation? I'm guessing not since it wasn't difficult.] [Also, not sure what you meant by quantification of leakage... so I'm skipping that for now.]
+
+[talk about window function; also pseudo inverses]
+
+[quantification of leakage -- show the green/pink plots of 1st row of window function bc 1st row is what determines the a00 we measure]
+
+
 \section{Exploration of arrays}
 \begin{itemize}
 \item Show plots of different arrays that we tried.
@@ -89,6 +125,9 @@ Really great abstract
 \item How to use angular information.
 \item (Modifications to array design to account for foregrounds).
 \end{itemize}
+
+The primary source of contamination in a global signal experiment comes from galactic foregrounds, which makes extraction of the global signal difficult for a number of reasons. Primarily, the galactic foregrounds are many orders of magnitude brighter than our expected signal, so finding the global signal through a simple spatial average over the sky would result in a measurement dominated by foregrounds. Also, since both the galactic foregrounds and the expected global re-ionization signal are spectrally smooth, foreground subtraction techniques will likely be unreliable. Therefore, we propose using angular information to differentiate galactic foregrounds from the global signal. 
+
 
 \section{Monte carlo / foreground simulation results}
 \begin{itemize}
