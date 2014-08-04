@@ -26,9 +26,11 @@
 \newcommand{\x}{\mathbf{x}}
 \newcommand{\xhat}{\hat{\mathbf{x}}}
 \newcommand{\A}{\mathbf{A}}
+\newcommand{\y}{\mathbf{y}}
 \newcommand{\N}{\mathbf{N}}
 \newcommand{\Q}{\mathbf{Q}}
 \newcommand{\M}{\mathbf{M}}
+\newcommand{\W}{\mathbf{W}}
 \newcommand{\rhat}{\hat{\mathbf{r}}}
 \newcommand{\acl}[1]{{\color{red} \textbf{[ACL:  #1]}}}
 \definecolor{applegreen}{rgb}{0.55, 0.71, 0.0}
@@ -84,31 +86,42 @@ Really great abstract
 
 In order to obtain a global signal measurement from visibilities, it is necessary to invert the linear equation 
 \begin{equation}
-\mathbf{y} = \Q \mathbf{x} + \mathbf{n}
+\y = \Q \mathbf{x} + \mathbf{n}
 \end{equation}
-where $\mathbf{y}$ is a vector of length $N_{\textrm{bl}}$ containing the visibilities measured at different baselines, $\mathbf{n}$ is the contribution of noise from both foregrounds and systematics, and $\mathbf{x}$ is a projection of the true sky onto the spherical harmonics, $Y_{\ell m}(\theta,\phi)$. As such, $\mathbf{x}$ has length $(\ell_{\textrm{max}}+1)^2$, where $\ell_{\textrm{max}}$ is the largest $\ell$ value used in the model of the true sky. The matrix $\Q$ is the beam response of an array at different baselines (rows) and different spherical harmonics (columns). $\Q$ is determined by 
+where $\y$ is a vector of length $N_{\textrm{bl}}$ containing the visibilities measured at different baselines, $\mathbf{n}$ is the contribution of noise from both foregrounds and systematics, and $\mathbf{x}$ is a projection of the true sky onto the spherical harmonics $Y_{\ell m}(\theta,\phi)$. As such, $\mathbf{x}$ has length $(\ell_{\textrm{max}}+1)^2$, where $\ell_{\textrm{max}}$ is the largest $\ell$ value used in the model of the true sky. The matrix $\Q$ is the beam response of an antenna array at different baselines (rows) and different spherical harmonics (columns). $\Q$ is determined by 
 \begin{equation}
 \textrm{Q}_{j,\ell m} = \int d \boldsymbol \theta^2 A(\boldsymbol \theta) Y_{\ell m}(\boldsymbol \theta) e^{2\pi i \frac{\mathbf{b_\textit{j}}}{\lambda} \cdot \boldsymbol \theta}
 \end{equation}
 where $\boldsymbol \theta$ is the angular position on the sky, $A$ is the primary beam for the antennas, $\mathbf{b_{\textit{j}}}$ is the $j$th baseline, and $\lambda$ is the wavelength of observation. Since $\Q$ is not in general invertible, we cannot solve for $\mathbf{x}$ directly and instead can only recover an estimator for $\mathbf{x}$. We can define a general estimator of the form 
 \begin{equation}
-\mathbf{\hat x} = \M \Q^\dagger \N^{-1} \mathbf{y}
+\mathbf{\hat x} = \M \Q^\dagger \N^{-1} \y
 \end{equation}
-where $\N$ is the total noise covariance matrix and M is some matrix chosen by the data analyst. One useful choice for M is 
+where $\N$ is the total noise covariance matrix and M is some matrix chosen by the data analyst. One useful choice for $\M$ is 
 \begin{equation}
 \M = [\Q^\dagger \N^{-1} \Q]^{-1}
 \label{eqn:M}
 \end{equation}
-which is obtained through a least-squares derivation that minimizes $\chi^2 \equiv (\mathbf{y}-\Q \mathbf{\hat x})^\dagger \N^{-1} (\mathbf{y}-\Q \mathbf{\hat x})$. Note that for this choice of M, the ensemble average of $\mathbf{\hat x}$ is $\mathbf{x}$.
+which is obtained through a least-squares derivation that minimizes $\chi^2 \equiv (\y-\Q \mathbf{\hat x})^\dagger \N^{-1} (\y-\Q \mathbf{\hat x})$. Note that for this choice of $\M$, the ensemble average of $\mathbf{\hat x}$ is $\mathbf{x}$.
 Using this fact, we can directly find the covariance of $\mathbf{\hat x}$ to be 
 \begin{equation}
 \textrm{Cov}(\mathbf{\hat x}) = [\Q^\dagger \N^{-1} \Q]^{-1}
+\label{eqn:Covxhat}
 \end{equation}
-\mep{note to self: get a bibtex going and cite Tegmark mapmaking paper here.} Therefore, using equation (\ref{eqn:M}) for o
+as shown in \mep{note to self: get a bibtex going and cite Tegmark mapmaking paper here}. Therefore, using equation (\ref{eqn:M}) for our statistical analysis allows us to analytically find the error statistics if the noise covariance matrix for the foregrounds and systematics is known. However, since galactic foreground models are not well constrained, it is not safe to assume we know $\N_{\textrm{fg}}$. Consequently, Monte Carlo simulations are still necessary to determine the error bars on measurements analyzed using this method. Note, however, that although we do not know the exact noise covariance $\N$, there is nothing wrong with choosing equation (\ref{eqn:M}) for our data analysis, as long as we do not claim that our error bars are constrained by equation (\ref{eqn:Covxhat}). %-- it just may not be optimal.
 
-[talk about window function; also pseudo inverses]
+Note that two inverses must be taken in order to compute $\M$. In general, neither $\N$ nor $\Q^\dagger \N^{-1} \Q$ will be invertible, requiring us to approximate both inverses with a pseudo-inverse. We used a pseudo-inverse method that raises the value of the small eigenmodes, inverts, and then projects out those small eigenmodes. \mep{note to self -- cite Tegmak cmb paper} \mep{Is there something significant I need to say about this method, or is it pretty standard?}
 
-[quantification of leakage -- show the green/pink plots of 1st row of window function bc 1st row is what determines the a00 we measure]
+Since $\Q$ is not diagonal, higher spherical harmonic modes will leak into our measurement $\y$. If it were possible to do the inverses in equation \ref{eqn:M}, then these leakages could be dampened down by taking the ensemble average of many observations. This is because 
+\begin{equation}
+<\xhat> = \M \Q^\dagger \N^{-1} \Q \x
+\end{equation}
+which is equal to $\x$ if $\M$ is the true inverse of $\Q^\dagger \N^{-1} \Q$. In order to quantify the relative amount of leakage from the different modes, it is convenient to define a window function matrix $\W$ as 
+\begin{equation}
+\W = \M \Q^\dagger \N^{-1} \Q. 
+\end{equation}
+With this definition, the elements of the first row of the window function matrix quantifies the ratios between the contributions from the different modes. A good experimental design would result in a very high ratio between $W_{0,00}$ and all of the other $W_{0,\ell m}$.
+
+\mep{Figure time! Show the green/pink plots of 1st row of window function for different arrays.}
 
 \acl{The tone of the writing is excellent, btw.}
 
