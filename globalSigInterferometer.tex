@@ -107,9 +107,9 @@ Using this fact, we can directly find the covariance of $\mathbf{\hat x}$ to be
 \textrm{Cov}(\mathbf{\hat x}) = [\Q^\dagger \N^{-1} \Q]^{-1}
 \label{eqn:Covxhat}
 \end{equation}
-as shown in \mep{note to self: get a bibtex going and cite Tegmark mapmaking paper here}. Therefore, using equation (\ref{eqn:M}) for our statistical analysis allows us to analytically find the error statistics if the noise covariance matrix for the foregrounds and systematics is known. However, since galactic foreground models are not well constrained, it is not safe to assume we know $\N_{\textrm{fg}}$. Consequently, Monte Carlo simulations are still necessary to determine the error bars on measurements analyzed using this method. Note, however, that although we do not know the exact noise covariance $\N$, there is nothing wrong with choosing equation (\ref{eqn:M}) for our data analysis, as long as we do not claim that our error bars are constrained by equation (\ref{eqn:Covxhat}). %-- it just may not be optimal.
+as shown in \citet{Tegmark_CMB_maps_wli}. \mep{Is this properly cited?}. Therefore, using equation (\ref{eqn:M}) for our statistical analysis allows us to analytically find the error statistics if the noise covariance matrix for the foregrounds and systematics is known. However, since galactic foreground models are not well constrained, it is not safe to assume we know $\N_{\textrm{fg}}$. Consequently, Monte Carlo simulations are still necessary to determine the error bars on measurements analyzed using this method. Note, however, that although we do not know the exact noise covariance $\N$, there is nothing wrong with choosing equation (\ref{eqn:M}) for our data analysis, as long as we do not claim that our error bars are constrained by equation (\ref{eqn:Covxhat}). %-- it just may not be optimal.
 
-Note that two inverses must be taken in order to compute $\M$. In general, neither $\N$ nor $\Q^\dagger \N^{-1} \Q$ will be invertible, requiring us to approximate both inverses with a pseudo-inverse. We used a pseudo-inverse method that raises the value of the small eigenmodes, inverts, and then projects out those small eigenmodes. \mep{note to self -- cite Tegmak cmb paper} \mep{Is there something significant I need to say about this method, or is it pretty standard?}
+Note that two inverses must be taken in order to compute $\M$. In general, neither $\N$ nor $\Q^\dagger \N^{-1} \Q$ will be invertible, requiring us to approximate both inverses with a pseudo-inverse. We used a pseudo-inverse method that raises the value of the small eigenmodes, inverts, and then projects out those small eigenmodes, as laid out in the appendix of \citet{Tegmark_CMB_spectra_wli}. \mep{Is this how I should cite this?} \mep{Is there something significant I need to say about this method, or is it pretty standard?}
 
 Since $\Q$ is not diagonal, higher spherical harmonic modes will leak into our measurement $\y$. If it were possible to do the inverses in equation \ref{eqn:M}, then these leakages could be dampened down by taking the ensemble average of many observations. This is because 
 \begin{equation}
@@ -165,6 +165,6 @@ The primary source of contamination in a global signal experiment comes from gal
 \end{itemize}
 
 \bibliographystyle{apj}
-%\bibliography{nextgen}{}
+\bibliography{globalSig}{}
 
 \end{document}
