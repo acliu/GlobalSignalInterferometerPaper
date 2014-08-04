@@ -89,6 +89,7 @@ where $\boldsymbol \theta$ is the angular position on the sky, $A$ is the beam a
 where N is the total noise covariance matrix and M is some matrix chosen by the data analyst. One useful choice for M is 
 \begin{equation}
 \textrm{M} = [\textrm{Q}^\dagger \textrm{N}^{-1} \textrm{Q}]^{-1}
+\label{eqn:M}
 \end{equation}
 which is obtained through a least-squares derivation that minimizes $\chi^2 \equiv (\mathbf{y}-\textrm{Q} \mathbf{\hat x})^\dagger \textrm{N}^{-1} (\mathbf{y}-\textrm{Q} \mathbf{\hat x})$. Note that for this choice of M, the ensemble average of $\mathbf{\hat x}$ is $\mathbf{x}$.
 %\begin{equation}
@@ -103,6 +104,7 @@ Using this fact, we can directly find the covariance of $\mathbf{\hat x}$ to be
 \begin{equation}
 \textrm{Cov}(\mathbf{\hat x}) = [\textrm{Q}^\dagger \textrm{N}^{-1} \textrm{Q}]^{-1}
 \end{equation}
+Therefore, using equation (\ref{eqn:M}) for o
 [Should I include the derivation? I'm guessing not since it wasn't difficult.] [Also, not sure what you meant by quantification of leakage... so I'm skipping that for now.]
 
 [talk about window function; also pseudo inverses]
