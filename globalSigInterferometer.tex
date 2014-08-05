@@ -28,10 +28,15 @@
 \newcommand{\A}{\mathbf{A}}
 \newcommand{\y}{\mathbf{y}}
 \newcommand{\N}{\mathbf{N}}
+\newcommand{\Nfg}{\mathbf{N}_{\textrm{fg}}}
 \newcommand{\Q}{\mathbf{Q}}
 \newcommand{\M}{\mathbf{M}}
 \newcommand{\W}{\mathbf{W}}
+\newcommand{\G}{\mathbf{G}}
+\newcommand{\Rfg}{\mathbf{R}_{\textrm{fg}}}
 \newcommand{\rhat}{\hat{\mathbf{r}}}
+\newcommand{\Nbl}{N_{\textrm{bl}}}
+
 \newcommand{\acl}[1]{{\color{red} \textbf{[ACL:  #1]}}}
 \definecolor{applegreen}{rgb}{0.55, 0.71, 0.0}
 \newcommand{\mep}[1]{{\color{applegreen} \textbf{[MEP:  #1]}}}
@@ -88,7 +93,7 @@ In order to obtain a global signal measurement from visibilities, it is necessar
 \begin{equation}
 \y = \Q \mathbf{x} + \mathbf{n}
 \end{equation}
-where $\y$ is a vector of length $N_{\textrm{bl}}$ containing the visibilities measured at different baselines, $\mathbf{n}$ is the contribution of noise from both foregrounds and systematics, and $\mathbf{x}$ is a projection of the true sky onto the spherical harmonics $Y_{\ell m}(\theta,\phi)$. As such, $\mathbf{x}$ has length $(\ell_{\textrm{max}}+1)^2$, where $\ell_{\textrm{max}}$ is the largest $\ell$ value used in the model of the true sky. The matrix $\Q$ is the beam response of an antenna array at different baselines (rows) and different spherical harmonics (columns). $\Q$ is determined by 
+where $\y$ is a vector of length $\Nbl$ containing the visibilities measured at different baselines, $\mathbf{n}$ is the contribution of noise from both foregrounds and systematics, and $\mathbf{x}$ is a projection of the true sky onto the spherical harmonics $Y_{\ell m}(\theta,\phi)$. As such, $\mathbf{x}$ has length $(\ell_{\textrm{max}}+1)^2$, where $\ell_{\textrm{max}}$ is the largest $\ell$ value used in the model of the true sky. The matrix $\Q$ is the beam response of an antenna array at different baselines (rows) and different spherical harmonics (columns). $\Q$ is determined by 
 \begin{equation}
 \textrm{Q}_{j,\ell m} = \int d \boldsymbol \theta^2 A(\boldsymbol \theta) Y_{\ell m}(\boldsymbol \theta) e^{2\pi i \frac{\mathbf{b_\textit{j}}}{\lambda} \cdot \boldsymbol \theta}
 \end{equation}
@@ -123,6 +128,13 @@ With this definition, the elements of the first row of the window function matri
 
 \mep{Figure time! Show the green/pink plots of 1st row of window function for different arrays.}
 
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=3in]{figures/W_matrix_filler.pdf}
+	\caption{\mep{Of course, this will have to be updated when the new data comes in. Probably to show several figures for different arrays?}\mep{Uh.... Weird stuff happens if I try to make the figure bigger. It's not wrapping the text and is trying to keep the figure in the column somehow?? Not sure what's up with the formatting style here.}}
+	\label{fig:WindowFunction}
+\end{figure}
+
 \acl{The tone of the writing is excellent, btw.}
 
 \section{Exploration of arrays}
@@ -142,6 +154,19 @@ With this definition, the elements of the first row of the window function matri
 \end{itemize}
 
 The primary source of contamination in a global signal experiment comes from galactic foregrounds, which makes extraction of the global signal difficult for a number of reasons. Primarily, the galactic foregrounds are many orders of magnitude brighter than our expected signal, so finding the global signal through a simple spatial average over the sky would result in a measurement dominated by foregrounds. Also, since both the galactic foregrounds and the expected global re-ionization signal are spectrally smooth, foreground subtraction techniques will likely be unreliable. Therefore, we propose using angular information to differentiate galactic foregrounds from the global signal. 
+
+\mep{note to self -- better transition needed} 
+Our ultimate goal in the foreground analysis is to construct a noise covariance matrix for the foregrounds: $\Nfg$. $\Nfg$  shows the correlation between Fourier modes probed the the antenna array and hence has dimensions $\Nbl \times \Nbl$. One method \mep{Are there other methods?} to generate $\Nfg$ from a model of the sky is to first find a covariance matrix of the sky $\Rfg$ and transform that matrix to the Fourier domain of the visibilities via the matrix transformation 
+\begin{equation}
+\Nfg = \mathbf{G} \Rfg \mathbf{G}^\dagger
+\end{equation}
+Since $\Rfg$ has dimensions $N_{\textrm{pix}} \times N_{\textrm{pix}}$, note that $\mathbf{G}$ must have dimensions $\Nbl \times N_{\textrm{pix}}$. Although $\mathbf{G}$ serves a purpose similar to a Fourier transformation matrix, it is not precisely a Fourier matrix as that would probe every single possible Fourier mode, and we only want those that correspond to our array's baselines. As such, $\mathbf{G}$ is defined by 
+\begin{equation}
+G_{i,j} = A(\rhat_j)e^{2\pi i \frac{\mathbf{b_\textit{j}}}{\lambda} \cdot \boldsymbol \rhat_j} \Delta \Omega
+\end{equation}
+where $\rhat_j$ is the angular position of the $j$th pixel and $\Delta \Omega$ is the solid angle encompassed by each pixel. 
+
+\mep{Insert here stuff on how you're calculating $\Rfg$?}
 
 \acl{An interesting point I just realized.  We can make the argument that since the normalization of $\mathbf{N}$ scales out of the expression for $\hat{\mathbf{x}}$, our foreground mitigation scheme is a very conservative one that only uses shape information, and not the detailed spectral form of our foreground model.}
 \acl{Somewhere, we also need to address rotation synthesis}
