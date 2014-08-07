@@ -153,18 +153,17 @@ With this definition, the elements of the first row of the window function matri
 \item (Modifications to array design to account for foregrounds).
 \end{itemize}
 
-The primary source of contamination in a global signal experiment comes from galactic foregrounds, which makes extraction of the global signal difficult for a number of reasons. Primarily, the galactic foregrounds are many orders of magnitude brighter than our expected signal, so finding the global signal through a simple spatial average over the sky would result in a measurement dominated by foregrounds. Also, since both the galactic foregrounds and the expected global re-ionization signal are spectrally smooth, foreground subtraction techniques will likely be unreliable. Therefore, we propose using angular information to differentiate galactic foregrounds from the global signal. 
+The primary source of contamination in a global signal experiment comes from galactic foregrounds, which make extraction of the global signal difficult for a number of reasons. Primarily, the galactic foregrounds are many orders of magnitude brighter than our expected signal, so finding the global signal through a simple spatial average over the sky would result in a measurement dominated by foregrounds. Also, since both the galactic foregrounds and the expected global re-ionization signal are spectrally smooth, foreground subtraction techniques will likely be unreliable. Therefore, we propose using angular information to differentiate galactic foregrounds from the global signal. 
 
-\mep{note to self -- better transition needed} 
-Our ultimate goal in the foreground analysis is to construct a noise covariance matrix for the foregrounds: $\Nfg$. $\Nfg$  shows the correlation between Fourier modes probed the the antenna array and hence has dimensions $\Nbl \times \Nbl$. One method \mep{Are there other methods?} to generate $\Nfg$ from a model of the sky is to first find a covariance matrix of the sky $\Rfg$ and transform that matrix to the Fourier domain of the visibilities via the matrix transformation 
+Our ultimate goal in foreground analysis is to construct a noise covariance matrix for the foregrounds: $\Nfg$. $\Nfg$  shows the correlation between the Fourier modes probed by the antenna array, and hence has dimensions $\Nbl \times \Nbl$. One method \mep{Are there other methods?} to generate $\Nfg$ from a model of the sky is to first find a covariance matrix of the sky $\Rfg$ and transform that matrix into the Fourier domain of the visibilities via the matrix transformation 
 \begin{equation}
 \Nfg = \mathbf{G} \Rfg \mathbf{G}^\dagger
 \end{equation}
 Since $\Rfg$ has dimensions $N_{\textrm{pix}} \times N_{\textrm{pix}}$, note that $\mathbf{G}$ must have dimensions $\Nbl \times N_{\textrm{pix}}$. Although $\mathbf{G}$ serves a purpose similar to a Fourier transformation matrix, it is not precisely a Fourier matrix as that would probe every single possible Fourier mode, and we only want those that correspond to our array's baselines. As such, $\mathbf{G}$ is defined by 
 \begin{equation}
-G_{i,j} = A(\rhat_j)e^{2\pi i \frac{\mathbf{b_\textit{j}}}{\lambda} \cdot \boldsymbol \rhat_j} \Delta \Omega
+G_{i,j} = A(\rhat_j)e^{2\pi i \frac{\mathbf{b_\textit{i}}}{\lambda} \cdot \boldsymbol \rhat_j} \Delta \Omega
 \end{equation}
-where $\rhat_j$ is the angular position of the $j$th pixel and $\Delta \Omega$ is the solid angle encompassed by each pixel. 
+where $\rhat_j$ is the angular position of the $j$th pixel,  $\Delta \Omega$ is the solid angle encompassed by each pixel, and $\mathbf{b_\textit{i}}$ is the $i$th baseline. 
 
 \mep{Insert here stuff on how you're calculating $\Rfg$?}
 
