@@ -90,6 +90,7 @@ Really great abstract
 \item Quantification of leakage from other spherical harmonics.
 \end{itemize}
 
+\acl{I'd like to say a little earlier that we're trying to get the first component of $\mathbf{x}$.  I'd also like to state in this section that we're envisioning doing this frequency-by-frequency first.  In other words, Equation 1 applies at a particular frequency.  It didn't have to be like this.  We could've expanded the dimensions of equation 1 to include all frequencies in a gigantic linear system of equations.  We're doing things freq-by-freq in order to be very conservative, since we don't want to make too many assumptions about the spectrum when the thing we're trying to measure is a spectrum.}
 In order to obtain a global signal measurement from visibilities, it is necessary to invert the linear equation 
 \begin{equation}
 \y = \Q \mathbf{x} + \mathbf{n}
@@ -115,12 +116,13 @@ Using this fact, we can directly find the covariance of $\mathbf{\hat x}$ to be
 \end{equation}
 as shown in \citet{Tegmark_CMB_maps_wli}. \mep{Is this properly cited?}. Therefore, using equation (\ref{eqn:M}) for our statistical analysis allows us to analytically find the error statistics if the noise covariance matrix for the foregrounds and systematics is known. However, since galactic foreground models are not well constrained, it is not safe to assume we know $\N_{\textrm{fg}}$. Consequently, Monte Carlo simulations are still necessary to determine the error bars on measurements analyzed using this method. Note, however, that although we do not know the exact noise covariance $\N$, there is nothing wrong with choosing Eq. \eqref{eqn:M} for our data analysis, as long as we do not claim that our error bars are constrained by equation (\ref{eqn:Covxhat}). %-- it just may not be optimal.
 
-Note that two inverses must be taken in order to compute $\M$. In general, neither $\N$ nor $\Q^\dagger \N^{-1} \Q$ will be invertible, requiring us to approximate both inverses with a pseudo-inverse. We used a pseudo-inverse method that raises the value of the small eigenmodes, inverts, and then projects out those small eigenmodes, as laid out in the appendix of \citet{Tegmark_CMB_spectra_wli}. \mep{Is this how I should cite this?} \mep{Is there something significant I need to say about this method, or is it pretty standard?}
+Note that two inverses must be taken in order to compute $\M$. In general, neither $\N$ nor $\Q^\dagger \N^{-1} \Q$ will be invertible, requiring us to approximate both inverses with a pseudo-inverse. We used a pseudo-inverse method that raises the value of the small eigenmodes, inverts, and then projects out those small eigenmodes, as laid out in the appendix of \citet{Tegmark_CMB_spectra_wli}. \mep{Is this how I should cite this?} \mep{Is there something significant I need to say about this method, or is it pretty standard?} \acl{Probably don't need to say more than you already have.}
 
-Since $\Q$ is not diagonal, higher spherical harmonic modes will leak into our measurement $\y$. If it were possible to do the inverses in equation \ref{eqn:M}, then these leakages could be dampened down by taking the ensemble average of many observations. This is because 
+Since $\Q$ is not diagonal, higher spherical harmonic modes will leak into our measurement $\y$. If it were possible to do the inverses in equation \ref{eqn:M}, then these leakages could be dampened down by taking the ensemble average of many observations.  \acl{I'd like to keep the terminology of ensemble averaging separate from that of repeated observations.  Perhaps one could say that repeated observations ``mimic an ensemble average"} This is because 
 \begin{equation}
 <\xhat> = \M \Q^\dagger \N^{-1} \Q \x
 \end{equation}
+\acl{To do ensemble averages in latex, \textbackslash langle and \textbackslash rangle}
 which is equal to $\x$ if $\M$ is the true inverse of $\Q^\dagger \N^{-1} \Q$. In order to quantify the relative amount of leakage from the different modes, it is convenient to define a window function matrix $\W$ as 
 \begin{equation}
 \W = \M \Q^\dagger \N^{-1} \Q. 
@@ -128,6 +130,7 @@ which is equal to $\x$ if $\M$ is the true inverse of $\Q^\dagger \N^{-1} \Q$. I
 With this definition, the elements of the first row of the window function matrix quantifies the ratios between the contributions from the different modes. A good experimental design would result in a very high ratio between $W_{0,00}$ and all of the other $W_{0,\ell m}$.
 
 \mep{Figure time! Show the green/pink plots of 1st row of window function for different arrays.}
+\acl{I'm wondering if it might actually be good to display the window function plots in a way that's averaged over $m$, since for a given $\ell$ the $m$ value basically just changes the direction.  One could imagine something analogous to the angular power spectrum, which is often estimated by computing $\hat{C}_\ell = \frac{1}{2\ell + 1} \sum_{m=-\ell}^{\ell} |a_{\ell m}|^2$.  We could do an analogous sum.  On the other hand, the baseline vector breaks the symmetry and does pick out a direction.  So if we want to build that intuition, it could be useful to show the different $m$ values separately.}
 
 \begin{figure}[h]
 	\centering
@@ -156,7 +159,8 @@ With this definition, the elements of the first row of the window function matri
 
 The primary source of contamination in a global signal experiment comes from galactic foregrounds, which make extraction of the global signal difficult for a number of reasons. Primarily, the galactic foregrounds are many orders of magnitude brighter than our expected signal, so finding the global signal through a simple spatial average over the sky would result in a measurement dominated by foregrounds. Also, since both the galactic foregrounds and the expected global re-ionization signal are spectrally smooth, foreground subtraction techniques will likely be unreliable. Therefore, we propose using angular information to differentiate galactic foregrounds from the global signal. 
 
-Our ultimate goal in foreground analysis is to construct a noise covariance matrix for the foregrounds: $\Nfg$. $\Nfg$  shows the correlation between the Fourier modes probed by the antenna array, and hence has dimensions $\Nbl \times \Nbl$. One method \mep{Are there other methods?} to generate $\Nfg$ from a model of the sky is to first find a covariance matrix of the sky $\R$ and transform that matrix into the Fourier domain of the visibilities via the matrix transformation 
+Our ultimate goal in foreground analysis is to construct a noise covariance matrix for the foregrounds: $\Nfg$. \acl{This sounds a little strange.  Surely our ``ultimate" goal in the foreground analysis is to clean out all the foregrounds, not to construct a convariance matrix!} $\Nfg$  shows the correlation between the Fourier modes probed by the antenna array, and hence has dimensions $\Nbl \times \Nbl$. One method \mep{Are there other methods?} to generate $\Nfg$ from a model of the sky is to first find a covariance matrix of the sky $\R$ and transform that matrix into the Fourier domain of the visibilities via the matrix transformation 
+
 \begin{equation}
 \Nfg = \mathbf{G} \R \mathbf{G}^\dagger
 \label{eqn:Nfg}
