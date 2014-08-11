@@ -84,6 +84,7 @@ Really great abstract
 \end{itemize}
 
 \section{Mathematical formalism}
+\label{sec:MathForm}
 \begin{itemize}
 \item How does one actually get from visibilities to a global signal measurement.
 \item The error statistics that come for free.
@@ -139,8 +140,8 @@ With this definition, the elements of the first row of the window function matri
 
 \begin{figure}[h]
 	\centering
-	\includegraphics[width=3in]{figures/W_matrix_filler.pdf}
-	\caption{\mep{Of course, this will have to be updated when the new data comes in. Probably to show several figures for different arrays?}\mep{Uh.... Weird stuff happens if I try to make the figure bigger. It's not wrapping the text and is trying to keep the figure in the column somehow?? Not sure what's up with the formatting style here.}}
+	\includegraphics[width=0.55\textwidth]{figures/W_matrix_filler.pdf}
+	\caption{\mep{Of course, this will have to be updated when the new data comes in. Probably to show several figures for different arrays?}\mep{Uh.... Weird stuff happens if I try to make the figure bigger. It's not wrapping the text and is trying to keep the figure in the column somehow?? Not sure what's up with the formatting style here.}\acl{Is this better? Or did you actually want to make this a figure that spans both columns? If so, change ``figure" to ``figure*" when you do \textbackslash begin.}}
 	\label{fig:WindowFunction}
 \end{figure}
 
@@ -164,7 +165,7 @@ With this definition, the elements of the first row of the window function matri
 
 The primary source of contamination in a global signal experiment comes from galactic foregrounds, which make extraction of the global signal difficult for a number of reasons. Primarily, the galactic foregrounds are many orders of magnitude brighter than our expected signal, so finding the global signal through a simple spatial average over the sky would result in a measurement dominated by foregrounds. Also, since both the galactic foregrounds and the expected global re-ionization signal are spectrally smooth, foreground subtraction techniques will likely be unreliable. Therefore, we propose using angular information to differentiate galactic foregrounds from the global signal. 
 
-Our ultimate goal in foreground analysis is to construct a noise covariance matrix for the foregrounds: $\Nfg$. \acl{This sounds a little strange.  Surely our ``ultimate" goal in the foreground analysis is to clean out all the foregrounds, not to construct a convariance matrix!} $\Nfg$  shows the correlation between the Fourier modes probed by the antenna array, and hence has dimensions $\Nbl \times \Nbl$. One method \mep{Are there other methods?} to generate $\Nfg$ from a model of the sky is to first find a covariance matrix of the sky $\R$ and transform that matrix into the Fourier domain of the visibilities via the matrix transformation 
+In order to best remove the foregrounds from our data, we construct a noise covariance matrix for the foregrounds: $\Nfg$. $\Nfg$  shows the correlation between the Fourier modes probed by the antenna array, and hence has dimensions $\Nbl \times \Nbl$. One method \mep{Are there other methods?} to generate $\Nfg$ from a model of the sky is to first find a covariance matrix of the sky $\R$ and transform that matrix into the Fourier domain of the visibilities via the matrix transformation 
 
 \begin{equation}
 \Nfg = \mathbf{G} \R \mathbf{G}^\dagger
@@ -196,6 +197,18 @@ At the other extreme,
 \item To get reliable estimates...Monte Carlo!
 \item Really great results! (Error bars and covariance on the recovered spectra).
 \end{itemize}
+
+Recall from Sec. \ref{sec:MathForm} that using the least-squares method for recovering $\xhat$ allows us to analytically determine the error covariance of $\xhat$ via Eq. \eqref{eqn:Covxhat}. However, this formula for the covariance is only true if we exactly know the noise covariance matrix. Thus, since $\Nfg$ might not be properly modeled, we must still resort to Monte Carlo simulations to determine the error bars on our measurements. 
+
+Our Monte Carlo simulations generate many visibilities $V(\mathbf{b}_i)$ from randomly perturbed sky models. \mep{Is ``randomly perturbed'' an appropriate way to describe it?} The sky models are derived by taking the all-sky survey from \citet{Haslam_408MHz_map} and using the power-law model of the foreground spectrum used in \citet{Liu_21cm_Fg} to extrapolate a map at the desired frequency. For a pixel at $\boldsymbol \theta$, the brightness at a certain frequency $\nu$ is 
+\begin{equation}
+I(\boldsymbol \theta) = I_H(\boldsymbol \theta) \left ( \frac{\nu}{\nu_H} \right ) ^{-\alpha + \Delta \alpha}
+\end{equation}
+where $I_H$ is the sky map from \citet{Haslam_408MHz_map}, $\nu_H=408$MHz, $\alpha = 2.8$, and $\Delta \alpha$ is a perturbing index randomly generated with variance 0.1. From this model, we can generate a vector of visibilities for all of the different baselines in an array. This vector is $\y$ from Eq. \eqref{eqn:yQxn}. The visibilities are defined as 
+\begin{equation}
+V(\mathbf{b}_i) = \int d \Omega A(\boldsymbol \theta) I(\boldsymbol \theta) e^{2\pi i\frac{\nu}{c} \mathbf{b}_i \cdot \boldsymbol \theta}
+\end{equation}
+where $\boldsymbol \theta$ is the angular position on the sky, $A$ is the primary beam for the antennas, $\mathbf{b_{\textit{j}}}$ is the $j$th baseline, $\nu$ is the frequency of observation, and $I$ is the intensity \mep{What's the correct name for this?} of the sky model. 
 
 \section{Fisher matrix results}
 \begin{itemize}
