@@ -67,9 +67,17 @@ Really great abstract
 \section{Introduction}
 \begin{itemize}
 \item Say why 21cm is important.
-\item Narrow focus to global signal.
-\item Survey of current instruments and efforts.
-\item Challenge of foregrounds.
+\item Narrow focus to global signal.  Show a plot of the signal.
+\item Challenge of foregrounds.  \acl{We should probably also comment on the ionosphere at some point}.
+\item Survey of current instruments and efforts. (EDGES, DARE, SCI-HI, LOFAR, LEDA, LWA) \acl{Gotta also survey some of the other experiments that one doesn't hear about so much.  Gianni's paper has a good list.  Also be sure to add more references like Jack Burns' ScienceDirect article.}
+\end{itemize}
+There are currently a large number of experiments seeking to make a first detection and characterization of the global $21\,\textrm{cm}$ signal.  The Experiment to Detect the Global EoR Signal (EDGES) uses an extremely well-calibrated single dipole \citep{rogersCalib} to integrate over large parts of the sky, producing a global spectrum from $100$ to $200\,\textrm{MHz}$.  Modeling foreground spectra as a sum of low-order polynomials, EDGES has placed a lower limit of $\Delta z > 0.06$ on the duration of reionization \citep{bowmanRogersMeasurement}.  Similar in concept but operating at a lower frequency range of $55$ to $99\,\textrm{MHz}$ is the Sonda Cosmol\'{o}gica de las Islas para la Detecci\'{o}n de Hidr\'{o}geno Neutro (SCI-HI) experiment.  This frequency range corresponds to the redshift range $13.3 < z < 24.9$, providing access to the prominent dip in the signal prior to reionization.  Using a similar polynomial foreground subtraction technique to EDGES, SCI-HI is able to achieve a foreground residual level of $\sim 10\,\textrm{K}$ at $\sim 70 \,\textrm{MHz}$ \citep{voytekSCIHI}.
+
+To escape radio frequency interference (RFI), both EDGES and SCI-HI are deployed in rather remote locations: EDGES observes from the Murchison Radio-astronomy Observatory in Western Australia, while SCI-HI has been deployed at Isla Guadalupe in Mexico, with plans to observe at Isla Socorro and/or Isla Clari\'{o}n in the future.  To achieve even better RFI isolation (as well as to escape ionospheric distortions), the Dark Ages Radio Explorer (DARE) satellite has been proposed \citep{DAREMCMC}.  DARE consists of a short dipole antenna in lunar orbit, which allows the Moon to be used an RFI shield.  DARE probes a frequency range of $40$ to $120\,\textrm{MHz}$, again providing direct access to the pre-reionization epoch.
+
+Moving beyond single dipole experiments, the Large-aperture Experiment to detect the Dark Ages (LEDA) makes use of an interferometric array of antennas to simultaneously model the sky and 
+
+\begin{itemize}
 \item Why an interferometer might be helpful plus why we're not crazy (Ekers + Rots Theorem?).  Angular info helps with foreground suppression.
 \item Preview results (exquisite extraction; great foreground mitigation; high significance detection).
 \item ``The rest of this paper is organized as follows..."
