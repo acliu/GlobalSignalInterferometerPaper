@@ -4,6 +4,7 @@
 \usepackage{amsmath}
 \usepackage{graphicx}
 \usepackage{hyperref}
+\usepackage{mathrsfs}
 %\usepackage[figuresright]{rotating}
 %\usepackage{rotating}
 %\usepackage{natbib}
@@ -35,6 +36,7 @@
 \newcommand{\W}{\mathbf{W}}
 \newcommand{\G}{\mathbf{G}}
 \newcommand{\R}{\mathbf{R}}
+\newcommand{\F}{\mathbf{F}}
 \newcommand{\rhat}{\hat{\mathbf{r}}}
 \newcommand{\Nbl}{N_{\textrm{bl}}}
 
@@ -109,6 +111,7 @@ where $\boldsymbol \theta$ is the angular position on the sky, $A$ is the primar
 Since $\Q$ is not in general invertible, we cannot solve Eq. \eqref{eqn:yQxn} for $\mathbf{x}$ directly and instead can only recover an estimator for $\mathbf{x}$. We can define a general estimator of the form 
 \begin{equation}
 \mathbf{\hat x} = \M \Q^\dagger \N^{-1} \y
+\label{eqn:xhat}
 \end{equation}
 where $\N$ is the total noise covariance matrix and M is some matrix chosen by the data analyst. One useful choice for $\M$ is 
 \begin{equation}
@@ -210,10 +213,36 @@ V(\mathbf{b}_i) = \int d \Omega A(\boldsymbol \theta) I(\boldsymbol \theta) e^{2
 \end{equation}
 where $\boldsymbol \theta$ is the angular position on the sky, $A$ is the primary beam for the antennas, $\mathbf{b_{\textit{j}}}$ is the $j$th baseline, $\nu$ is the frequency of observation, and $I$ is the intensity \mep{What's the correct name for this?} of the sky model. 
 
+Once we have generated a $\y$ vector, we can use Eq. \eqref{eqn:xhat} to find the estimator for the global signal that our analysis would produce for that particular sky. The variance of a large set of estimators from many such sky models provides us with the error bars for an experiment measuring the global signal. \mep{I don't like the phrasing of this paragraph.} 
+
 \section{Fisher matrix results}
 \begin{itemize}
 \item Fisher matrix formalism for translating error statistics from recovered spectra to parameterizations of the signal.
 \end{itemize}
+
+While the Monte Carlo simulations give us constraints on how well a certain experiment (defined by a given $\Q$ and $\N$) can measure the global signal $\hat \x_{00}$, they do not provide us with constraints on scientifically relevant cosmic parameters. In order to find how well an experiment could constrain parameters relevant to the time evolution of the global signal, we employ a Fisher matrix formalism. The Fisher information matrix is defined as 
+\begin{equation}
+\F_{i,j} = \left \langle \frac{\partial \mathscr{L}(\boldsymbol \theta | \x)}{\partial \theta_i \partial \theta_j} \right \rangle
+\end{equation}
+where $\mathscr{L}(\boldsymbol \theta | \x)$ is the likelihood of a set of parameters $\boldsymbol \theta$ given the measurements $\x$. Given a Gaussian likelihood function with covariance matrix $C$ and centered on a model $\boldsymbol \mu(\boldsymbol \theta)$, and assuming that the measurements are unbiased, the elements of the Fisher matrix become
+\begin{equation}
+\F_{i,j} = \frac{\partial \boldsymbol \mu ^t}{\partial \theta_i} C^{-1} \frac{\partial \boldsymbol \mu}{\partial \theta_j}
+\end{equation}
+Note that the inverse of the Fisher matrix is the covariance of the parameters. Therefore, the error in $\theta_i$ is on the order of $\sigma_i \sim \sqrt{(\F^{-1})_{ii}}$. 
+
+Now, this methodology has assumed that the measurements are unbiased, i.e. $\langle \xhat \rangle = \boldsymbol \mu (\boldsymbol \theta)$. If the measurements are biased by $\delta \xhat$, then the parameters will be biased by 
+\begin{equation}
+\delta \theta_i = \sum_{j} (\F^{-1})_{ij} \frac{\partial \boldsymbol \mu ^t}{\partial \theta_j} C^{-1} \delta \xhat 
+\end{equation}
+Note that the dimensions here work out because $\delta \xhat$ and $\boldsymbol \mu(\boldsymbol \theta)$ have length $N_\textrm{fq}$, and $C^{-1}$ has dimensions $N_\textrm{fq} \times N_\textrm{fq}$.  
+
+Using the Fisher matrix formalism, we analyzed how well different arrays would be able to constrain models for different epochs in the evolution of the global signal. \mep{It seems at this point that it would be helpful to refer to a picture of the fiducial model of the global signal, such as the one in your designer's guide paper. Actually, should we in an earlier section describe in more detail what we think the signal will look like? If so, where would that be? In the introduction?} At about $z\sim 30$ when the first galaxies form, we expect a significant absorption feature as Lyman-alpha photons couple the spin and gas temperatures. This dip can be modeled as a Gaussian in frequency
+\begin{equation}
+\boldsymbol \mu = -A\textrm{exp}\left ( -\frac{(\nu - \nu_0)^2}{2\sigma^2} \right ) 
+\end{equation}
+so that the parameter vector is $\boldsymbol \theta = (A,\nu_0,\sigma)$. \mep{Insert figures of pairwise projections and discussion thereof.} 
+
+
 
 \section{Conclusions}
 \begin{itemize}
