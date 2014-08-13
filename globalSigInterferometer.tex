@@ -77,10 +77,15 @@ There are currently a large number of experiments seeking to make a first detect
 
 To escape radio frequency interference (RFI), both EDGES and SCI-HI are deployed in rather remote locations: EDGES observes from the Murchison Radio-astronomy Observatory in Western Australia, while SCI-HI has been deployed at Isla Guadalupe in Mexico, with plans to observe at Isla Socorro and/or Isla Clari\'{o}n in the future.  To achieve even better RFI isolation (as well as to escape ionospheric distortions), the Dark Ages Radio Explorer (DARE) satellite has been proposed \citep{DAREMCMC}.  DARE consists of a short dipole antenna in lunar orbit, which allows the Moon to be used an RFI shield.  DARE probes a frequency range of $40$ to $120\,\textrm{MHz}$, again providing direct access to the pre-reionization epoch.
 
-Moving beyond single dipole experiments, the Large-aperture Experiment to detect the Dark Ages (LEDA) makes use of an interferometric array of antennas to simultaneously model the sky and 
+Moving beyond single dipole experiments, the Large-aperture Experiment to detect the Dark Ages (LEDA) makes use of an interferometric array of antennas to simultaneously model the sky and calibration parameters \citep{BernardiLEDA}.  Fundamentally, however, its measurement of the global signal is still expected to come from a total power measurements (i.e., auto-correlations) from single dipoles treated independently.  This differs from the approach taken by \citet{VedanthamLOFAR2}, where the LOw Frequency ARray (LOFAR) was operated as a true interferometer not just for calibration purposes, but also for the cosmological measurement itself.  At a basic level, one might imagine that interferometers are sensitive only to spatially fluctuating signals on the sky (if one follows the standard procedure of avoiding noise bias by discarding auto-correlations in the data), and are therefore insensitive to the global signal.  However, an externally imposed spatial dependence can introduce sufficient spatial structure for a global signal to be measurable by an interferometer.  \citet{VedanthamLOFAR2} took advantage of this fact by observing fields containing the Moon, effectively using lunar occultations to introduce the necessary spatial dependence for an interferometric measurement of the global signal.  So far, this approach has yielded a reasonably high signal-to-noise characterization of the foreground contaminants between $\nu =35$ and $80\,\textrm{MHz}$.
 
 \begin{itemize}
 \item Why an interferometer might be helpful plus why we're not crazy (Ekers + Rots Theorem?).  Angular info helps with foreground suppression.
+\end{itemize}
+
+In this paper, we build on \citet{VedanthamLOFAR2}, generalizing their work to consider a general theory of interferometric measurements of the global $21\,\textrm{cm}$ signal.  We provide a mathematically rigorous framework for extracting the global signal from an interferometer, and use it to provide intuition for the types of arrays that provide the best constraints.  
+
+\begin{itemize}
 \item Preview results (exquisite extraction; great foreground mitigation; high significance detection).
 \item ``The rest of this paper is organized as follows..."
 \end{itemize}
@@ -244,7 +249,9 @@ Now, this methodology has assumed that the measurements are unbiased, i.e. $\lan
 \end{equation}
 Note that the dimensions here work out because $\delta \xhat$ and $\boldsymbol \mu(\boldsymbol \theta)$ have length $N_\textrm{fq}$, and $C^{-1}$ has dimensions $N_\textrm{fq} \times N_\textrm{fq}$.  
 
-Using the Fisher matrix formalism, we analyzed how well different arrays would be able to constrain models for different epochs in the evolution of the global signal. \mep{It seems at this point that it would be helpful to refer to a picture of the fiducial model of the global signal, such as the one in your designer's guide paper. Actually, should we in an earlier section describe in more detail what we think the signal will look like? If so, where would that be? In the introduction?} At about $z\sim 30$ when the first galaxies form, we expect a significant absorption feature as Lyman-alpha photons couple the spin and gas temperatures. This dip can be modeled as a Gaussian in frequency
+Using the Fisher matrix formalism, we analyzed how well different arrays would be able to constrain models for different epochs in the evolution of the global signal. \mep{It seems at this point that it would be helpful to refer to a picture of the fiducial model of the global signal, such as the one in your designer's guide paper. Actually, should we in an earlier section describe in more detail what we think the signal will look like? If so, where would that be? In the introduction?} \acl{Yep, I think the intro is the right place for it.  Earlier today I sneakily added a second sentence to the second bullet point there.}
+
+At about $z\sim 30$ when the first galaxies form, we expect a significant absorption feature as Lyman-alpha photons couple the spin and gas temperatures. This dip can be modeled as a Gaussian in frequency
 \begin{equation}
 \boldsymbol \mu = -A\textrm{exp}\left ( -\frac{(\nu - \nu_0)^2}{2\sigma^2} \right ) 
 \end{equation}
