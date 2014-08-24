@@ -270,18 +270,24 @@ Now, this methodology has assumed that the measurements are unbiased, i.e. $\lan
 \end{equation}
 Note that the dimensions here work out because $\delta \xhat$ and $\boldsymbol \mu(\boldsymbol \theta)$ have length $N_\textrm{fq}$, and $C^{-1}$ has dimensions $N_\textrm{fq} \times N_\textrm{fq}$.  
 
-Using the Fisher matrix formalism, we analyzed how well different arrays would be able to constrain models for different epochs in the evolution of the global signal. \mep{It seems at this point that it would be helpful to refer to a picture of the fiducial model of the global signal, such as the one in your designer's guide paper. Actually, should we in an earlier section describe in more detail what we think the signal will look like? If so, where would that be? In the introduction?} \acl{Yep, I think the intro is the right place for it.  Earlier today I sneakily added a second sentence to the second bullet point there.}
-
-At about $z\sim 30$ when the first galaxies form, we expect a significant absorption feature as Lyman-alpha photons couple the spin and gas temperatures. This dip can be modeled as a Gaussian in frequency
+Using the Fisher matrix formalism, we analyzed how well different arrays would be able to constrain models for different epochs in the evolution of the global signal. %\mep{It seems at this point that it would be helpful to refer to a picture of the fiducial model of the global signal, such as the one in your designer's guide paper. Actually, should we in an earlier section describe in more detail what we think the signal will look like? If so, where would that be? In the introduction?} \acl{Yep, I think the intro is the right place for it.  Earlier today I sneakily added a second sentence to the second bullet point there.} 
+At about $z\sim 30$ when the first galaxies form, we expect a significant absorption feature as Lyman-alpha photons couple the spin and gas temperatures (see Fig. \ref{fig:21cmSignal}). This dip can be modeled as a Gaussian in frequency
 \begin{equation}
 \boldsymbol \mu = -A\textrm{exp}\left ( -\frac{(\nu - \nu_0)^2}{2\sigma^2} \right ) 
 \end{equation}
-so that the parameter vector is $\boldsymbol \theta = (A,\nu_0,\sigma)$. \mep{Insert figures of pairwise projections and discussion thereof.} 
+so that the parameter vector is $\boldsymbol \theta = (A,\nu_0,\sigma)$, where $A$ is the amplitude of the signal, $\nu_0$ is the center of the absorption dip, and $\sigma$ is the width. Given a model and a fisher matrix, we can approximate the likelihood function of the parameter values as a multivariate Gaussian with covariance $\F^{-1}$.  
+\begin{equation}
+L(\boldsymbol \theta) \approx \frac{1}{(2\pi)^{n/2}(\textrm{det} \F^{-1})^{1/2}} \textrm{exp} \left ( -\frac{1}{2}(\boldsymbol \theta - \boldsymbol \theta_{\textrm{m}})^t \F (\boldsymbol \theta - \boldsymbol \theta_{\textrm{m}}) \right )
+\end{equation}
+where $n$ is the length of the parameter vector and $\boldsymbol \theta_{\textrm{m}}$ are the parameters with maximum likelihood. In order to more easily visualize the 3-dimensional contours of $L(\boldsymbol \theta)$, we examine the parameters pairwise by integrating over the third parameter in order to produce a new 2-dimensional likelihood function. Fig. \ref{fig:contours} shows contours of such pairwise likelihood functions for ... 
+
+\mep{Insert figures of pairwise projections and discussion thereof.} 
 
 \begin{figure}[h]
 	\centering
 	\includegraphics[width=0.55\textwidth]{figures/contours_A_nu0.pdf}
 	\caption{\acl{Fill this in.  Probably also want to make this a horizontal stripe of constraints.}}
+	\label{fig:contours}
 \end{figure}
 
 \begin{figure}[h]
