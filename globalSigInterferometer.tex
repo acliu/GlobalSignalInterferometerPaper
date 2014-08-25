@@ -72,7 +72,16 @@ Really great abstract
 \item Say why 21cm is important.
 \item Narrow focus to global signal.  Show a plot of the signal.
 \end{itemize}
-The global signal is defined as the monopole component of the redshifted $21\,\textrm{cm}$ signal, i.e., the angularly averaged $21\,\textrm{cm}$ signal as a function of frequency.  In Figure \acl{insert} we show a fiducial model for the global $21\,\textrm{cm}$ signal, based on the model presented in \citet{PritchardLoeb2010}.  
+
+\begin{figure}[h]
+	\centering
+	%\includegraphics[width=0.55\textwidth]{}
+	\caption{\mep{Insert 21cm signal evolution figure.}}
+	\label{fig:21cmSignal}
+\end{figure}
+
+Figure \ref{fig:21cmSignal} shows a schematic of a fiducial model of the global 21 cm signal, highlighting the important epochs and corresponding features in the signal. The first epoch, the cosmic ``Dark Ages,'' arises with the thermal decoupling of the 21 cm spin states from the cosmic microwave background (CMB) and is marked by a shallow absorption feature. As the gas density continues to fall with the universe's expansion, collisions are no longer able to couple the spin states to the gas, and the signal falls back into coupling with the CMB. The next epoch is marked by the formation of the first stars and galaxies, whose Ly$\alpha$ photons strongly couple the spin states to the gas temperature. This first results in a deep absorption feature, as the gas temperature is far below that of the CMB. However, heating from X-ray emission pushes the gas above the CMB temperature, resulting in a 21 cm emission signal. This leads to the final epoch, the ``epoch of reionization,'' where UV photons ionize the gas, gradually erasing the 21 cm signal. 
+
 \begin{itemize}
 \item Challenge of foregrounds.  \acl{We should probably also comment on the ionosphere at some point}.
 \item Survey of current instruments and efforts. (EDGES, DARE, SCI-HI, LOFAR, LEDA, LWA) \acl{Gotta also survey some of the other experiments that one doesn't hear about so much.  Gianni's paper has a good list.  Also be sure to add more references like Jack Burns' ScienceDirect article.}
@@ -81,7 +90,7 @@ There are currently a large number of experiments seeking to make a first detect
 
 To escape radio frequency interference (RFI), both EDGES and SCI-HI are deployed in rather remote locations: EDGES observes from the Murchison Radio-astronomy Observatory in Western Australia, while SCI-HI has been deployed at Isla Guadalupe in Mexico, with plans to observe at Isla Socorro and/or Isla Clari\'{o}n in the future.  To achieve even better RFI isolation (as well as to escape ionospheric distortions), the Dark Ages Radio Explorer (DARE) satellite has been proposed \citep{DAREMCMC}.  DARE consists of a short dipole antenna in lunar orbit, which allows the Moon to be used an RFI shield.  DARE probes a frequency range of $40$ to $120\,\textrm{MHz}$, again providing direct access to the pre-reionization epoch.
 
-Moving beyond single dipole experiments, the Large-aperture Experiment to detect the Dark Ages (LEDA) makes use of an interferometric array of antennas to simultaneously model the sky and calibration parameters \citep{BernardiLEDA}.  Fundamentally, however, its measurement of the global signal is still expected to come from a total power measurements (i.e., auto-correlations) from single dipoles treated independently.  This differs from the approach taken by \citet{VedanthamLOFAR2}, where the LOw Frequency ARray (LOFAR) was operated as a true interferometer not just for calibration purposes, but also for the cosmological measurement itself.  At a basic level, one might imagine that interferometers are sensitive only to spatially fluctuating signals on the sky (if one follows the standard procedure of avoiding noise bias by discarding auto-correlations in the data), and are therefore insensitive to the global signal.  However, an externally imposed spatial dependence can introduce sufficient spatial structure for a global signal to be measurable by an interferometer.  \citet{VedanthamLOFAR2} took advantage of this fact by observing fields containing the Moon, effectively using lunar occultations to introduce the necessary spatial dependence for an interferometric measurement of the global signal.  So far, this approach has yielded a reasonably high signal-to-noise characterization of the foreground contaminants between $\nu =35$ and $80\,\textrm{MHz}$.
+Moving beyond single dipole experiments, the Large-aperture Experiment to detect the Dark Ages (LEDA) makes use of an interferometric array of antennas to simultaneously model the sky and calibration parameters \citep{BernardiLEDA}.  Fundamentally, however, its measurement of the global signal is still expected to come from total power measurements (i.e., auto-correlations) from single dipoles treated independently.  This differs from the approach taken by \citet{VedanthamLOFAR2}, where the LOw Frequency ARray (LOFAR) was operated as a true interferometer not just for calibration purposes, but also for the cosmological measurement itself.  At a basic level, one might imagine that interferometers are sensitive only to spatially fluctuating signals on the sky (if one follows the standard procedure of avoiding noise bias by discarding auto-correlations in the data), and are therefore insensitive to the global signal.  However, an externally imposed spatial dependence can introduce sufficient spatial structure for a global signal to be measurable by an interferometer.  \citet{VedanthamLOFAR2} took advantage of this fact by observing fields containing the Moon, effectively using lunar occultations to introduce the necessary spatial dependence for an interferometric measurement of the global signal.  So far, this approach has yielded a reasonably high signal-to-noise characterization of the foreground contaminants between $\nu =35$ and $80\,\textrm{MHz}$.
 
 \begin{itemize}
 \item Why an interferometer might be helpful plus why we're not crazy (Ekers + Rots Theorem?).  Angular info helps with foreground suppression.
@@ -99,7 +108,7 @@ The rest of this paper is organized as follows.  In Section \ref{sec:Qualitative
 \section{Why we're really not crazy}
 \label{sec:QualitativePic}
 \begin{itemize}
-\item Cartoon / qualitative picture?
+\item Cartoon / qualitative picture? \mep{Remind me -- What was this pic supposed to show?}
 \item Simple eqn. showing that there is non-zero response?
 \item Intuitive, qualitative description of what sort of arrays are good.  (Preview for later sections).
 \item Discussion of noise bias and other problems with single dipole experiments?
@@ -146,7 +155,7 @@ Using this fact, we can directly find the covariance of $\mathbf{\hat x}$ to be
 \end{equation}
 as shown in \citet{Tegmark_CMB_maps_wli}. Therefore, using equation (\ref{eqn:M}) for our statistical analysis allows us to analytically find the error statistics if the noise covariance matrix for the foregrounds and systematics is known. However, since galactic foreground models are not well constrained, it is not safe to assume we know $\N_{\textrm{fg}}$. Consequently, Monte Carlo simulations are still necessary to determine the error bars on measurements analyzed using this method. Note, however, that although we do not know the exact noise covariance $\N$, there is nothing wrong with choosing Eq. \eqref{eqn:M} for our data analysis, as long as we do not claim that our error bars are constrained by equation (\ref{eqn:Covxhat}). %-- it just may not be optimal.
 
-Note that two inverses must be taken in order to compute $\M$. In general, neither $\N$ nor $\Q^\dagger \N^{-1} \Q$ will be invertible, requiring us to approximate both inverses with a pseudo-inverse. \acl{Actually, $\mathbf{N}$ is usually invertible.}We used a pseudo-inverse method that raises the value of the small eigenmodes, inverts, and then projects out those small eigenmodes, as laid out in the appendix of \citet{Tegmark_CMB_spectra_wli}. 
+Note that two inverses must be taken in order to compute $\M$. In general, $\Q^\dagger \N^{-1} \Q$ will not be invertible, requiring us to approximate the inverse with a pseudo-inverse. We used a pseudo-inverse method that raises the value of the small eigenmodes, inverts, and then projects out those small eigenmodes, as laid out in the appendix of \citet{Tegmark_CMB_spectra_wli}. 
 
 Since $\Q$ is not diagonal, higher spherical harmonic modes will leak into our measurement $\y$. If it were possible to do the inverses in equation \ref{eqn:M}, then these leakages could be dampened down by taking repeated observations to mimic an ensemble average. This is because 
 \begin{equation}
@@ -263,18 +272,24 @@ Now, this methodology has assumed that the measurements are unbiased, i.e. $\lan
 \end{equation}
 Note that the dimensions here work out because $\delta \xhat$ and $\boldsymbol \mu(\boldsymbol \theta)$ have length $N_\textrm{fq}$, and $C^{-1}$ has dimensions $N_\textrm{fq} \times N_\textrm{fq}$.  
 
-Using the Fisher matrix formalism, we analyzed how well different arrays would be able to constrain models for different epochs in the evolution of the global signal. \mep{It seems at this point that it would be helpful to refer to a picture of the fiducial model of the global signal, such as the one in your designer's guide paper. Actually, should we in an earlier section describe in more detail what we think the signal will look like? If so, where would that be? In the introduction?} \acl{Yep, I think the intro is the right place for it.  Earlier today I sneakily added a second sentence to the second bullet point there.}
-
-At about $z\sim 30$ when the first galaxies form, we expect a significant absorption feature as Lyman-alpha photons couple the spin and gas temperatures. This dip can be modeled as a Gaussian in frequency
+Using the Fisher matrix formalism, we analyzed how well different arrays would be able to constrain models for different epochs in the evolution of the global signal. %\mep{It seems at this point that it would be helpful to refer to a picture of the fiducial model of the global signal, such as the one in your designer's guide paper. Actually, should we in an earlier section describe in more detail what we think the signal will look like? If so, where would that be? In the introduction?} \acl{Yep, I think the intro is the right place for it.  Earlier today I sneakily added a second sentence to the second bullet point there.} 
+At about $z\sim 30$ when the first galaxies form, we expect a significant absorption feature as Lyman-alpha photons couple the spin and gas temperatures (see Fig. \ref{fig:21cmSignal}). This dip can be modeled as a Gaussian in frequency
 \begin{equation}
 \boldsymbol \mu = -A\textrm{exp}\left ( -\frac{(\nu - \nu_0)^2}{2\sigma^2} \right ) 
 \end{equation}
-so that the parameter vector is $\boldsymbol \theta = (A,\nu_0,\sigma)$. \mep{Insert figures of pairwise projections and discussion thereof.} 
+so that the parameter vector is $\boldsymbol \theta = (A,\nu_0,\sigma)$, where $A$ is the amplitude of the signal, $\nu_0$ is the center of the absorption dip, and $\sigma$ is the width. Given a model and a fisher matrix, we can approximate the likelihood function of the parameter values as a multivariate Gaussian with covariance $\F^{-1}$.  
+\begin{equation}
+L(\boldsymbol \theta) \approx \frac{1}{(2\pi)^{n/2}(\textrm{det} \F^{-1})^{1/2}} \textrm{exp} \left ( -\frac{1}{2}(\boldsymbol \theta - \boldsymbol \theta_{\textrm{m}})^t \F (\boldsymbol \theta - \boldsymbol \theta_{\textrm{m}}) \right )
+\end{equation}
+where $n$ is the length of the parameter vector and $\boldsymbol \theta_{\textrm{m}}$ are the parameters with maximum likelihood. In order to more easily visualize the 3-dimensional contours of $L(\boldsymbol \theta)$, we examine the parameters pairwise by integrating over the third parameter in order to produce a new 2-dimensional likelihood function. Fig. \ref{fig:contours} shows contours of such pairwise likelihood functions for ... 
+
+\mep{Insert figures of pairwise projections and discussion thereof.} 
 
 \begin{figure}[h]
 	\centering
 	\includegraphics[width=0.55\textwidth]{figures/contours_A_nu0.pdf}
 	\caption{\acl{Fill this in.  Probably also want to make this a horizontal stripe of constraints.}}
+	\label{fig:contours}
 \end{figure}
 
 \begin{figure}[h]
