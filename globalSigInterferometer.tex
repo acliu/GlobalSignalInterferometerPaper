@@ -71,6 +71,9 @@ Really great abstract
 \begin{itemize}
 \item Say why 21cm is important.
 \item Narrow focus to global signal.  Show a plot of the signal.
+\end{itemize}
+The global signal is defined as the monopole component of the redshifted $21\,\textrm{cm}$ signal, i.e., the angularly averaged $21\,\textrm{cm}$ signal as a function of frequency.  In Figure \acl{insert} we show a fiducial model for the global $21\,\textrm{cm}$ signal, based on the model presented in \citet{PritchardLoeb2010}.  
+\begin{itemize}
 \item Challenge of foregrounds.  \acl{We should probably also comment on the ionosphere at some point}.
 \item Survey of current instruments and efforts. (EDGES, DARE, SCI-HI, LOFAR, LEDA, LWA) \acl{Gotta also survey some of the other experiments that one doesn't hear about so much.  Gianni's paper has a good list.  Also be sure to add more references like Jack Burns' ScienceDirect article.}
 \end{itemize}
@@ -83,6 +86,7 @@ Moving beyond single dipole experiments, the Large-aperture Experiment to detect
 \begin{itemize}
 \item Why an interferometer might be helpful plus why we're not crazy (Ekers + Rots Theorem?).  Angular info helps with foreground suppression.
 \end{itemize}
+\acl{Somewhere, need to address the point that time integration can allow extra information to be gleaned.}
 
 In this paper, we build on \citet{VedanthamLOFAR2}, generalizing their work to consider a general theory of interferometric measurements of the global $21\,\textrm{cm}$ signal.  We provide a mathematically rigorous framework for extracting the global signal from an interferometer.  Given that interferometers naturally sample spatial information, a global signal measurement that is made by an interferometer is well-poised to use angular information to separate foregrounds from the (monopole) cosmological signal.  As pointed out in \citep{L13} and \citep{Liu_Switzer_2014}, the angular dependence of foregrounds can be leveraged to enable better foreground subtraction.  In this present paper we use our mathematical formalism to show how such a scheme may be implemented in the specific context of an interferometric measurement.  Although we find that some amount of spectral foreground subtraction is still necessary, our Monte Carlo simulations show that spatial information can reduce the burden of the spectral subtraction, reducing the risk of cosmological signal loss.  \acl{Should probably have brought up cosmological signal loss and angular subtraction earlier}  Fisher matrix projections confirm the stringent constraints on the Dark Ages and reionization that can be obtained with our approach.  \acl{Probably want a statement stronger than this.}
 
@@ -90,7 +94,7 @@ In this paper, we build on \citet{VedanthamLOFAR2}, generalizing their work to c
 \item Preview results (exquisite extraction; great foreground mitigation; high significance detection).
 \end{itemize}
 
-The rest of this paper is organized as follows.  In Sec. \ref{sec:QualitativePic} we provide some qualitative intuition for using interferometry to measure monopole signals.  This is made more mathematically rigorous in Sec. \ref{sec:MathForm}, where we establish a matrix-based framework for signal extraction.  Sec. \ref{sec:Foregrounds} introduces foregrounds and our strategy for their mitigation.  Its effectiveness is demonstrated using Monte Carlo simulations in Sec. \ref{sec:MonteCarlos}.  The Monte Carlo results are then propagated through to theory parameters in Sec. \ref{sec:Fisher} using a Fisher matrix formalism.  We summarize our conclusions in Sec. \ref{sec:Conc}.
+The rest of this paper is organized as follows.  In Section \ref{sec:QualitativePic} we provide some qualitative intuition for using interferometry to measure monopole signals.  This is made more mathematically rigorous in Section \ref{sec:MathForm}, where we establish a matrix-based framework for signal extraction.  Section \ref{sec:Foregrounds} introduces foregrounds and our strategy for their mitigation.  Its effectiveness is demonstrated using Monte Carlo simulations in Section \ref{sec:MonteCarlos}.  The Monte Carlo results are then propagated through to theory parameters in Section \ref{sec:Fisher} using a Fisher matrix formalism.  We summarize our conclusions in Section \ref{sec:Conc}.
 
 \section{Why we're really not crazy}
 \label{sec:QualitativePic}
@@ -119,7 +123,7 @@ where $\y$ is a vector of length $\Nbl$ containing the visibilities measured at 
 
 The matrix $\Q$ is the beam response of an antenna array at different baselines (rows) and different spherical harmonics (columns). $\Q$ is determined by 
 \begin{equation}
-\textrm{Q}_{j,\ell m} = \int d \boldsymbol \theta^2 A(\boldsymbol \theta) Y_{\ell m}(\boldsymbol \theta) e^{2\pi i \frac{\mathbf{b_\textit{j}}}{\lambda} \cdot \boldsymbol \theta}
+\textrm{Q}_{j,\ell m} = \int d\Omega A(\boldsymbol \theta) Y_{\ell m}(\boldsymbol \theta) e^{-2\pi i \frac{\mathbf{b_\textit{j}}}{\lambda} \cdot \boldsymbol \theta}
 \label{eqn:Qdef}
 \end{equation}
 where $\boldsymbol \theta$ is the angular position on the sky, $A$ is the primary beam for the antennas, $\mathbf{b_{\textit{j}}}$ is the $j$th baseline, and $\lambda$ is the wavelength of observation. Note that in the formulation of Eqs. \eqref{eqn:yQxn} and \eqref{eqn:Qdef} we assumed that all calculations would be done at a specific frequency. This is not necessary, as we could have expanded the dimensions of Eq. \eqref{eqn:yQxn} to include all of the frequencies measured in the experiment. However, we chose to do our calculations for each frequency independently in order to remain conservative in our assumptions about the spectrum.
@@ -193,7 +197,7 @@ In order to best remove the foregrounds from our data, we construct a noise cova
 \end{equation}
 Since $\R$ has dimensions $N_{\textrm{pix}} \times N_{\textrm{pix}}$, note that $\mathbf{G}$ must have dimensions $\Nbl \times N_{\textrm{pix}}$. Although $\mathbf{G}$ serves a purpose similar to a Fourier transformation matrix, it is not precisely a Fourier matrix as that would probe every single possible Fourier mode, and we only want those that correspond to our array's baselines. As such, $\mathbf{G}$ is defined by 
 \begin{equation}
-G_{i,j} = A(\rhat_j)e^{2\pi i \frac{\mathbf{b_\textit{i}}}{\lambda} \cdot \boldsymbol \rhat_j} \Delta \Omega
+G_{i,j} = A(\rhat_j)e^{-2\pi i \frac{\mathbf{b_\textit{i}}}{\lambda} \cdot \boldsymbol \rhat_j} \Delta \Omega
 \end{equation}
 where $\rhat_j$ is the angular position of the $j$th pixel,  $\Delta \Omega$ is the solid angle encompassed by each pixel, and $\mathbf{b_\textit{i}}$ is the $i$th baseline. 
 
@@ -214,7 +218,8 @@ At the other extreme,
 \section{Monte carlo / foreground simulation results}
 \label{sec:MonteCarlos}
 
-\acl{Let's be conservative and try to do some arrays that are quite widely spaced and also to add some curvature into our Monte Carlos.  Plus frequency-dependent beams.}
+\acl{TODO: Let's be conservative and try to do some arrays that are quite widely spaced and also to add some curvature into our Monte Carlos.  Plus frequency-dependent beams.}
+\acl{TODO: Do some pictures of spherical harmonics in the Mollweide projection to build some intuition.}
 
 \begin{itemize}
 \item $\mathbf{N}_\textrm{fg}$ might not be properly modeled, so we can't use $[\mathbf{Q}^\dagger \mathbf{N}^{-1} \mathbf{Q}]^{-1}$ as a reliable indicator of the errors.  (Although recall that it's a perfectly fine choice for extracting the signal).
@@ -222,7 +227,7 @@ At the other extreme,
 \item Really great results! (Error bars and covariance on the recovered spectra).
 \end{itemize}
 
-Recall from Sec. \ref{sec:MathForm} that using the least-squares method for recovering $\xhat$ allows us to analytically determine the error covariance of $\xhat$ via Eq. \eqref{eqn:Covxhat}. However, this formula for the covariance is only true if we exactly know the noise covariance matrix. Thus, since $\Nfg$ might not be properly modeled, we must still resort to Monte Carlo simulations to determine the error bars on our measurements. 
+Recall from Section \ref{sec:MathForm} that using the least-squares method for recovering $\xhat$ allows us to analytically determine the error covariance of $\xhat$ via Eq. \eqref{eqn:Covxhat}. However, this formula for the covariance is only true if we exactly know the noise covariance matrix. Thus, since $\Nfg$ might not be properly modeled, we must still resort to Monte Carlo simulations to determine the error bars on our measurements. 
 
 Our Monte Carlo simulations generate many visibilities $V(\mathbf{b}_i)$ from randomly perturbed sky models. \mep{Is ``randomly perturbed'' an appropriate way to describe it?} The sky models are derived by taking the all-sky survey from \citet{Haslam_408MHz_map} and using the power-law model of the foreground spectrum used in \citet{Liu_21cm_Fg} to extrapolate a map at the desired frequency. For a pixel at $\boldsymbol \theta$, the brightness at a certain frequency $\nu$ is 
 \begin{equation}
@@ -230,7 +235,7 @@ I(\boldsymbol \theta) = I_H(\boldsymbol \theta) \left ( \frac{\nu}{\nu_H} \right
 \end{equation}
 where $I_H$ is the sky map from \citet{Haslam_408MHz_map}, $\nu_H=408$MHz, $\alpha = 2.8$, and $\Delta \alpha$ is a perturbing index randomly generated with variance 0.1. From this model, we can generate a vector of visibilities for all of the different baselines in an array. This vector is $\y$ from Eq. \eqref{eqn:yQxn}. The visibilities are defined as 
 \begin{equation}
-V(\mathbf{b}_i) = \int d \Omega A(\boldsymbol \theta) I(\boldsymbol \theta) e^{2\pi i\frac{\nu}{c} \mathbf{b}_i \cdot \boldsymbol \theta}
+V(\mathbf{b}_i) = \int d \Omega A(\boldsymbol \theta) I(\boldsymbol \theta) e^{-2\pi i\frac{\nu}{c} \mathbf{b}_i \cdot \boldsymbol \theta}
 \end{equation}
 where $\boldsymbol \theta$ is the angular position on the sky, $A$ is the primary beam for the antennas, $\mathbf{b_{\textit{j}}}$ is the $j$th baseline, $\nu$ is the frequency of observation, and $I$ is the intensity \mep{What's the correct name for this?} of the sky model. 
 
