@@ -50,11 +50,16 @@
 \begin{document}
 
 %\title{What Power Spectrum Measurements From the Next Generation of 21~cm Experiments Can Teach Us About the Epoch of Reionization}
-\title{Global signal interferometer (XXX: replace with better title)}
+\title{A designer's guide to interferometric global $21\,\textrm{cm}$ signal measurements}
 
 \author{Morgan E. Presley\altaffilmark{1},
+Adrian Liu\altaffilmark{2,3},
+Aaron R. Parsons\altaffilmark{2,4}
 }
-\altaffiltext{1}{Department of Astrophysical Sciences, Princeton University, Princeton NJ}
+\altaffiltext{1}{Department of Astrophysical Sciences, Princeton University, Princeton, NJ 08544, USA}
+\altaffiltext{2}{Department of Astronomy, UC Berkeley, Berkeley, CA 94720, USA}
+\altaffiltext{3}{Berkeley Center for Cosmological Physics, UC Berkeley, Berkeley, CA 94720, USA}
+\altaffiltext{4}{Radio Astronomy Laboratory, UC Berkeley, Berkeley, CA 94720, USA}
 
 \begin{abstract}
 Really great abstract
@@ -68,6 +73,7 @@ Really great abstract
 
 \section{Introduction}
 \acl{DID WE REMEMBER TO DIVIDE THE $a_{00}$ values by $\sqrt{4\pi}$?}
+\acl{Check contour levels}
 \begin{itemize}
 \item Say why 21cm is important.
 \item Narrow focus to global signal.  Show a plot of the signal.
@@ -105,16 +111,18 @@ In this paper, we build on \citet{VedanthamLOFAR2}, generalizing their work to c
 \item Preview results (exquisite extraction; great foreground mitigation; high significance detection).
 \end{itemize}
 
-The rest of this paper is organized as follows.  In Section \ref{sec:QualitativePic} we provide some qualitative intuition for using interferometry to measure monopole signals.  This is made more mathematically rigorous in Section \ref{sec:MathForm}, where we establish a matrix-based framework for signal extraction.  Section \ref{sec:Foregrounds} introduces foregrounds and our strategy for their mitigation.  Its effectiveness is demonstrated using Monte Carlo simulations in Section \ref{sec:MonteCarlos}.  The Monte Carlo results are then propagated through to theory parameters in Section \ref{sec:Fisher} using a Fisher matrix formalism.  We summarize our conclusions in Section \ref{sec:Conc}.
+The rest of this paper is organized as follows.  In Section \ref{sec:BackOfEnvelopeArrayDesign} we provide some qualitative intuition for using interferometry to measure monopole signals.  This is made more mathematically rigorous in Section \ref{sec:MathForm}, where we establish a matrix-based framework for signal extraction.  Section \ref{sec:Foregrounds} introduces foregrounds and our strategy for their mitigation.  Its effectiveness is demonstrated using Monte Carlo simulations in Section \ref{sec:MonteCarlos}.  The Monte Carlo results are then propagated through to theory parameters in Section \ref{sec:Fisher} using a Fisher matrix formalism.  We summarize our conclusions in Section \ref{sec:Conc}.
 
-\section{Why we're really not crazy}
-\label{sec:QualitativePic}
-\begin{itemize}
-\item Cartoon / qualitative picture? \mep{Remind me -- What was this pic supposed to show?}
-\item Simple eqn. showing that there is non-zero response?
-\item Intuitive, qualitative description of what sort of arrays are good.  (Preview for later sections).
-\item Discussion of noise bias and other problems with single dipole experiments?
-\end{itemize}
+\acl{Insert guide for readers who don't like math.}
+
+%\section{Why we're really not crazy}
+%\label{sec:QualitativePic}
+%\begin{itemize}
+%\item Cartoon / qualitative picture? \mep{Remind me -- What was this pic supposed to show?}
+%\item Simple eqn. showing that there is non-zero response?
+%\item Intuitive, qualitative description of what sort of arrays are good.  (Preview for later sections).
+%\item Discussion of noise bias and other problems with single dipole experiments?
+%\end{itemize}
 
 \acl{A quick reminder of knobs that we can turn: array spacing, beam size, beam size frequency dependence, spectral indices, spectral index spread, higher curvature components etc.}
 
@@ -125,7 +133,11 @@ The rest of this paper is organized as follows.  In Section \ref{sec:Qualitative
 
 In this section, we use simplified toy models to build intuition for the types of interferometer arrays that are best suited for probing the global signal.  The goal here is to provide a rough sense for what might be a sensible design that we can analyze in a more numerically detailed fashion in the rest of the paper.
 
-\subsection{Balancing foregrounds and sensitivity for a single baseline}
+\subsection{A qualitative picture of a global signal interferometer}
+
+Consider first a purely qualitative picture of an 
+
+\subsection{Sparse or packed arrays?}
 
 Suppose we consider an array consisting of just a single baseline, and ask what baseline length $b$ optimizes measurements of the global signal.  Intuitively, a short $b$ increases sensitivity to the signal, since (for a given $uv$ plane primary beam kernel) short baselines have the greatest overlap with the $\mathbf{u}=0$ mode, which is precisely what we are seeking to measure.  On the other hand, foregrounds contamination is worst for short baselines,  given that they are mostly sensitive to the smoothest spatial modes of the sky, where foregrounds dominate.  There must therefore exist an intermediate baseline length that best balances these two competing demands, which we will now compute.
 
@@ -134,8 +146,14 @@ In the flat-sky approximation, the visibility response $V(\mathbf{b})$ of a base
 \label{eq:Vb}
 V(\mathbf{b}) = \int  T(\boldsymbol \theta) A(\boldsymbol \theta) \exp \left( -i 2 \pi \frac{\nu}{c} \mathbf{b} \cdot \boldsymbol \theta \right) d^2 \mathbf{\theta},
 \end{equation}
-where $ A(\boldsymbol \theta)$ is the primary beam pattern.  Without loss of generality, we may normalize our primary beam such that $A(0) = 1$.  Note that while we will invoke the flat-sky approximation throughout this section in an effort to enhance physical intuition at the expense of mathematical rigor, the formalism and numerical results of subsequent sections will properly incorporate the curved sky.  Setting $T(\boldsymbol \theta) = T_0$ for a monopole signal, one obtains the result $V(\mathbf{b}) = T_0 \widetilde{A} \left( \nu \mathbf{b} / c \right)$, with $\widetilde{A}$ is defined as the Fourier transform of $A(\boldsymbol \theta)$.  This suggests that an appropriate (though by no means optimal) estimator $\widehat{T}_0$ for the global signal $T_0$ might be
+where $ A(\boldsymbol \theta)$ is the primary beam pattern.  Without loss of generality, we may normalize our primary beam such that $A(0) = 1$.  Note that while we will invoke the flat-sky approximation throughout this section in an effort to enhance physical intuition at the expense of mathematical rigor, the formalism and numerical results of subsequent sections will properly incorporate the curved sky. For notational compactness, we will not explicitly highlight the frequency dependence of $T_0$, $A(\mathbf{\theta})$, and $V(\mathbf{b})$, although of course these quantities all implicitly vary with frequency. Setting $T(\boldsymbol \theta) = T_0$ for a monopole signal, one obtains the result
 \begin{equation}
+\label{eq:blMonoResponse}
+V(\mathbf{b}) = T_0 \widetilde{A} \left( \nu \mathbf{b} / c \right),
+\end{equation}
+with $\widetilde{A}$ is defined as the Fourier transform of $A(\boldsymbol \theta)$.  This suggests that an appropriate (though not necessarily optimal) estimator $\widehat{T}_0$ for the global signal $T_0$ might be
+\begin{equation}
+\label{eq:singleBlSillyEst}
 \widehat{T}_0 = \frac{V( \mathbf{b})}{\widetilde{A} \left( \nu \mathbf{b} / c \right)}.
 \end{equation}
 Intuitively, a baseline $\mathbf{b}$ has sensitivity $\widetilde{A} \left( \nu \mathbf{b} / c - \mathbf{u} \right)$ to spatial wavenumber $\mathbf{u}$, so the prescription suggested here is to simply divide the measured visibility by the response to the $\mathbf{u}=0$ mode. \mep{Um... not intuitive to me. I followed just fine until eqn 2, but I'm not sure what you're doing here. But given this, the following stuff makes sense.} In the absence of foregrounds and noise, this is guaranteed to return the true $T_0$.  In reality, of course, we have contributions from both foregrounds and noise.  To describe the former, we can write $T(\boldsymbol \theta)$ as the sum of $T_0$ and a foreground contribution $T_\textrm{fg} (\boldsymbol \theta)$.  This then yields a foreground perturbation $V_\textrm{fg} (\mathbf{b})$ to the visibility, of the form
@@ -158,22 +176,122 @@ where we have assumed that the primary beam $A$ is a relatively broad function o
 \end{equation}
 This represents the bias that foregrounds introduce into our estimate of the global signal, which we can seek to minimize by varying $\mathbf{b}$.
 
-For illustrative purposes, let us consider specific models for $\widetilde{A}$ and $\widetilde{T}_\textrm{fg}$.  If the primary beam is taken to be Gaussian with variance $\theta_0^2$, then our normalization convention dictates that $\widetilde{A}(\mathbf{u}) = 2 \pi \theta_0^2 \exp (-2 \pi^2 \theta_0^2 u^2 )$, where $u \equiv |\mathbf{u}|$.  As for $\widetilde{T}_\textrm{fg}$, one can imagine the foregrounds to have statistical properties described by some angular power spectrum $C_\ell$.  Often, $C_\ell$ is fit by a power law, so that $C_\ell \propto \ell^{-\alpha}$, where $\alpha$ is typically between $2$ and $3$ (depending on various factors such as frequency and Galactic latitude).  In the flat-sky approximation, we have $\ell \sim 2 \pi u$, which allows us to translate the angular power spectrum into a power spectrum $P(\mathbf{u}) \propto u^{-\alpha}$ on the $uv$ plane.  Given this, it is reasonable (on dimensional grounds) to take $\widetilde{T}_\textrm{fg} \propto u^{-\alpha/2}$, \mep{where did this come from? I don't see the dimensional argument.} which yields
+For illustrative purposes, let us consider specific models for $\widetilde{A}$ and $\widetilde{T}_\textrm{fg}$.  If the primary beam is taken to be Gaussian with variance $\theta_b^2$, then our normalization convention dictates that $\widetilde{A}(\mathbf{u}) = 2 \pi \theta_b^2 \exp (-2 \pi^2 \theta_b^2 u^2 )$, where $u \equiv |\mathbf{u}|$.  As for $\widetilde{T}_\textrm{fg}$, one can imagine the foregrounds to have statistical properties described by some angular power spectrum $C_\ell$.  Often, $C_\ell$ is fit by a power law, so that $C_\ell \propto \ell^{-\alpha}$, where $\alpha$ is typically between $2$ and $3$ (depending on various factors such as frequency and Galactic latitude).  In the flat-sky approximation, we have $\ell \sim 2 \pi u$, which allows us to translate the angular power spectrum into a power spectrum $P(\mathbf{u}) \propto u^{-\alpha}$ on the $uv$ plane.  Given this, it is reasonable (on dimensional grounds) to take $\widetilde{T}_\textrm{fg} \propto u^{-\alpha/2}$, \mep{where did this come from? I don't see the dimensional argument.} which yields
 \begin{equation}
 \label{eq:DeviationPowGauss}
-\Delta T_0 \propto \left( \frac{\nu b}{c}\right)^{-\alpha/2} \exp \left(2 \pi^2 \theta_0^2 \frac{\nu^2 b^2}{c^2}  \right),
+\Delta T_0 \propto \left( \frac{\nu b}{c}\right)^{-\alpha/2} \exp \left(2 \pi^2 \theta_b^2 \frac{\nu^2 b^2}{c^2}  \right),
 \end{equation}
 where $b \equiv | \mathbf{b} |$.  Minimizing this expression by differentiating with respect to $b$ gives an optimal baseline length $b_\textrm{opt}$ of
 \begin{equation}
 \label{eq:b_opt}
-\frac{b_\textrm{opt}}{\lambda} = \frac{1}{2\pi \theta_0} \sqrt{\frac{\alpha}{2}}.
+\frac{b_\textrm{opt}}{\lambda} = \frac{1}{2\pi \theta_b} \sqrt{\frac{\alpha}{2}}.
 \end{equation}
-Immediately, one recognizes the factor of $(2 \pi \theta_0)^{-1}$ as the size of the primary beam's footprint on the $uv$ plane.  Since this footprint typically coincides with an antenna's physical size in wavelengths, the fact that the remaining factor of $\sqrt{\alpha / 2}$ is of order unity means that the optimal baseline consists of antennas that are placed as close together as is physically possible.  Put another way, unless foreground power dramatically decreases with increasing spatial wavenumber (so that $\alpha \gg 1$, which is never the case), the reduced sensitivity to the global signal is not worth the relatively small decrease in foreground contamination.
+Immediately, one recognizes the factor of $(2 \pi \theta_b)^{-1}$ as the size of the primary beam's footprint on the $uv$ plane.  Since this footprint typically coincides with an antenna's physical size in wavelengths, the fact that the remaining factor of $\sqrt{\alpha / 2}$ is of order unity means that the optimal baseline consists of antennas that are placed as close together as is physically possible.  Put another way, unless foreground power dramatically decreases with increasing spatial wavenumber (so that $\alpha \gg 1$, which is never the case), the reduced sensitivity to the global signal is not worth the relatively small decrease in foreground contamination.
 
 In the derivation that we have just presented, we focused exclusively on minimizing the systematic \emph{bias} that would result from foreground contamination.  Alternatively, we could have instead chosen to minimize the \emph{variance} (i.e., the error bars) on our estimator $\widehat{T}_0$.  Unlike the bias, the variance contains a noise term, since $\langle n \rangle = 0$ in the absence of systematics, but $\langle |n|^2 \rangle$ will be non-zero.  This will tend to reduce the optimal baseline length, given that short baselines increase signal-to-noise.  But since Equation \eqref{eq:b_opt} predicts close to the shortest possible baseline anyway, our minimum-bias solution also serves as an excellent approximation to a minimum-variance solution.
 
-\subsection{Balancing physical constraints with information extraction}
+Making a slight leap from a single baseline to a full interferometer array, this section argues for a packed array, where antenna elements are placed as close together as possible. A packed array will inevitably result in a regular, periodic arrangement of antennas, giving a large number of identical copies of our single (short) baseline. Our conclusion then rests on the assumption that a large regular array is essentially just that---a large collection of repeated, short baselines---and no more. This is in general a rather bad assumption, for a large array also provides access to longer baselines, which brings in new information about the sky that may be relevant to one's proposed measurement. For a global signal measurement, however, longer baselines have very little sensitivity to the signal of interest. We can see this from Equation \eqref{eq:blMonoResponse}, where $\widetilde{A}$ is typically a function that drops off away from the origin, so as one increases $\mathbf{b}$ from zero (i.e., a single dipole experiment) to a short baseline to a long baseline, the visibility response to the monopole $T_0$ drops. For our purposes, then, long baselines contribute negligibly and a large array can be thought of as a simply a large collection of multiple short baselines. We can therefore make the leap from the single baseline derivations of this section to argue that packed arrays are desirable.
 
+\acl{Really need to mention earlier that we are dropping the auto-correlation mode.}
+\acl{Also need to mention the fact that the foreground sky is not isotropic. So larger beams get more galactic plane.}
+\acl{Somewhere, also need to mention how our diagonal approximation for $\M$ also implies that it's not necessary to go to a very high $\ell_\textrm{max}$}
+
+\subsection{Wide beams or narrow beams?}
+
+The arguments in the previous subsection suggested a particular \emph{relative} placement of antenna elements: antennas should be packed together as tightly as possible. However, the \emph{absolute} scale of the array remains unspecified. In this section, we answer the question of whether it is better to have a packed array with physically small antenna elements (and therefore short baselines and wide primary beams), or a packed array with larger elements (and therefore longer baselines and narrow primary beams).
+
+As a first guess, one could imagine inserting our expression for $b_\textrm{opt}$ [Equation \eqref{eq:b_opt}] into Equation \eqref{eq:DeviationPowGauss} to yield an equation whose only free parameter is the primary beam size $\theta_0$. Minimizing this equation by varying the beam size then suggests that the beam ought to be made as small as possible. However, since any discussion of an array's absolute size will necessarily tie the array to absolute angular scales on the sky, a more nuanced discussion of foreground properties is required beyond the set-up in the previous subsection, which only required that the angular power spectrum of foregrounds was monotonically decreasing.
+
+One important property of the foreground sky is the fact that it is not rotationally invariant---the galactic plane, for example, is far brighter than the galactic poles. This is not captured by the angular power spectrum of foregrounds, which abuses the notion of a power spectrum by assuming statistical isotropy for a sky that is clearly anisotropic. A global signal experiment with a narrow beam can take advantage of cooler regions in the galaxy, selectively observing only where foregrounds are known to be dimmer, since the cosmological global signal is by definition the same everywhere on the sky. The narrower the primary beam, the more selectively one can implement such an angular foreground avoidance scheme, and the lower the foreground contamination. Arrays with narrow primary beams, large antennas, and long baselines therefore see dimmer foregrounds for two reasons: the narrow primary beam allows for cleaner selections of cool patches of the sky, and the necessarily longer baselines also sample foregrounds on finer angular scales (higher $\ell$), which are weaker because $C_\ell$ is a decreasing function for galactic foregrounds.
+
+Narrow primary beams, however, are not without their drawbacks. In general, angular avoidance strategies alone will be unable to mitigate foregrounds to the level required for a detection of the cosmological global signal. An angular avoidance strategy in principle allows the rejection of any foregrounds that are not spatially constant (i.e., are not the monopole), but are unable to remove the monopole component of foregrounds. Put another way, an observational strategy that avoids the strongest foregrounds will reduce the magnitude of foreground contamination considerably, but will at best only be able to reduce the contamination to the minimum foreground temperature on the sky, which can still be much brighter than the cosmological signal. Ultimately, one must therefore also rely on spectral foreground subtraction methods, and this is where narrow beams and long baselines may not be advantageous. Spectral subtraction typically exploits the intrinsic smoothness of foreground spectra, projecting out smooth components of the data. For such a procedure to be successful, then, one must avoid having an instrument that imprints extra spectral features into the data. Long baselines are particularly prone to such imprints, since the angular mode number $\ell \sim 2 \pi u \sim 2 \pi b / \lambda$ probed by a baseline $b$ varies more rapidly with frequency (or wavelength) when $b$ is large, allowing non-uniform spatial features of the sky to couple more strongly into spectral ripples.\footnote{Indeed, this is a common concern for $21\,\textrm{cm}$ tomography, and is the origin of the ``foreground wedge" signature seen in power spectrum measurements\acl{cite some stuff}. However, one key difference is that most interferometer arrays targeting the power spectrum are not tightly packed (though they do tend to be quite compact). Such arrays are therefore not subject to our constraint that the primary beam width and the baseline length vary in a strictly reciprocal fashion. \acl{Talk about how HERA is an exception}} Such spectral ripples will survive a spectral foreground subtraction that projects out smooth modes (although see \acl{cite myself} for a proposal for how these ripples can be modeled \emph{in situ} from the data itself), leaving residuals that may be indistinguishable from the cosmological signal. Combining this with our previous discussion, we see that an array with longer baselines and narrower primary beams may see dimmer foregrounds prior to spectral foreground subtraction, but may imprint spectral signatures that result in greater post-subtraction foreground residuals. An optimal array is one with a beam size that is chosen to balance these two competing demands.
+
+Because spatial features of the foreground sky such as the Galactic plane are difficult to model statistically, numerical simulations are required to find the right balance in primary beam size. To perform such simulations, we first form simulate foreground skies between $100$ and $200\,\textrm{MHz}$ by extrapolating the $408\,\textrm{MHz}$ Haslam map \acl{cite} pixel-by-pixel using a power-law-like relation \acl{Insert equation}. Observations are assumed to be centered on the Northern Galactic Pole (NGP) with the extent of the field defined by the primary beam of the instrument, which we take to be a Gaussian attenuated by a cosine (to ensure that the primary beam vanishes at the horizon):
+\begin{equation}
+A(\theta, \varphi) = \exp \left( -\frac{1}{2} \frac{\theta^2}{\theta_b^2} \right) \cos \theta,
+\end{equation}
+\acl{Gotta talk about how the beam width changes with frequency}
+where $\theta_b$ controls the width of the primary beam. To measure the global signal, we compute
+\begin{equation}
+\label{eq:NormedSimpleEst}
+\widehat{T}_0 (\nu) = \frac{ \sum_j \left[ \int  A(\rhat, \nu) \exp\left(i 2\pi \frac{\nu }{c}\mathbf{b}_j \cdot \rhat \right)d\Omega \right] V(\mathbf{b}_j, \nu)}{ \sum_k \big{|} \int  A(\rhat, \nu) \exp\left(i 2\pi \frac{\nu }{c}\mathbf{b}_k \cdot \rhat \right)d\Omega \big{|}^2}.
+\end{equation}
+Although we defer a full discussion of data analysis to Section \ref{sec:MathForm}, we can understand the essential features of this estimator as a generalization of Equation \eqref{eq:singleBlSillyEst}. First, this estimator does not require the flat-sky approximation. In addition, it incorporates a signal-to-noise weighting of measurements from different baselines. To see this, note that the term in the numerator enclosed by the square brackets is precisely the visibility response of a baseline to a monopole sky of unit amplitude. Baselines with a greater response are given greater weight as visibilities from different baselines are summed together, before normalizing the final result. If the array consists of a single baseline, the summations in both the numerator and denominator disappear, and the estimator reduces to Equation \eqref{eq:singleBlSillyEst} once the flat-sky approximation is invoked.
+
+Following an initial estimate of the sky spectrum, we further suppress foregrounds by fitting a polynomial to the logarithm of the spectrum. Subtracting off the smooth polynomial fit, one obtains a residual spectrum
+\begin{equation}
+T_\textrm{res} (\nu) = \widehat{T}_0(\nu) -  \exp \left[ \sum_{n=0}^{N} a_n p_n( \log \nu) \right],
+\end{equation}
+where $p_n$ denotes the $n$th Legendre polynomial, with a corresponding expansion coefficient $a_n$ obtained from fitting $\log \widehat{T}_0$ up to order $N$. The set of polynomials that one fits to is arbitrary, and our choice of Legendre polynomials is simply one of convenience.
+
+In Figure \ref{fig:unsub_T0_beamSize} we show simulations of an interferometric recovery of the global signal, $\widehat{T}_0 (\nu)$, averaged over $10,000$ random realizations of the simulated foregrounds. Because our simulations do not contain any cosmological signal, this is equal to $\Delta T_0$, the expected foreground bias. Each curve shows the result for a $12\times12$ square grid of tightly packed antennas with varying primary beam widths (and therefore varying baseline lengths). As expected, arrays with smaller beams/longer baselines exhibit a lower foreground bias, since our observations are centered around the NGP, so wider beams pick up more foregrounds from lower galactic latitudes, where they are typically brighter.
+
+Figures \ref{fig:subPoly6_T0_beamSize} and \ref{fig:subPoly9_T0_beamSize} show the foreground residuals that remain after the subtraction of $6$th and $9$th order log-space polynomials, respectively. One immediately sees that whereas the narrowest beams/longest baselines gave the dimmest \emph{initial} pre-subtraction spectra, the post-subtraction residuals are minimized for intermediate-sized beams. This is precisely the trade-off that we qualitatively alluded to above: the long baselines that inevitably come with narrow beams cause low-level chromatic ripples in the data that are not easily removed by smooth low-order polynomials, while the broad beams that come with short baselines incorporate brighter lower-latitude foregrounds. Further evidence can be seen by comparing Figures \ref{fig:subPoly6_T0_beamSize} and \ref{fig:subPoly9_T0_beamSize}. One sees that higher-order polynomial fits allows further suppression of the chromatic residuals introduced by long baselines, but only results in slight decreases in residuals for the wide beam case, since the higher residuals for the latter are the result of an overall increase in foreground amplitude, which affects all polynomial orders.
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=0.50\textwidth]{figures/unsub_T0_beamSize.pdf}
+	\caption{\acl{Do this}}
+	\label{fig:unsub_T0_beamSize}
+\end{figure}
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=0.50\textwidth]{figures/subPoly6_T0_beamSize.pdf}
+	\caption{\acl{Do this}}
+	\label{fig:subPoly6_T0_beamSize}
+\end{figure}
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=0.50\textwidth]{figures/subPoly9_T0_beamSize.pdf}
+	\caption{Same as Figure \ref{fig:subPoly6_T0_beamSize}, but with a $9$th order spectral subtraction. \acl{Add more description}}
+	\label{fig:subPoly9_T0_beamSize}
+\end{figure}
+
+\acl{Add bl length to plots.}
+\acl{Probably want to put in a map of the galaxy somewhere}
+\acl{Need to mention somewhere that we're not including the zero mode}
+\acl{Insert equation if the non-flat-sky measurement equation hasn't already been written out by this point}xx
+\acl{Probably outline earlier the general paradigm we're thinking about}
+
+Yet another consideration in choosing baseline length is instrumental noise. As we have already alluded to, short baselines have greater sensitivity to the spatial monopole of the sky, and therefore have better signal-to-noise. Thus, if one were to add instrumental noise to the preceding discussion, the optimal baseline length would shift towards smaller values (with the primary beam correspondingly increasing in width). Picking a baseline length based on the foregrounds-only analysis of this subsection is therefore in principle sub-optimal. In practice, however, instrumental noise is a sub-dominant contribution to the error budgets of most $21\,\textrm{cm}$ global signal experiments, and the optimal baseline length will only be slightly shorter than the one advocated here. Moreover, since interferometers consist of many baselines, the collective signal-to-noise of an array can compensate for a lower signal-to-noise in any individual baseline, a point that we will explore in the following subsection.
+
+\subsection{How many elements?}
+
+Thus far, we have established that the ideal global signal interferometer is one comprised of elements with full-width-half-max primary beam widths of $\sim25^\circ$, packed as closely together as possible. However, we have yet to specify the number of elements. In this section we imagine a regular square grid of $N \times N$ antennas and ask what value of $N$ is required for an interferometer to perform as well as a single dipole in a measurement of the global signal.\acl{Should mention that we're not using the auto-correlation mode}
+
+As one adds more and more elements to a regular array (increasing $N$), the main effect is an increase in the number of short baselines, providing repeated measurements of the same visibilities that can be combined to average down instrumental noise. While it is true that adding more elements to an array also gives rise to some longer baselines (since the only way to add antenna elements to a closely packed array is to add them to the periphery), these baselines have minimal response to the global signal and only provide information regarding foregrounds. This information can in principle be used to help with foreground mitigation, but as we shall see when we discuss data analysis in Section \ref{sec:MathForm}, it is difficult to use this information without introducing chromatic signatures into the final global spectrum estimates. It is thus safer to severely downweight the influence of long baselines, minimizing their influence on the final result.
+
+With multiple copies of the same baselines, an interferometer can have just as high a signal-to-noise as single dipole experiment, even if each individual baseline is less sensitive to the global signal. To quantify precisely how many such copies are necessary, we will now compute the expected noise variance from our estimator $\widehat{T}_0 (\nu) $ of the global signal. Starting with Equation \eqref{eq:NormedSimpleEst}, we perturb the $j$th visibility $V(\mathbf{b}_j, \nu)$ by adding an additive noise contribution $n_j (\nu)$. Computing the variance $\boldsymbol \Sigma(\nu,\nu)$ of the final estimator then gives
+\begin{eqnarray}
+\boldsymbol \Sigma(\nu,\nu) &\equiv& \langle \widehat{T}_0 (\nu)^2 \rangle - \langle  \widehat{T}_0 (\nu) \rangle^2 \nonumber \\
+&=&  \frac{\sigma^2}{ \sum_k \big{|} \int  A(\rhat, \nu) \exp\left(i 2\pi \frac{\nu }{c}\mathbf{b}_k \cdot \rhat \right)d\Omega \big{|}^2},
+\end{eqnarray}
+where we have assumed that the instrumental noise has zero mean, so that $\langle n_j \rangle = 0$. We have additionally assumed that the noise is uncorrelated between baselines, and has a variance of $\sigma^2$, so that $\langle n_i n_j^* \rangle = \sigma^2 \delta_{ij}$. Making the approximation that the sensitivity of the array to the global signal is dominated by the shortest baseline $\mathbf{b}_\textrm{short}$ of which there are $N_\textrm{short}$ copies, the noise variance of an interferometer-estimated global signal reduces to
+\begin{equation}
+\boldsymbol \Sigma(\nu,\nu) \approx \frac{\sigma^2}{ N_\textrm{short} \big{|} \int  A(\rhat, \nu) \exp\left(i 2\pi \frac{\nu }{c}\mathbf{b}_\textrm{short} \cdot \rhat \right)d\Omega \big{|}^2}.
+\end{equation}
+On the other hand, for a single dipole experiment we have only a single baseline of length zero, so the noise variance is
+\begin{equation}
+\boldsymbol \Sigma(\nu,\nu) = \frac{\sigma^2}{\big{|} \int  A(\rhat, \nu) d\Omega \big{|}^2}.
+\end{equation}
+Equating these two expression then allows one to solve for the number of short baselines $N_\textrm{short}$ that are needed for an interferometer to have the same thermal noise sensitivity as a single dipole experiment:
+\begin{equation}
+N_\textrm{short} \approx  \frac{\big{|} \int  A(\rhat, \nu) d\Omega \big{|}^2}{  \big{|} \int  A(\rhat, \nu) \exp\left(i 2\pi \frac{\nu }{c}\mathbf{b}_\textrm{short} \cdot \rhat \right)d\Omega \big{|}^2}.
+\end{equation}
+To get a rough sense for the magnitude of $N_\textrm{short}$, suppose we make the flat-sky approximation. This gives
+\begin{equation}
+N_\textrm{short} \approx \frac{\big{|} \widetilde{A}(0)\big{|}^2}{\big{|} \widetilde{A}(\nu \mathbf{b}_\textrm{short} / c)\big{|}^2}.
+\end{equation}
+For Gaussian beams, we obtain
+\begin{equation}
+N_\textrm{short} \approx \exp \left( 4 \pi^2 \theta_b^2 \frac{b_\textrm{short}^2}{\lambda^2} \right).
+\end{equation}
+Now, if one assumes a closely packed array, then $b_\textrm{short} \lambda \sim (2\pi \theta_0)^{-1}$. Inserting this into our expression gives $N_\textrm{short} \sim e$. For an $N \times N$ square grid of antennas, there are $N_\textrm{short} = 2(N-1)^2$ shortest baselines formed by adjacent antenna pairs (half of which are in one direction, while the other half are perpendicular) \acl{Phrase this better}. Solving for $N$ then gives $1 + \sqrt{e/2} \approx 2.2$, and therefore even a small array (say, $3\times 3$ or $4\times 4$) will allow an interferometric measurement of the global signal to possess the same thermal noise sensitivity as a signal dipole experiment. \acl{Comment on generalizing this, as well as on how redundancy is not a requirement}
+
+\subsection{Balancing physical constraints with information extraction}
+\acl{This is going to be moved to the next section}
 Following the baseline optimization of the previous section, one could in principle substitute our expression for $b_\textrm{opt}$ back into Equation \eqref{eq:DeviationPowGauss} to yield an equation whose only free parameter is the primary beam size $\theta_0$.  Minimizing this equation by varying the beam size then suggests that the beam ought to be made as small as possible.  While this is formally correct for the single baseline case, we will now show that the situation changes somewhat when multiple baselines are involved.
 
 To see why this is so, note that if the beam width $\theta_0$ were made to be small, our earlier assumption that $\widetilde{A}$ is compact no longer applies.  Equation \eqref{eq:PerturbedEst} then implies that our estimator $\widetilde{T}_0$  for the global signal $T_0$ accrues signal from a wide range of modes on the $uv$ plane, particularly since a broad $\widetilde{A}$ allows one the luxury of going to long baselines without sacrificing too much sensitivity to the global signal.\footnote{Alternatively, one can point to Equation \eqref{eq:b_opt} to see that a small $\theta_0$ dictates a long $b_\textrm{opt}$.  However, Equation \eqref{eq:b_opt} must be interpreted with caution in this regime, since its derivation was predicated on a narrow-beam assumption that no longer applies.} In other words, while a long baseline formed from narrow-beam antennas contains much information from the monopole signal, such information is irretrievably mixed in with other spatial modes.
@@ -211,63 +329,143 @@ In summary, the back-of-the-envelope calculations presented in this section sugg
 \item The error statistics that come for free.
 \item Quantification of leakage from other spherical harmonics.
 \end{itemize}
+\acl{Diagonal normalization is actually minimum-variance solution}
 
-%\acl{I'd like to say a little earlier that we're trying to get the first component of $\mathbf{x}$.  I'd also like to state in this section that we're envisioning doing this frequency-by-frequency first.  In other words, Equation 1 applies at a particular frequency.  It didn't have to be like this.  We could've expanded the dimensions of equation 1 to include all frequencies in a gigantic linear system of equations.  We're doing things freq-by-freq in order to be very conservative, since we don't want to make too many assumptions about the spectrum when the thing we're trying to measure is a spectrum.}
-In order to obtain a global signal measurement from visibilities, it is necessary to invert the linear equation 
+In this section, we lay down a rigorous framework for the extraction of a global signal from interferometric measurements. Inspired by the near-separable models of \citet{Liu_Switzer_2014}, our proposed extraction method will be a two-step process. First, the data are analyzed frequency-by-frequency, producing an estimate of the spatial monopole at every frequency channel. This step includes an initial foreground mitigation process using angular foreground signatures. Following the per-frequency analysis, the data are combined into a single global signal spectra, where take advantage of the long frequency coherence length of foregrounds to perform a final foreground subtraction.
+
+\subsection{Extracting the Spatial Monopole from Visibilities}
+
+We begin with a more general version of Equation \eqref{eq:Vb}, our measurement equation. Discarding the flat-sky approximation, we have
+\begin{equation}
+V(\mathbf{b}) = \int  T(\mathbf{\hat{r}}) A(\mathbf{\hat{r}}) \exp \left( -i 2 \pi \frac{\nu}{c} \mathbf{b} \cdot \mathbf{\hat{r}} \right) d\Omega,
+\end{equation}
+where $\mathbf{\hat{r}}$ is a unit vector that specifies locations on the sky. Expressing the sky in terms of spherical harmonics gives
+\begin{equation}
+\label{eq:VbSphHarm}
+V(\mathbf{b}) = \sum_{\ell m} \left(  \int  Y_{\ell m} (\mathbf{\hat{r}}) A(\mathbf{\hat{r}}) e^{ -i 2 \pi \frac{\nu}{c} \mathbf{b} \cdot \mathbf{\hat{r}}} d\Omega \right) a_{\ell m}.
+\end{equation}
+Since this equation is linear, we may write it as a matrix equation of the form
 \begin{equation}
 \y = \Q \mathbf{x} + \mathbf{n}
 \label{eqn:yQxn}
 \end{equation}
-where $\y$ is a vector of length $\Nbl$ containing the visibilities measured at different baselines, $\mathbf{n}$ is the contribution of noise from both foregrounds and systematics, and $\mathbf{x}$ is a projection of the true sky onto the spherical harmonics $Y_{\ell m}(\theta,\phi)$. As such, $\mathbf{x}$ has length $(\ell_{\textrm{max}}+1)^2$, where $\ell_{\textrm{max}}$ is the largest $\ell$ value used in the model of the true sky. The global signal corresponds only to the first component of $\mathbf{x}$, where $\ell,m=0,0$. However, since the sky is composed of the overlay of many higher-order structures, it is \mep{advisable? necessary?} to also fit higher $\ell$'s and $m$'s. 
-
-The matrix $\Q$ is the beam response of an antenna array at different baselines (rows) and different spherical harmonics (columns). $\Q$ is determined by 
+where $\y$ is a vector of length $\Nbl$ containing the visibilities measured at different baselines $V(\mathbf{b})$, and we have added a noise contribution $\mathbf{n}$. This noise contribution can be thought of as being comprised of instrumental noise and a ``random" component of unmodeled foregrounds. The matrix $\Q$ is the beam response of an antenna array at different baselines (rows) and different spherical harmonics (columns). Comparing Equations \eqref{eq:VbSphHarm} and \eqref{eqn:yQxn}, we see that the explicit form of $\Q$ is given by 
 \begin{equation}
-\textrm{Q}_{j,\ell m} = \int d\Omega A(\boldsymbol \theta) Y_{\ell m}(\boldsymbol \theta) e^{-2\pi i \frac{\mathbf{b_\textit{j}}}{\lambda} \cdot \boldsymbol \theta}
+\textrm{Q}_{j,\ell m} = \int d\Omega A(\mathbf{\hat{r}}) Y_{\ell m}(\mathbf{\hat{r}}) e^{-2\pi i \frac{\mathbf{b_\textit{j}}}{\lambda} \cdot \mathbf{\hat{r}}}
 \label{eqn:Qdef}
 \end{equation}
-where $\boldsymbol \theta$ is the angular position on the sky, $A$ is the primary beam for the antennas, $\mathbf{b_{\textit{j}}}$ is the $j$th baseline, and $\lambda$ is the wavelength of observation. Note that in the formulation of Eqs. \eqref{eqn:yQxn} and \eqref{eqn:Qdef} we assumed that all calculations would be done at a specific frequency. This is not necessary, as we could have expanded the dimensions of Eq. \eqref{eqn:yQxn} to include all of the frequencies measured in the experiment. However, we chose to do our calculations for each frequency independently in order to remain conservative in our assumptions about the spectrum.
+where $\boldsymbol \theta$ is the angular position on the sky, $A$ is the primary beam for the antennas, $\mathbf{b_{\textit{j}}}$ is the $j$th baseline, and $\lambda$ is the wavelength of observation. The sky is represented by $\mathbf{x}$, which is a vector containing all the spherical harmonic coefficients $a_{\ell m}$. As such, it has length $(\ell_{\textrm{max}}+1)^2$, where $\ell_{\textrm{max}}$ is the largest $\ell$ value used in the model of the true sky. The global signal that we seek is proportional\footnote{Throughout this paper, we adopt a spherical harmonic normalization convention where $Y_{00} (\mathbf{\hat{r}}) = 1/ \sqrt{4\pi}$. A pure monopole $T_0$ then has $a_{00} = \int Y_{00} T_0 d\Omega = \sqrt{4\pi} T_0$, so to recover an estimate of $T_0$ from an estimate of $a_{00}$, one must divide by $\sqrt{4 \pi}$. \acl{Decide if we want to just be a bunch of rebels and define our normalization convention to include the $\sqrt{4\pi}$.}} to the first component of $\mathbf{x}$, i.e., $a_{00}$. Ultimately, then, we only need to form an estimator $\hat{a}_{00}$ of this first component. However, it is crucial to bear in mind that the true $\mathbf{x}$ contains foregrounds with significant power in higher $(\ell, m)$ modes, and that this power may leak into our estimate $\hat{a}_{00}$ of $a_{00}$. The formalism that we present below will provide exactly the right machinery for quantifying such leakage.
+%
+%The matrix $\Q$ is the beam response of an antenna array at different baselines (rows) and different spherical harmonics (columns). $\Q$ is determined by 
+%\begin{equation}
+%\textrm{Q}_{j,\ell m} = \int d\Omega A(\boldsymbol \theta) Y_{\ell m}(\boldsymbol \theta) e^{-2\pi i \frac{\mathbf{b_\textit{j}}}{\lambda} \cdot \boldsymbol \theta}
+%\label{eqn:Qdef}
+%\end{equation}
+%where $\boldsymbol \theta$ is the angular position on the sky, $A$ is the primary beam for the antennas, $\mathbf{b_{\textit{j}}}$ is the $j$th baseline, and $\lambda$ is the wavelength of observation. Note that in the formulation of Eqs. \eqref{eqn:yQxn} and \eqref{eqn:Qdef} we assumed that all calculations would be done at a specific frequency. This is not necessary, as we could have expanded the dimensions of Equation \eqref{eqn:yQxn} to include all of the frequencies measured in the experiment. However, we chose to do our calculations for each frequency independently in order to remain conservative in our assumptions about the spectrum.
 
-Since $\Q$ is not in general invertible, we cannot solve Eq. \eqref{eqn:yQxn} for $\mathbf{x}$ directly and instead can only recover an estimator for $\mathbf{x}$. We can define a general estimator of the form 
+Since $\Q$ is not in general invertible (or even a square matrix), we cannot solve Equation \eqref{eqn:yQxn} for $\mathbf{x}$ directly and instead can only recover an estimator for $\mathbf{x}$. We consider an estimator of the form 
 \begin{equation}
 \mathbf{\hat x} = \M \Q^\dagger \N^{-1} \y
 \label{eqn:xhat}
 \end{equation}
-where $\N$ is the total noise covariance matrix and M is some matrix chosen by the data analyst. One useful choice for $\M$ is 
+where $\N$ is the total noise covariance matrix, given by $\mathbf{N} = \langle \mathbf{n} \mathbf{n}^\dagger \rangle$, and $\M$ is some invertible matrix chosen by the data analyst. For example, one might pick
 \begin{equation}
-\M = [\Q^\dagger \N^{-1} \Q]^{-1}
+\M = [\Q^\dagger \N^{-1} \Q]^{-1}.
 \label{eqn:M}
 \end{equation}
-which is obtained through a least-squares derivation that minimizes $\chi^2 \equiv (\y-\Q \mathbf{\hat x})^\dagger \N^{-1} (\y-\Q \mathbf{\hat x})$. Note that for this choice of $\M$, the ensemble average of $\mathbf{\hat x}$ is $\mathbf{x}$.
-Using this fact, we can directly find the covariance of $\mathbf{\hat x}$ to be 
+Such a choice produces an estimator that minimizes $\chi^2 \equiv (\y-\Q \mathbf{\hat x})^\dagger \N^{-1} (\y-\Q \mathbf{\hat x})$. The final estimator has the desirable property that its ensemble average $\langle \mathbf{\hat x} \rangle$ satisfies the condition $\langle \mathbf{\hat x} \rangle = \mathbf{x}$. This means that on average, the estimator for a particular spherical harmonic coefficient $\hat{a}_{\ell m}$ is equal to the true coefficient $\hat{a}_{\ell m}$, and there is no leakage between different spherical harmonic modes.
+
+Despite the attractive properties that result from picking $\M = [\Q^\dagger \N^{-1} \Q]^{-1}$, it is often the case that it is impossible to do so, for the combination $\Q^\dagger \N^{-1} \Q$ may not be invertible. Essentially, since the inversion results in $\langle \mathbf{\hat x} \rangle = \mathbf{x}$, any time our observations do not allow different $\hat{a}_{\ell m}$ to be perfectly disentangled from each other, $\Q^\dagger \N^{-1} \Q$ will be uninvertible. For example, if only part of the sky is surveyed, the best that one can do is to measure linear combinations of different $\hat{a}_{\ell m}$s. This will be the case for the measurements that we consider in this paper, and for $\mathbf{M}$ we pick a diagonal matrix such that
 \begin{equation}
-\textrm{Cov}(\mathbf{\hat x}) = [\Q^\dagger \N^{-1} \Q]^{-1}
-\label{eqn:Covxhat}
+\label{eq:diagM}
+\M_{ij} = \frac{\delta_{ij}}{(\Q^\dagger \N^{-1} \Q)_{ii}}.
 \end{equation}
-as shown in \citet{Tegmark_CMB_maps_wli}. Therefore, using equation (\ref{eqn:M}) for our statistical analysis allows us to analytically find the error statistics if the noise covariance matrix for the foregrounds and systematics is known. However, since galactic foreground models are not well constrained, it is not safe to assume we know $\N_{\textrm{fg}}$. Consequently, Monte Carlo simulations are still necessary to determine the error bars on measurements analyzed using this method. Note, however, that although we do not know the exact noise covariance $\N$, there is nothing wrong with choosing Eq. \eqref{eqn:M} for our data analysis, as long as we do not claim that our error bars are constrained by equation (\ref{eqn:Covxhat}). %-- it just may not be optimal.
-
-Note that two inverses must be taken in order to compute $\M$. In general, $\Q^\dagger \N^{-1} \Q$ will not be invertible, requiring us to approximate the inverse with a pseudo-inverse. We used a pseudo-inverse method that raises the value of the small eigenmodes, inverts, and then projects out those small eigenmodes, as laid out in the appendix of \citet{Tegmark_CMB_spectra_wli}. 
-
-Since $\Q$ is not diagonal, higher spherical harmonic modes will leak into our measurement $\y$. If it were possible to do the inverses in equation \ref{eqn:M}, then these leakages could be dampened down by taking repeated observations to mimic an ensemble average. This is because 
+With this choice of $\M$, each $a_{\ell m}$ estimate (each component of $\hat{\mathbf{x}}$) is a linear combination of the true $a_{\ell m}$s. Taking the ensemble average of Equation \eqref{eqn:xhat} and inserting Equation \eqref{eqn:yQxn} yields
+%
+%Note that for this choice of $\M$, the ensemble average of $\mathbf{\hat x}$ is $\mathbf{x}$.
+%Using this fact, we can directly find the covariance of $\mathbf{\hat x}$ to be 
+%\begin{equation}
+%\textrm{Cov}(\mathbf{\hat x}) = [\Q^\dagger \N^{-1} \Q]^{-1}
+%\label{eqn:Covxhat}
+%\end{equation}
+%as shown in \citet{Tegmark_CMB_maps_wli}. Therefore, using equation (\ref{eqn:M}) for our statistical analysis allows us to analytically find the error statistics if the noise covariance matrix for the foregrounds and systematics is known. However, since galactic foreground models are not well constrained, it is not safe to assume we know $\N_{\textrm{fg}}$. Consequently, Monte Carlo simulations are still necessary to determine the error bars on measurements analyzed using this method. Note, however, that although we do not know the exact noise covariance $\N$, there is nothing wrong with choosing Equation \eqref{eqn:M} for our data analysis, as long as we do not claim that our error bars are constrained by equation (\ref{eqn:Covxhat}). %-- it just may not be optimal.
+%
+%Note that two inverses must be taken in order to compute $\M$. In general, $\Q^\dagger \N^{-1} \Q$ will not be invertible, requiring us to approximate the inverse with a pseudo-inverse. We used a pseudo-inverse method that raises the value of the small eigenmodes, inverts, and then projects out those small eigenmodes, as laid out in the appendix of \citet{Tegmark_CMB_spectra_wli}. 
+%
+%Since $\Q$ is not diagonal, higher spherical harmonic modes will leak into our measurement $\y$. If it were possible to do the inverses in equation \ref{eqn:M}, then these leakages could be dampened down by taking repeated observations to mimic an ensemble average. This is because 
 \begin{equation}
 \langle \xhat \rangle = \M \Q^\dagger \N^{-1} \Q \x
 \end{equation}
-which is equal to $\x$ if $\M$ is the true inverse of $\Q^\dagger \N^{-1} \Q$. In order to quantify the relative amount of leakage from the different modes, it is convenient to define a window function matrix $\W$ as 
+which is equal to $\x$ if $\M$ is the true inverse of $\Q^\dagger \N^{-1} \Q$. Defining a window function matrix $\W$ as 
 \begin{equation}
-\W = \M \Q^\dagger \N^{-1} \Q. 
+\W = \M \Q^\dagger \N^{-1} \Q,
+\label{eq:Wform}
 \end{equation}
-With this definition, the elements of the first row of the window function matrix quantifies the ratios between the contributions from the different modes. A good experimental design would result in a very high ratio between $W_{0,00}$ and all of the other $W_{0,\ell m}$.
+we see that $\langle \xhat \rangle  = \W \mathbf{x}$, so each row of $\W$ gives the linear combination of spherical harmonics actually probed by our estimator $\hat{a}_{\ell m}$. Put another way, $\W$ quantifies the amount of leakage between modes, and it depends on both our instrument (via $\Q$) and our data analysis method [via Equations \eqref{eqn:xhat} and \eqref{eq:diagM}]. Of particular interest will be the first row of $\W$, which will tell us what combination of spherical harmonics are actually being measured when we attempt to constrain the monopole $a_{00}$ mode.
+
+The choice of $\M$ used here has several attractive properties. In the Appendix we prove that our choice minimizes the variance (and therefore the error bars) in $\mathbf{\hat{x}}$. Additionally, Equation \eqref{eq:diagM} has the property that diagonal elements of $\W$ always equal unity. Focusing on the first row, then, we have $\W_{11} =1$, which implies that the amplitude of a pure monopole sky is preserved by our measurement and data analysis procedures. In other words, there is by construction never any signal loss, even if the $\N$ matrix is mis-modeled and does not perfectly represent the true noise covariance of the measurements.
+
+\acl{Talk about normalization as well as the Fisher matrix interpretation}
+%
+%In order to quantify the relative amount of leakage from the different modes, it is convenient to define
+%
+%With this definition, the elements of the first row of the window function matrix quantifies the ratios between the contributions from the different modes. A good experimental design would result in a very high ratio between $W_{0,00}$ and all of the other $W_{0,\ell m}$.
+
+\subsection{Single Dipole Limit}
+
+Having established a general formalism and a method for extracting the global signal from interferometric measurements, let us examine the single-dipole limit as an illustrative example. This should be considered representative of ``traditional" experiments such as EDGES \acl{Maybe we should see if there is a better, more precise descriptor than ``traditional".}. With a single dipole, the matrix $\mathbf{Q}$ reduces to a single row vector consisting of Equation \eqref{eqn:Qdef} evaluated at baseline length $b_j=0$. The measurement vector $\mathbf{y}$ becomes a single measurement $y$, given by the primary beam integrated over the sky:
+\begin{equation}
+y = \int T(\mathbf{\hat{r}}) A(\mathbf{\hat{r}}) d\Omega.
+\end{equation}
+Equations \eqref{eqn:xhat} and \eqref{eq:diagM} then reduce to
+\begin{equation}
+\mathbf{\hat{x}}_{\ell m} = \frac{\int d\Omega Y_{\ell m} (\mathbf{\hat{r}}) A(\mathbf{\hat{r}})}{\left[ \int d\Omega A(\mathbf{\hat{r}}) \right]^2} y.
+\end{equation}
+For the global signal (i.e., spatial monopole), we are interested in the first component of this $\mathbf{\hat{x}}$ vector. Isolating this and dividing both sides $\sqrt{4\pi}$ to convert from our $a_{00}$ to the all-sky average, we obtain
+\begin{equation}
+\widehat{T}_0 = \frac{y}{ \int d\Omega A(\mathbf{\hat{r}}) },
+\end{equation}
+which is the estimator that one would have guessed from simple considerations---the measurement $y$ is just a weighted average of the sky, and the denominator normalizes the weights. Note that we did not have to specify a form for the noise covariance $\mathbf{N}$. With a single dipole experiment, our measurement consists of a single number, so $\mathbf{N}$ becomes a single scalar and the factor of $\mathbf{N}^{-1}$ in Equation \eqref{eqn:xhat} is always canceled out by the one appearing in Equation \eqref{eq:diagM}. This is a limitation of single dipole experiments. With the instrument having performed an irreversible spatial averaging over the sky, we lose the ability to judiciously downweight low signal-to-noise and/or foreground systematics-dominated data.
+
+Explicitly evaluating Equation \eqref{eq:Wform} for our single dipole case, the window function for the sky monopole (i.e., the first row of $\W$) is given by
+\begin{equation}
+W_{0}(\ell,m) = \frac{\int d\Omega A(\mathbf{\hat{r}}) Y_{\ell m} (\mathbf{\hat{r}})}{\int d\Omega A(\mathbf{\hat{r}}) / \sqrt{4 \pi}}.
+\label{eq:singleDipoleW0}
+\end{equation}
+At first sight, this does not appear to be what we desire as our window function. Naively, one might have hoped for $W_0$ to be zero for all values of $\ell$ and $m$ except for $(\ell, m) = (0,0)$, so that our estimator for the sky monopole does not contain any leaked power from other spherical harmonics. In this case, however, the leakage is rather innocuous, and is simply the result of our having only surveyed a small portion of the sky (the part that lies within the primary beam). Confirming this interpretation is the form of the numerator in Equation \eqref{eq:singleDipoleW0}, which is the spherical harmonic decomposition of the primary beam.
+
+Since the foreground sky is not translationally invariant (with emission much stronger around the Galactic plane than in the polar regions), it is advantageous to concentrate our survey in cooler parts of the sky. The non-zero width of the window function given by Equation \eqref{eq:singleDipoleW0} is thus a desirable feature. Another way to see this is to imagine having conducted a survey of a small patch of sky around a galactic pole, where foreground emission is weak. \acl{To what extent should we have discussed foregrounds by this point?} This would be a better estimate of the \emph{cosmological} monopole signal than the estimate we would obtain if we were somehow able to force the window function to be zero away from $(\ell,m) = (0,0)$. In the latter case we would be better estimating the monopole signal of total sky emission, but much of this would be due to the foreground contribution. The key point is that the foregrounds also have a monopole, and without an \emph{a priori} way to distinguish between the monopole of the cosmological and the monopole of the foregrounds, making a ``clean" measurement of the sky's monopole simply adds stronger foregrounds.
+
+\subsection{Multi-baseline case}
+
+We now turn to the multi-baseline case. With our measurement $\mathbf{y}$ now consisting of more than just a single number, there is the opportunity to weight our data in non-trivial ways, emphasizing certain portions (or certain modes) of the sky relative to others. Our model for the noise covariance will no longer cancel out when we form $\hat{\mathbf{x}}$. It will therefore be necessary to decide on a form for $\mathbf{N}$. The form that we pick will ideally match the true sky covariance, \acl{Need to go through the whole paper and emphasize that this isn't really a ``noise" covariance in the usual sense.} but if not, at least to yield an estimator $\hat{\mathbf{x}}$ that suits our needs.
+
+Consider first a simple case where the only source of variance is instrumental noise. Further assume that the noise is uncorrelated between different baselines, so that $\N \propto \mathbf{I}$. The window function matrix then simplifies to $\W \propto \M \Q^\dagger \Q$, with the key piece being $\Q^\dagger \Q$. Evaluating it explicitly, we obtain
+\begin{equation}
+\Q^\dagger \Q = \int d\Omega d\Omega^\prime A(\
+\end{equation}
+
+\acl{Make the point that because we have a single measurement, the noise covariance always drops out. We can't really do anything to weight}
+
+
+
+\acl{Should probably also include stuff about window function normalization}
+\acl{Also don't forget to mention how $\N$ is regularized}
 
 \mep{Figure time! Show the green/pink plots of 1st row of window function for different arrays.}
 \acl{I'm wondering if it might actually be good to display the window function plots in a way that's averaged over $m$, since for a given $\ell$ the $m$ value basically just changes the direction.  One could imagine something analogous to the angular power spectrum, which is often estimated by computing $\hat{C}_\ell = \frac{1}{2\ell + 1} \sum_{m=-\ell}^{\ell} |a_{\ell m}|^2$.  We could do an analogous sum.  On the other hand, the baseline vector breaks the symmetry and does pick out a direction.  So if we want to build that intuition, it could be useful to show the different $m$ values separately.}
 
 \begin{figure}[h]
 	\centering
-	\includegraphics[width=0.55\textwidth]{figures/W_matrix_filler.pdf}
+	\includegraphics[width=0.55\textwidth]{figures/oldFigures/W_matrix_filler.pdf}
 	\caption{\mep{Of course, this will have to be updated when the new data comes in. Probably to show several figures for different arrays?}\mep{Uh.... Weird stuff happens if I try to make the figure bigger. It's not wrapping the text and is trying to keep the figure in the column somehow?? Not sure what's up with the formatting style here.}\acl{Is this better? Or did you actually want to make this a figure that spans both columns? If so, change ``figure" to ``figure*" when you do \textbackslash begin.}}
 	\label{fig:WindowFunction}
 \end{figure}
 
 \acl{The tone of the writing is excellent, btw.}
+
+
+
 %
 %\section{Exploration of arrays}
 %\begin{itemize}
@@ -328,19 +526,19 @@ At the other extreme,
 \item Really great results! (Error bars and covariance on the recovered spectra).
 \end{itemize}
 
-Recall from Section \ref{sec:MathForm} that using the least-squares method for recovering $\xhat$ allows us to analytically determine the error covariance of $\xhat$ via Eq. \eqref{eqn:Covxhat}. However, this formula for the covariance is only true if we exactly know the noise covariance matrix. Thus, since $\Nfg$ might not be properly modeled, we must still resort to Monte Carlo simulations to determine the error bars on our measurements. 
+Recall from Section \ref{sec:MathForm} that using the least-squares method for recovering $\xhat$ allows us to analytically determine the error covariance of $\xhat$ via Equation \eqref{eqn:Covxhat}. However, this formula for the covariance is only true if we exactly know the noise covariance matrix. Thus, since $\Nfg$ might not be properly modeled, we must still resort to Monte Carlo simulations to determine the error bars on our measurements. 
 
 Our Monte Carlo simulations generate many visibilities $V(\mathbf{b}_i)$ from randomly perturbed sky models. \mep{Is ``randomly perturbed'' an appropriate way to describe it?} The sky models are derived by taking the all-sky survey from \citet{Haslam_408MHz_map} and using the power-law model of the foreground spectrum used in \citet{Liu_21cm_Fg} to extrapolate a map at the desired frequency. For a pixel at $\boldsymbol \theta$, the brightness at a certain frequency $\nu$ is 
 \begin{equation}
 I(\boldsymbol \theta) = I_H(\boldsymbol \theta) \left ( \frac{\nu}{\nu_H} \right ) ^{-\alpha + \Delta \alpha}
 \end{equation}
-where $I_H$ is the sky map from \citet{Haslam_408MHz_map}, $\nu_H=408$MHz, $\alpha = 2.8$, and $\Delta \alpha$ is a perturbing index randomly generated with variance 0.1. From this model, we can generate a vector of visibilities for all of the different baselines in an array. This vector is $\y$ from Eq. \eqref{eqn:yQxn}. The visibilities are defined as 
+where $I_H$ is the sky map from \citet{Haslam_408MHz_map}, $\nu_H=408$MHz, $\alpha = 2.8$, and $\Delta \alpha$ is a perturbing index randomly generated with variance 0.1. From this model, we can generate a vector of visibilities for all of the different baselines in an array. This vector is $\y$ from Equation \eqref{eqn:yQxn}. The visibilities are defined as 
 \begin{equation}
 V(\mathbf{b}_i) = \int d \Omega A(\boldsymbol \theta) I(\boldsymbol \theta) e^{-2\pi i\frac{\nu}{c} \mathbf{b}_i \cdot \boldsymbol \theta}
 \end{equation}
 where $\boldsymbol \theta$ is the angular position on the sky, $A$ is the primary beam for the antennas, $\mathbf{b_{\textit{j}}}$ is the $j$th baseline, $\nu$ is the frequency of observation, and $I$ is the intensity \mep{What's the correct name for this?} of the sky model. 
 
-Once we have generated a $\y$ vector, we can use Eq. \eqref{eqn:xhat} to find the estimator for the global signal that our analysis would produce for that particular sky. The variance of a large set of estimators from many such sky models provides us with the error bars for an experiment measuring the global signal. \mep{I don't like the phrasing of this paragraph.} 
+Once we have generated a $\y$ vector, we can use Equation \eqref{eqn:xhat} to find the estimator for the global signal that our analysis would produce for that particular sky. The variance of a large set of estimators from many such sky models provides us with the error bars for an experiment measuring the global signal. \mep{I don't like the phrasing of this paragraph.} 
 
 \section{Fisher matrix results}
 \label{sec:Fisher}
@@ -379,20 +577,20 @@ where $n$ is the length of the parameter vector and $\boldsymbol \theta_{\textrm
 
 \begin{figure}[h]
 	\centering
-	\includegraphics[width=0.55\textwidth]{figures/contours_A_nu0.pdf}
+	\includegraphics[width=0.55\textwidth]{figures/oldFigures/contours_A_nu0.pdf}
 	\caption{\acl{Fill this in.  Probably also want to make this a horizontal stripe of constraints.}}
 	\label{fig:contours}
 \end{figure}
 
 \begin{figure}[h]
 	\centering
-	\includegraphics[width=0.55\textwidth]{figures/contours_A_sigma.pdf}
+	\includegraphics[width=0.55\textwidth]{figures/oldFigures/contours_A_sigma.pdf}
 	\caption{\acl{Fill this in}}
 \end{figure}
 
 \begin{figure}[h]
 	\centering
-	\includegraphics[width=0.55\textwidth]{figures/contours_nu0_sigma.pdf}
+	\includegraphics[width=0.55\textwidth]{figures/oldFigures/contours_nu0_sigma.pdf}
 	\caption{\acl{Fill this in}}
 \end{figure}
 
@@ -403,7 +601,13 @@ where $n$ is the length of the parameter vector and $\boldsymbol \theta_{\textrm
 \item This is a great way to do this measurement.  It will produce lots of great science! And eternal glory!
 \end{itemize}
 
+\appendix
+\section{Proof of minimum-variance property of global signal estimator}
+\label{minVarProof}
+
 \bibliographystyle{apj}
 \bibliography{globalSig}{}
+
+
 
 \end{document}
