@@ -290,39 +290,8 @@ N_\textrm{short} \approx \exp \left( 4 \pi^2 \theta_b^2 \frac{b_\textrm{short}^2
 \end{equation}
 Now, if one assumes a closely packed array, then $b_\textrm{short} \lambda \sim (2\pi \theta_0)^{-1}$. Inserting this into our expression gives $N_\textrm{short} \sim e$. For an $N \times N$ square grid of antennas, there are $N_\textrm{short} = 2(N-1)^2$ shortest baselines formed by adjacent antenna pairs (half of which are in one direction, while the other half are perpendicular) \acl{Phrase this better}. Solving for $N$ then gives $1 + \sqrt{e/2} \approx 2.2$, and therefore even a small array (say, $3\times 3$ or $4\times 4$) will allow an interferometric measurement of the global signal to possess the same thermal noise sensitivity as a signal dipole experiment. \acl{Comment on generalizing this, as well as on how redundancy is not a requirement}
 
-\subsection{Balancing physical constraints with information extraction}
-\acl{This is going to be moved to the next section}
-Following the baseline optimization of the previous section, one could in principle substitute our expression for $b_\textrm{opt}$ back into Equation \eqref{eq:DeviationPowGauss} to yield an equation whose only free parameter is the primary beam size $\theta_0$.  Minimizing this equation by varying the beam size then suggests that the beam ought to be made as small as possible.  While this is formally correct for the single baseline case, we will now show that the situation changes somewhat when multiple baselines are involved.
 
-To see why this is so, note that if the beam width $\theta_0$ were made to be small, our earlier assumption that $\widetilde{A}$ is compact no longer applies.  Equation \eqref{eq:PerturbedEst} then implies that our estimator $\widetilde{T}_0$  for the global signal $T_0$ accrues signal from a wide range of modes on the $uv$ plane, particularly since a broad $\widetilde{A}$ allows one the luxury of going to long baselines without sacrificing too much sensitivity to the global signal.\footnote{Alternatively, one can point to Equation \eqref{eq:b_opt} to see that a small $\theta_0$ dictates a long $b_\textrm{opt}$.  However, Equation \eqref{eq:b_opt} must be interpreted with caution in this regime, since its derivation was predicated on a narrow-beam assumption that no longer applies.} In other words, while a long baseline formed from narrow-beam antennas contains much information from the monopole signal, such information is irretrievably mixed in with other spatial modes.
-
-\mep{This intuition makes sense to me, but only because of previous discussions we've had where I've seen a picture of the grids in the uv plane with the different beam sizes mapped out. I doubt that I would have understood what was going on if I hadn't seen that picture. Will there be an image accompanying this discussion, or would others already familiar with the field not need one?}
-
-To separate out the monopole mode, it is necessary to incorporate information from multiple baselines, each of which measures a slightly different linear combination of the sky, such that when combined appropriately, the multi-baseline measurements give a clean measurement of the monopole.  To understand what conditions are necessary for such a clean extraction, imagine trying to estimate spherical harmonic expansion coefficients $a_{\ell m}$ of the sky from our measurements.  Clearly, if there are more spherical harmonic coefficients to estimate than we have constraints (i.e., measurements), it is mathematically impossible to construct estimators of the expansion coefficients that do not include leakages from other spherical harmonics.  Our previous single-baseline example was a special case of this, where our estimator of $T_0$ (which is proportional to $a_{00}$) included a bias term which involves contributions from higher $\ell$ and $m$ modes.  Ideally, an array ought to make many independent measurements per spherical harmonic mode to ensure a clean separation of modes.  Since $\ell \sim 2 \pi u$, different $\ell$ modes are separated by $\Delta \ell \sim 2 \pi \Delta u$.  Given that $\ell$ can only take on integer values, this means that having enough measurements is tantamount to requiring our baselines be separated from each other by less than $\Delta u = 1/ 2 \pi$ on the $uv$ plane.  As a concrete example, imagine a square grid of antennas with neighboring antennas separated by a distance $b_0$.  Baselines of this array will also form a square grid of points on the $uv$ plane with the $u$ and $v$ coordinates given by integer multiples of $\Delta u = b_0 / \lambda = b_0 \nu / c$.  We must therefore satisfy the condition
-\begin{equation}
-\label{eq:WantAll}
-b_0 \ll \frac{c}{2 \pi \nu_\textrm{max}},
-\end{equation}
-where we have evaluated our constraint at the maximum frequency $\nu_\textrm{max}$ we wish to probe, since that is where it is the most stringent.  On the other hand, as we have argued above, physical constraints on antennas size dictate a spacing satisfying
-\begin{equation}
-\label{eq:AntSize}
-b_0 \ge \frac{c}{2 \pi \theta_0 \nu_\textrm{min}},
-\end{equation}
-where this time the tightest constraint occurs at the lowest frequency $\nu_\textrm{min}$.
-
-The two constraints listed above make it difficult to probe a large frequency range with a single interferometer.  To see this, note that the upper limit on $b_0$ decreases with increasing $\nu_\textrm{max}$, while the lower limit increases with decreasing $\nu_\textrm{min}$.  With a wide enough frequency range, these two limits meet, and to avoid inconsistent constraints, we require
-\begin{equation}
-\theta_0 \ge \frac{\nu_\textrm{max} }{\nu_\textrm{min}}
-\end{equation}
-as a \emph{minimum} beam size.  Since this critical beam size depends on the ratio of $\nu_\textrm{max}$ to $\nu_\textrm{min}$, it is easier to satisfy our bounds at higher frequencies.
-
-In summary, the back-of-the-envelope calculations presented in this section suggest that the ideal array for probing the global signal is one with closely packed wide-field antennas.  In the following sections we will further develop this intuition using a more mathematically rigorous framework.  Note that while Equation \eqref{eq:AntSize} is a hard physical constraint imposed by our antennas, Equation \eqref{eq:WantAll} is necessary only if one is completely intolerant of any confusion between different spherical harmonic modes.  With a practical broadband array, such stringent standards may not always be achievable, and leakage of higher $\ell$ foreground modes into the $\ell = 0$ monopole must be quantified.  Fortunately, our mathematical framework will naturally incorporate the tools for doing so.
-
-\acl{Should probably comment on how the LOFAR paper has violated these conditions in a number of places.}
-
-\mep{The rest of this looked good! :)}
-
-\section{Mathematical formalism}
+\section{Data analysis choices}
 \label{sec:MathForm}
 \begin{itemize}
 \item How does one actually get from visibilities to a global signal measurement.
@@ -331,9 +300,11 @@ In summary, the back-of-the-envelope calculations presented in this section sugg
 \end{itemize}
 \acl{Diagonal normalization is actually minimum-variance solution}
 
-In this section, we lay down a rigorous framework for the extraction of a global signal from interferometric measurements. Inspired by the near-separable models of \citet{Liu_Switzer_2014}, our proposed extraction method will be a two-step process. First, the data are analyzed frequency-by-frequency, producing an estimate of the spatial monopole at every frequency channel. This step includes an initial foreground mitigation process using angular foreground signatures. Following the per-frequency analysis, the data are combined into a single global signal spectra, where take advantage of the long frequency coherence length of foregrounds to perform a final foreground subtraction.
+In the previous section, we examined the trade-offs associated with the design of an interferometer targeting the global $21\,\textrm{cm}$ signal. Qualitatively, we concluded that one ought to design an interferometer array with a modest number of antenna elements, packed as closely together as possible. Ideally, the antenna elements should possess primary beams that are neither too narrow nor too broad, with roughly a FWHM \acl{have we defined the acronym yet?} of $\sim 25^\circ$ \acl{Make sure we consistently quote the same rough number everywhere} for experiments targeting redshifts relevant to reionization.
 
-\subsection{Extracting the Spatial Monopole from Visibilities}
+In this section, we assume that an appropriate array has been constructed, and consider instead various trade-offs in data analysis. Inspired by the near-separable models of \citet{Liu_Switzer_2014}, our proposed analysis methods will usually involve a two-step process. First, the data are analyzed frequency-by-frequency, producing an estimate of the spatial monopole at every frequency channel. Following the per-frequency analysis, the data are combined into a single global signal spectra, where we take advantage of the long frequency-coherence length of foregrounds to perform a final foreground subtraction. In what follows, we will examine the pros and cons of various choices in the detailed implementation of each of these steps.
+
+\subsection{Step 1: Extracting the Spatial Monopole from Visibilities}
 
 We begin with a more general version of Equation \eqref{eq:Vb}, our measurement equation. Discarding the flat-sky approximation, we have
 \begin{equation}
@@ -349,7 +320,7 @@ Since this equation is linear, we may write it as a matrix equation of the form
 \y = \Q \mathbf{x} + \mathbf{n}
 \label{eqn:yQxn}
 \end{equation}
-where $\y$ is a vector of length $\Nbl$ containing the visibilities measured at different baselines $V(\mathbf{b})$, and we have added a noise contribution $\mathbf{n}$. This noise contribution can be thought of as being comprised of instrumental noise and a ``random" component of unmodeled foregrounds. The matrix $\Q$ is the beam response of an antenna array at different baselines (rows) and different spherical harmonics (columns). Comparing Equations \eqref{eq:VbSphHarm} and \eqref{eqn:yQxn}, we see that the explicit form of $\Q$ is given by 
+where $\y$ is a vector of length $\Nbl$ \acl{Make sure we define this quantity} containing the visibilities measured at different baselines $V(\mathbf{b})$, and we have added a noise contribution $\mathbf{n}$. This noise contribution can be thought of as being comprised of instrumental noise and a ``random" component of unmodeled foregrounds. The matrix $\Q$ is the beam response of an antenna array at different baselines (rows) and different spherical harmonics (columns). Comparing Equations \eqref{eq:VbSphHarm} and \eqref{eqn:yQxn}, we see that the explicit form of $\Q$ is given by 
 \begin{equation}
 \textrm{Q}_{j,\ell m} = \int d\Omega A(\mathbf{\hat{r}}) Y_{\ell m}(\mathbf{\hat{r}}) e^{-2\pi i \frac{\mathbf{b_\textit{j}}}{\lambda} \cdot \mathbf{\hat{r}}}
 \label{eqn:Qdef}
@@ -365,17 +336,66 @@ where $\boldsymbol \theta$ is the angular position on the sky, $A$ is the primar
 
 Since $\Q$ is not in general invertible (or even a square matrix), we cannot solve Equation \eqref{eqn:yQxn} for $\mathbf{x}$ directly and instead can only recover an estimator for $\mathbf{x}$. We consider an estimator of the form 
 \begin{equation}
-\mathbf{\hat x} = \M \Q^\dagger \N^{-1} \y
+\mathbf{\hat x} = \M \Q^\dagger \N^{-1} \y,
 \label{eqn:xhat}
 \end{equation}
-where $\N$ is the total noise covariance matrix, given by $\mathbf{N} = \langle \mathbf{n} \mathbf{n}^\dagger \rangle$, and $\M$ is some invertible matrix chosen by the data analyst. For example, one might pick
+where $\N$ and $\M$ are both matrices that can be chosen by the data analyst. The $\N$ matrix measures $N_\textrm{bl} \times N_\textrm{bl}$, and its role is to encode (via $\N^{-1}$) how the data analyst might wish to weigh the different visibilities in forming estimates of the various spherical harmonics. Note that this weighting is in addition to the weighting that is naturally provided by $\Q^\dagger$, which (for a given spherical harmonic mode) upweights baselines if their visibilities are sensitive to that mode and downweights them otherwise. The matrix $\M$ measures $(\ell_\textrm{max} +1)^2 \times (\ell_\textrm{max} +1)^2$, and therefore operates on a set of estimated spherical harmonic modes; its role is to normalize our estimates of the different modes, and to possibly disentangle them from each other if there is leaked power between the modes. Our choices for $\M$ and $\N$ will determine the statistical properties of our final global signal estimates.
+
+\subsection{A possible choice of $\M$}
+
+As a first guess, picking
 \begin{equation}
 \M = [\Q^\dagger \N^{-1} \Q]^{-1}.
 \label{eqn:M}
 \end{equation}
-Such a choice produces an estimator that minimizes $\chi^2 \equiv (\y-\Q \mathbf{\hat x})^\dagger \N^{-1} (\y-\Q \mathbf{\hat x})$. The final estimator has the desirable property that its ensemble average $\langle \mathbf{\hat x} \rangle$ satisfies the condition $\langle \mathbf{\hat x} \rangle = \mathbf{x}$. This means that on average, the estimator for a particular spherical harmonic coefficient $\hat{a}_{\ell m}$ is equal to the true coefficient $\hat{a}_{\ell m}$, and there is no leakage between different spherical harmonic modes.
+might be considered an attractive choice. This form for $\M$ produces an estimator that minimizes $\chi^2 \equiv (\y-\Q \mathbf{\hat x})^\dagger \N^{-1} (\y-\Q \mathbf{\hat x})$. The final estimator has the desirable property that its ensemble average $\langle \mathbf{\hat x} \rangle$ satisfies the condition $\langle \mathbf{\hat x} \rangle = \mathbf{x}$. This means that on average, the estimator for a particular spherical harmonic coefficient $\hat{a}_{\ell m}$ is equal to the true coefficient $\hat{a}_{\ell m}$, and there is no leakage between different spherical harmonic modes. An estimate of the monopole is thus truly an estimate of the monopole only, with no contributions from other modes.
 
-Despite the attractive properties that result from picking $\M = [\Q^\dagger \N^{-1} \Q]^{-1}$, it is often the case that it is impossible to do so, for the combination $\Q^\dagger \N^{-1} \Q$ may not be invertible. Essentially, since the inversion results in $\langle \mathbf{\hat x} \rangle = \mathbf{x}$, any time our observations do not allow different $\hat{a}_{\ell m}$ to be perfectly disentangled from each other, $\Q^\dagger \N^{-1} \Q$ will be uninvertible. For example, if only part of the sky is surveyed, the best that one can do is to measure linear combinations of different $\hat{a}_{\ell m}$s. This will be the case for the measurements that we consider in this paper, and for $\mathbf{M}$ we pick a diagonal matrix such that
+However, the $\M$ matrix defined by Equation \eqref{eqn:M} makes an assumption that may not be justified---it assumes that the combination $[\Q^\dagger \N^{-1} \Q]$ is invertible. Essentially, since the inversion results in $\langle \mathbf{\hat x} \rangle = \mathbf{x}$, we can reverse our line of reasoning to see that any time our observations do not allow different $\hat{a}_{\ell m}$ to be perfectly disentangled from each other, $\Q^\dagger \N^{-1} \Q$ will be uninvertible. For example, if only part of the sky is surveyed, the best that one can do is to measure linear combinations of different $\hat{a}_{\ell m}$s. Even if the full sky is surveyed (for example by observing the sky with a hypothetical wide-field instrument located at the equator), it is typically difficult to design a broadband instrument that allows for a full inversion without sacrificing the design principles of the previous section, as we will now show. \acl{This sentence is way too long}
+
+%\subsection{Balancing physical constraints with information extraction}
+%\acl{This is going to be moved to the next section}
+%Following the baseline optimization of the previous section, one could in principle substitute our expression for $b_\textrm{opt}$ back into Equation \eqref{eq:DeviationPowGauss} to yield an equation whose only free parameter is the primary beam size $\theta_0$.  Minimizing this equation by varying the beam size then suggests that the beam ought to be made as small as possible.  While this is formally correct for the single baseline case, we will now show that the situation changes somewhat when multiple baselines are involved.
+%
+%To see why this is so, note that if the beam width $\theta_0$ were made to be small, our earlier assumption that $\widetilde{A}$ is compact no longer applies.  Equation \eqref{eq:PerturbedEst} then implies that our estimator $\widetilde{T}_0$  for the global signal $T_0$ accrues signal from a wide range of modes on the $uv$ plane, particularly since a broad $\widetilde{A}$ allows one the luxury of going to long baselines without sacrificing too much sensitivity to the global signal.\footnote{Alternatively, one can point to Equation \eqref{eq:b_opt} to see that a small $\theta_0$ dictates a long $b_\textrm{opt}$.  However, Equation \eqref{eq:b_opt} must be interpreted with caution in this regime, since its derivation was predicated on a narrow-beam assumption that no longer applies.} In other words, while a long baseline formed from narrow-beam antennas contains much information from the monopole signal, such information is irretrievably mixed in with other spatial modes.
+%
+%\mep{This intuition makes sense to me, but only because of previous discussions we've had where I've seen a picture of the grids in the uv plane with the different beam sizes mapped out. I doubt that I would have understood what was going on if I hadn't seen that picture. Will there be an image accompanying this discussion, or would others already familiar with the field not need one?}
+
+To perfectly isolate a given spherical harmonic coefficient $a_{\ell m}$ , it is necessary to incorporate information from multiple baselines, each of which measures a slightly different linear combination of spherical harmonics on the sky. A clean extraction requires the data analyst to form yet another linear combination, this time of different visibilities. The goal of this linear combination is to invert the original linear combination of spherical harmonics that was formed by the instrument. Clearly, a necessary condition for this inversion to be successful is for there to be at least as many constraints (i.e., unique visibilities) as there are spherical harmonic coefficients to estimate; ideally, an array ought to make many independent measurements per spherical harmonic mode to ensure a clean separation of modes.  Since $\ell \sim 2 \pi u$, different $\ell$ modes are separated by $\Delta \ell \sim 2 \pi \Delta u$.  Given that $\ell$ can only take on integer values, this means that having enough measurements is tantamount to requiring our baselines be separated from each other by less than $\Delta u = 1/ 2 \pi$ on the $uv$ plane.  As a concrete example, imagine the square grid of antennas from the previous section, where neighboring antennas separated by a distance $b_\textrm{short}$.  Baselines of this array will also form a square grid of points on the $uv$ plane with the $u$ and $v$ coordinates given by integer multiples of $\Delta u = b_\textrm{short} / \lambda = b_\textrm{short} \nu / c$.  We must therefore satisfy the condition
+\begin{equation}
+\label{eq:WantAll}
+b_\textrm{short} \ll \frac{c}{2 \pi \nu_\textrm{max}},
+\end{equation}
+where we have evaluated our constraint at the maximum frequency $\nu_\textrm{max}$ we wish to probe, since that is where it is the most stringent.  On the other hand, as we have argued above, physical constraints on antennas size dictate a spacing satisfying
+\begin{equation}
+\label{eq:AntSize}
+b_\textrm{short} \ge \frac{c}{2 \pi \theta_b \nu_\textrm{min}},
+\end{equation}
+where this time the tightest constraint occurs at the lowest frequency $\nu_\textrm{min}$. \acl{Comment on how dithering baselines mean that this isn't really an issue if we're trying to measure higher $\ell$. The physical constraints on antenna size only matter if you're trying to access the lowest $\ell$ modes}
+
+The two constraints listed above make it difficult to probe a large frequency range with a single interferometer.  To see this, note that the upper limit on $b_0$ decreases with increasing $\nu_\textrm{max}$, while the lower limit increases with decreasing $\nu_\textrm{min}$.  With a wide enough frequency range, these two limits meet, and to avoid inconsistent constraints, we require
+\begin{equation}
+\theta_b \ge \frac{\nu_\textrm{max} }{\nu_\textrm{min}}
+\end{equation}
+as a \emph{minimum} beam size.  Since this critical beam size depends on the ratio of $\nu_\textrm{max}$ to $\nu_\textrm{min}$, it is easier to satisfy our bounds with a narrowband instrument at higher frequencies, which is precisely the scenario that is uninteresting for a global $21\,\textrm{cm}$ signal experiment. Moreover, since $\nu_\textrm{max}$ must be greater than $\nu_\textrm{min}$ the generosity of our bound saturates at $\nu_\textrm{max} = \nu_\textrm{min}$, and our condition then requires that $\theta_0 \ge 1\,\textrm{rad}$. Recalling that $\theta_b$ is the standard deviation of a Gaussian beam (and not the FWHM), we see that essentially one needs horizon-to-horizon beam coverage of the sky. As discussed previously, however, such a beam would be too wide to be optimal, as it would not allow the selective isolation of cold patches in the galaxy. Indeed, one can see from Figure \ref{fig:subPoly9_T0_beamSize} that even with a FWHM of $38.7^\circ$, foreground residuals decrease rather slowly.
+
+\acl{Really need to address the issue of faceting here. Wait, do we?}
+
+From this, we see that if one is to adhere to the design principles of Section \ref{sec:BackOfEnvelopeArrayDesign}, the conditions required for $\Q^\dagger \N^{-1} \Q$ to be invertible will necessarily be violated at some observation frequencies. This problem can be alleviated slightly if one is willing to construct multiple narrowband arrays to collectively cover a wide frequency range. However, this is not only an expensive solution, but also a relatively ineffective one---the best that one can do is to pursue an extreme approach where a different array is constructed (or a single array reconfigured) for every observation frequency, but that corresponds precisely to the $\nu_\textrm{max} = \nu_\textrm{min}$ case discussed above, and we have already seen that the required beam sizes are still to wide.
+
+Alternatively, one may simply replace the inverse of $\Q^\dagger \N^{-1} \Q$ with its pseudo-inverse whenever the matrix $\Q^\dagger \N^{-1} \Q$ is uninvertible. In doing so, however, one runs the risk of imprinting sharp spectral features into the final estimate of the global signal. This is because a pseudo-inverse inverts only the modes of a matrix that are present with non-zero eigenvalue, and the set of modes that are present will in general be frequency-dependent. The imprint of sharp spectral features should be avoided at all costs, since sharp features have the ability to masquerade as the cosmological signal.
+
+For all the reasons listed above, we therefore recommend against the use of Equation \eqref{eqn:M} for $\M$.
+
+%In summary, the back-of-the-envelope calculations presented in this section suggest that the ideal array for probing the global signal is one with closely packed wide-field antennas.  In the following sections we will further develop this intuition using a more mathematically rigorous framework.  Note that while Equation \eqref{eq:AntSize} is a hard physical constraint imposed by our antennas, Equation \eqref{eq:WantAll} is necessary only if one is completely intolerant of any confusion between different spherical harmonic modes.  With a practical broadband array, such stringent standards may not always be achievable, and leakage of higher $\ell$ foreground modes into the $\ell = 0$ monopole must be quantified.  Fortunately, our mathematical framework will naturally incorporate the tools for doing so.
+
+\acl{Should probably comment on how the LOFAR paper has violated these conditions in a number of places.}
+
+%\mep{The rest of this looked good! :)}
+
+
+
+
+This will be the case for the measurements that we consider in this paper, and for $\mathbf{M}$ we pick a diagonal matrix such that
 \begin{equation}
 \label{eq:diagM}
 \M_{ij} = \frac{\delta_{ij}}{(\Q^\dagger \N^{-1} \Q)_{ii}}.
@@ -600,6 +620,9 @@ where $n$ is the length of the parameter vector and $\boldsymbol \theta_{\textrm
 \begin{itemize}
 \item This is a great way to do this measurement.  It will produce lots of great science! And eternal glory!
 \end{itemize}
+
+
+
 
 \appendix
 \section{Proof of minimum-variance property of global signal estimator}
