@@ -288,7 +288,7 @@ For Gaussian beams, we obtain
 \begin{equation}
 N_\textrm{short} \approx \exp \left( 4 \pi^2 \theta_b^2 \frac{b_\textrm{short}^2}{\lambda^2} \right).
 \end{equation}
-Now, if one assumes a closely packed array, then $b_\textrm{short} \lambda \sim (2\pi \theta_0)^{-1}$. Inserting this into our expression gives $N_\textrm{short} \sim e$. For an $N \times N$ square grid of antennas, there are $N_\textrm{short} = 2(N-1)^2$ shortest baselines formed by adjacent antenna pairs (half of which are in one direction, while the other half are perpendicular) \acl{Phrase this better}. Solving for $N$ then gives $1 + \sqrt{e/2} \approx 2.2$, and therefore even a small array (say, $3\times 3$ or $4\times 4$) will allow an interferometric measurement of the global signal to possess the same thermal noise sensitivity as a signal dipole experiment. \acl{Comment on generalizing this, as well as on how redundancy is not a requirement} \mep{I was just wondering about that -- isn't the redundancy necessary for systematic noise reduction?} \mep{Cool calculation. I really like this section.}
+Now, if one assumes a closely packed array, then $b_\textrm{short}/ \lambda \sim (2\pi \theta_0)^{-1}$. Inserting this into our expression gives $N_\textrm{short} \sim e$. For an $N \times N$ square grid of antennas, there are $N_\textrm{short} = 2(N-1)^2$ shortest baselines formed by adjacent antenna pairs (half of which are in one direction, while the other half are perpendicular) \acl{Phrase this better}. Solving for $N$ then gives $1 + \sqrt{e/2} \approx 2.2$, and therefore even a small array (say, $3\times 3$ or $4\times 4$) will allow an interferometric measurement of the global signal to possess the same thermal noise sensitivity as a signal dipole experiment. \acl{Comment on generalizing this, as well as on how redundancy is not a requirement} \mep{I was just wondering about that -- isn't the redundancy necessary for systematic noise reduction?} \mep{Cool calculation. I really like this section.}
 
 
 \section{Data analysis choices}
@@ -341,8 +341,8 @@ Since $\Q$ is not in general invertible (or even a square matrix), we cannot sol
 \end{equation}
 where $\N$ and $\M$ are both matrices that can be chosen by the data analyst. The $\N$ matrix measures $N_\textrm{bl} \times N_\textrm{bl}$, and its role is to encode (via $\N^{-1}$) how the data analyst might wish to weigh the different visibilities in forming estimates of the various spherical harmonics. Note that this weighting is in addition to the weighting that is naturally provided by $\Q^\dagger$, which (for a given spherical harmonic mode) upweights baselines if their visibilities are sensitive to that mode and downweights them otherwise. The matrix $\M$ measures $(\ell_\textrm{max} +1)^2 \times (\ell_\textrm{max} +1)^2$, and therefore operates on a set of estimated spherical harmonic modes; its role is to normalize our estimates of the different modes, and to possibly disentangle them from each other if there is leaked power between the modes. Our choices for $\M$ and $\N$ will determine the statistical properties of our final global signal estimates.
 
-\subsection{A possible choice of $\M$}
-
+\subsection{A possible choice for $\M$}
+\label{sec:badMmatrix}
 As a first guess, picking
 \begin{equation}
 \M = [\Q^\dagger \N^{-1} \Q]^{-1}.
@@ -386,21 +386,18 @@ Alternatively, one may simply replace the inverse of $\Q^\dagger \N^{-1} \Q$ wit
 
 For all the reasons listed above, we therefore recommend against the use of Equation \eqref{eqn:M} for $\M$.
 
-%In summary, the back-of-the-envelope calculations presented in this section suggest that the ideal array for probing the global signal is one with closely packed wide-field antennas.  In the following sections we will further develop this intuition using a more mathematically rigorous framework.  Note that while Equation \eqref{eq:AntSize} is a hard physical constraint imposed by our antennas, Equation \eqref{eq:WantAll} is necessary only if one is completely intolerant of any confusion between different spherical harmonic modes.  With a practical broadband array, such stringent standards may not always be achievable, and leakage of higher $\ell$ foreground modes into the $\ell = 0$ monopole must be quantified.  Fortunately, our mathematical framework will naturally incorporate the tools for doing so.
-
 \acl{Should probably comment on how the LOFAR paper has violated these conditions in a number of places.}
 
-%\mep{The rest of this looked good! :)}
 
 
+\subsection{A better choice for $\M$}
 
-
-This will be the case for the measurements that we consider in this paper, and for $\mathbf{M}$ we pick a diagonal matrix such that
+As an alternative to Equation \eqref{eqn:M}, consider the diagonal matrix given by 
 \begin{equation}
 \label{eq:diagM}
 \M_{ij} = \frac{\delta_{ij}}{(\Q^\dagger \N^{-1} \Q)_{ii}}.
 \end{equation}
-With this choice of $\M$, each $a_{\ell m}$ estimate (each component of $\hat{\mathbf{x}}$) is a linear combination of the true $a_{\ell m}$s. Taking the ensemble average of Equation \eqref{eqn:xhat} and inserting Equation \eqref{eqn:yQxn} yields
+With this choice of $\M$, each $a_{\ell m}$ estimate (each component of $\hat{\mathbf{x}}$) is a linear combination of the true $a_{\ell m}$ coefficients. At first sight, this seems to be a drawback of this choice for $\M$, since our goal is to measure the cosmological monopole. However, we will soon use a variety of illustrative special cases to see that this is not the case, and that some leakage between different $a_{\ell m}$ coefficients---if appropriately constrained---is in fact a feature. To quantify this leakage, we take the ensemble average of Equation \eqref{eqn:xhat} and insert Equation \eqref{eqn:yQxn}. This yields
 %
 %Note that for this choice of $\M$, the ensemble average of $\mathbf{\hat x}$ is $\mathbf{x}$.
 %Using this fact, we can directly find the covariance of $\mathbf{\hat x}$ to be 
@@ -416,14 +413,14 @@ With this choice of $\M$, each $a_{\ell m}$ estimate (each component of $\hat{\m
 \begin{equation}
 \langle \xhat \rangle = \M \Q^\dagger \N^{-1} \Q \x
 \end{equation}
-which is equal to $\x$ if $\M$ is the true inverse of $\Q^\dagger \N^{-1} \Q$. Defining a window function matrix $\W$ as 
+Defining a window function matrix $\W$ as 
 \begin{equation}
 \W = \M \Q^\dagger \N^{-1} \Q,
 \label{eq:Wform}
 \end{equation}
-we see that $\langle \xhat \rangle  = \W \mathbf{x}$, so each row of $\W$ gives the linear combination of spherical harmonics actually probed by our estimator $\hat{a}_{\ell m}$. Put another way, $\W$ quantifies the amount of leakage between modes, and it depends on both our instrument (via $\Q$) and our data analysis method [via Equations \eqref{eqn:xhat} and \eqref{eq:diagM}]. Of particular interest will be the first row of $\W$, which will tell us what combination of spherical harmonics are actually being measured when we attempt to constrain the monopole $a_{00}$ mode.
+we see that $\langle \xhat \rangle  = \W \mathbf{x}$, so each row of $\W$ gives the linear combination of spherical harmonics actually probed by our estimator $\hat{a}_{\ell m}$. The matrix $\W$ quantifies the amount of leakage between modes, and it depends on both our instrument (via $\Q$) and our data analysis method [via Equations \eqref{eqn:xhat} and \eqref{eq:diagM}]. Of particular interest will be the first row of $\W$, which will tell us what combination of spherical harmonics are actually being measured when we attempt to constrain the monopole $a_{00}$ mode.
 
-The choice of $\M$ used here has several attractive properties. In the Appendix we prove that our choice minimizes the variance (and therefore the error bars) in $\mathbf{\hat{x}}$. Additionally, Equation \eqref{eq:diagM} has the property that diagonal elements of $\W$ always equal unity. Focusing on the first row, then, we have $\W_{11} =1$, which implies that the amplitude of a pure monopole sky is preserved by our measurement and data analysis procedures. In other words, there is by construction never any signal loss, even if the $\N$ matrix is mis-modeled and does not perfectly represent the true noise covariance of the measurements.
+The choice of $\M$ used here has several attractive properties. In the Appendix we prove that our choice minimizes the variance (and therefore the error bars) in $\mathbf{\hat{x}}$. Additionally, Equation \eqref{eq:diagM} has the property that diagonal elements of $\W$ always equal unity. Focusing on the first row, then, we have $\W_{11} =1$, which implies that the amplitude of a pure monopole sky is preserved by our measurement and data analysis procedures. In other words, there is by construction never any signal loss.
 
 \acl{Talk about normalization as well as the Fisher matrix interpretation}
 %
@@ -431,9 +428,9 @@ The choice of $\M$ used here has several attractive properties. In the Appendix 
 %
 %With this definition, the elements of the first row of the window function matrix quantifies the ratios between the contributions from the different modes. A good experimental design would result in a very high ratio between $W_{0,00}$ and all of the other $W_{0,\ell m}$.
 
-\subsection{Single Dipole Limit}
+\subsubsection{Single Dipole Limit}
 
-Having established a general formalism and a method for extracting the global signal from interferometric measurements, let us examine the single-dipole limit as an illustrative example. This should be considered representative of ``traditional" experiments such as EDGES \acl{Maybe we should see if there is a better, more precise descriptor than ``traditional".}. With a single dipole, the matrix $\mathbf{Q}$ reduces to a single row vector consisting of Equation \eqref{eqn:Qdef} evaluated at baseline length $b_j=0$. The measurement vector $\mathbf{y}$ becomes a single measurement $y$, given by the primary beam integrated over the sky:
+Consider the single-dipole limit as an illustrative example of how our choice of $\M$ works, and how leakage between spherical harmonic modes can be a desirable feature. The single-dipole limit is representative of ``traditional" experiments such as EDGES \acl{Maybe we should see if there is a better, more precise descriptor than ``traditional".}. With a single dipole, the matrix $\mathbf{Q}$ reduces to a single row vector consisting of Equation \eqref{eqn:Qdef} evaluated at baseline length $b_j=0$. The measurement vector $\mathbf{y}$ becomes a single measurement $y$, given by the primary beam integrated over the sky:
 \begin{equation}
 y = \int T(\mathbf{\hat{r}}) A(\mathbf{\hat{r}}) d\Omega.
 \end{equation}
@@ -445,16 +442,18 @@ For the global signal (i.e., spatial monopole), we are interested in the first c
 \begin{equation}
 \widehat{T}_0 = \frac{y}{ \int d\Omega A(\mathbf{\hat{r}}) },
 \end{equation}
-which is the estimator that one would have guessed from simple considerations---the measurement $y$ is just a weighted average of the sky, and the denominator normalizes the weights. Note that we did not have to specify a form for the noise covariance $\mathbf{N}$. With a single dipole experiment, our measurement consists of a single number, so $\mathbf{N}$ becomes a single scalar and the factor of $\mathbf{N}^{-1}$ in Equation \eqref{eqn:xhat} is always canceled out by the one appearing in Equation \eqref{eq:diagM}. This is a limitation of single dipole experiments. With the instrument having performed an irreversible spatial averaging over the sky, we lose the ability to judiciously downweight low signal-to-noise and/or foreground systematics-dominated data.
+which is the estimator that one would have guessed from simple considerations---the measurement $y$ is just a weighted average of the sky, and the denominator normalizes the weights. This is in fact also a special case of the estimator given in Equation \eqref{eq:singleBlSillyEst}, where the baseline vector $\mathbf{b}$ is set to zero.
+%
+%Note that we did not have to specify a form for the noise covariance $\mathbf{N}$. With a single dipole experiment, our measurement consists of a single number, so $\mathbf{N}$ becomes a single scalar and the factor of $\mathbf{N}^{-1}$ in Equation \eqref{eqn:xhat} is always canceled out by the one appearing in Equation \eqref{eq:diagM}. This is a limitation of single dipole experiments. With the instrument having performed an irreversible spatial averaging over the sky, we lose the ability to judiciously downweight low signal-to-noise and/or foreground systematics-dominated data.
 
 Explicitly evaluating Equation \eqref{eq:Wform} for our single dipole case, the window function for the sky monopole (i.e., the first row of $\W$) is given by
 \begin{equation}
 W_{0}(\ell,m) = \frac{\int d\Omega A(\mathbf{\hat{r}}) Y_{\ell m} (\mathbf{\hat{r}})}{\int d\Omega A(\mathbf{\hat{r}}) / \sqrt{4 \pi}}.
 \label{eq:singleDipoleW0}
 \end{equation}
-At first sight, this does not appear to be what we desire as our window function. Naively, one might have hoped for $W_0$ to be zero for all values of $\ell$ and $m$ except for $(\ell, m) = (0,0)$, so that our estimator for the sky monopole does not contain any leaked power from other spherical harmonics. In this case, however, the leakage is rather innocuous, and is simply the result of our having only surveyed a small portion of the sky (the part that lies within the primary beam). Confirming this interpretation is the form of the numerator in Equation \eqref{eq:singleDipoleW0}, which is the spherical harmonic decomposition of the primary beam.
+Naively, one might have hoped for $W_0$ to be zero for all values of $\ell$ and $m$ except for $(\ell, m) = (0,0)$, so that our estimator for the sky monopole does not contain any leaked power from other spherical harmonics. This is what the $\M$ matrix of Section \ref{sec:badMmatrix} would have achieved, and is what was sacrificed by our new choice of $\M$. On closer examination, however, the leakage appears to be rather innocuous, and is simply the result of our having only surveyed a small portion of the sky (the part that lies within the primary beam). Confirming this interpretation is the form of the numerator in Equation \eqref{eq:singleDipoleW0}, which is the spherical harmonic decomposition of the primary beam.
 
-Since the foreground sky is not translationally invariant (with emission much stronger around the Galactic plane than in the polar regions), it is advantageous to concentrate our survey in cooler parts of the sky. The non-zero width of the window function given by Equation \eqref{eq:singleDipoleW0} is thus a desirable feature. Another way to see this is to imagine having conducted a survey of a small patch of sky around a galactic pole, where foreground emission is weak. \acl{To what extent should we have discussed foregrounds by this point?} This would be a better estimate of the \emph{cosmological} monopole signal than the estimate we would obtain if we were somehow able to force the window function to be zero away from $(\ell,m) = (0,0)$. In the latter case we would be better estimating the monopole signal of total sky emission, but much of this would be due to the foreground contribution. The key point is that the foregrounds also have a monopole, and without an \emph{a priori} way to distinguish between the monopole of the cosmological and the monopole of the foregrounds, making a ``clean" measurement of the sky's monopole simply adds stronger foregrounds.
+As discussed above in Section \ref{sec:BackOfEnvelopeArrayDesign}, it is advantageous to concentrate observations on cooler parts of the sky. The non-zero width of the window function given by Equation \eqref{eq:singleDipoleW0} is thus a desirable feature. Another way to see this is to recognize that focusing on a small patch of the sky (and therefore accepting our broader window function) gives us a better estimate of the \emph{cosmological} monopole signal than if we were somehow able to force the window function to be zero away from $(\ell,m) = (0,0)$. In the latter case we would be better estimating the monopole signal of total sky emission, but much of this would be due to the foreground contribution. The key point is that the foregrounds also have a monopole, and without an \emph{a priori} way to distinguish between the monopole of the cosmological and the monopole of the foregrounds, making a ``clean" measurement of the sky's monopole simply adds stronger foregrounds.
 
 \subsection{Multi-baseline case}
 
