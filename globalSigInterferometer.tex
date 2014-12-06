@@ -555,7 +555,7 @@ More seriously, the use of the foreground-motivated $\N$ has the potential to in
 
 After the frequency-by-frequency combination of visibilities into an initial estimate of the monopole mode, one obtains spectra such as those shown in Figure \ref{fig:unsub_T0_beamSize} and Figure \ref{fig:Ncomparison} \acl{Be consistent about "Fig." versus "Figure"}. The spectra are clearly still dominated by smooth, near-power law foregrounds. It is therefore necessary to take further steps to mitigate foregrounds once the data have been reduced to a single spectrum.
 
-One approach is to subtract off smooth functions from the spectrum, be they polynomials or more data-driven forms (such as principal component spectra used in \acl{Cite Eric and I}). The (hopefully foreground-free) residuals can then be compared to theoretical models for the global signal, although care must be taken to properly account for the possibility that part of the cosmological signal may have been subtracted along with the foregrounds. An alternate approach, which we adopt in the rest of this paper, is to follow in the footsteps of \acl{Cite DARE, Jonathan, and Bernardi et. al.} and to fit for foreground and cosmological model parameters simultaneously. Doing so provides a natural description for signal loss, which manifests itself as degeneracies between foreground parameters and cosmological model parameters. One important trade-off is to decide how many foreground parameters to include. If too many parameters are used, much of the cosmological signal will be 
+One approach is to subtract off smooth functions from the spectrum, be they polynomials or more data-driven forms (such as principal component spectra used in \acl{Cite Eric and I}). The (hopefully foreground-free) residuals can then be compared to theoretical models for the global signal, although care must be taken to properly account for the possibility that part of the cosmological signal may have been subtracted along with the foregrounds. An alternate approach, which we adopt in the rest of this paper, is to follow in the footsteps of \acl{Cite DARE, Jonathan, and Bernardi et. al.} and to fit for foreground and cosmological model parameters simultaneously. Doing so provides a natural description for signal loss, which manifests itself as degeneracies between foreground parameters and cosmological model parameters. One important trade-off is to decide how many foreground parameters to include. If too many parameters are used, much of the cosmological signal will be absorbed into the foreground model, resulting in large degeneracies and large final error bars on the parameters. On the other hand, having too few parameters will result in foreground residuals that will bias cosmological parameter values. We take the same approach as \acl{Cite Bernardi et al.}, where we include just enough foreground parameters for the cosmological parameter bias to be subdominant to the errors.
 
 \subsection{Summary of data analysis methods}
 
@@ -566,7 +566,11 @@ In summary, we propose a ``simple is best" approach for extracting the global si
 where we have re-introduced the frequency-dependence of various quantities in our notation. Following this, we fit the spectrum with a model that includes foreground fits and cosmological parameters. For our foreground fits, we use the same parametric forms as we did in Section \ref{sec:beamSize}, namely Legendre polynomials in $\log \widehat{T}$-$\log \nu$.
 
 \acl{Talk about how it doesn't really matter how many spherical harmonic coefficients one solves for. Maybe?}
+
+
 \section{Set-up of numerical studies}
+\acl{Be sure to include a formula for noise}
+
 %
 %\section{Foregrounds and their mitigation}
 %\label{sec:Foregrounds}
@@ -613,9 +617,11 @@ T(\nu) = -A \textrm{exp}\left ( -\frac{(\nu - \nu_0)^2}{2\sigma^2} \right ),
 \end{equation}
 where $A$ is the amplitude of the signal, $\nu_0$ is the center of the absorption dip, and $\sigma$ is the width. For the reionization signal, we use the form
 \begin{equation}
-T(\nu) = \frac{T_{21}}{2} \sqrt{\frac{1+z}{10}} \tanh \left( 1 + \frac{z-z_r}{\Delta z} \right),
+T(\nu) = \frac{T_{21}}{2} \sqrt{\frac{1+z}{10}}\left[ 1 +  \tanh \left( \frac{z-z_r}{\Delta z} \right)\right],
 \end{equation}
 where $z_r$ is the redshift of the mid-point of reionization, $\Delta z$ is its rough duration, $T_{21}$ is an overall amplitude, and $z = (1420 \,\textrm{MHz} / \nu) - 1$.
+
+The final model parameters 
 %
 %\section{Monte carlo / foreground simulation results}
 %\label{sec:MonteCarlos}
