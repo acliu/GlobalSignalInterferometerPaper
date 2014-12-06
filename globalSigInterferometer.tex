@@ -1,5 +1,5 @@
 %\documentclass[preprint]{aastex}
-\documentclass[twolcolumn,apj,iop]{emulateapj}
+\documentclass[twolcolumn,apj,iop,numberedappendix]{emulateapj}
 \usepackage{ctable}
 \usepackage{amsmath}
 \usepackage{graphicx}
@@ -197,6 +197,7 @@ Making a slight leap from a single baseline to a full interferometer array, this
 \acl{Somewhere, also need to mention how our diagonal approximation for $\M$ also implies that it's not necessary to go to a very high $\ell_\textrm{max}$}
 
 \subsection{Wide beams or narrow beams?}
+\label{sec:beamSize}
 
 The arguments in the previous subsection suggested a particular \emph{relative} placement of antenna elements: antennas should be packed together as tightly as possible. However, the \emph{absolute} scale of the array remains unspecified. In this section, we answer the question of whether it is better to have a packed array with physically small antenna elements (and therefore short baselines and wide primary beams), or a packed array with larger elements (and therefore longer baselines and narrow primary beams). \mep{Perhaps a preview of the results here so we know where we're heading? Something along the lines of: We will ultimately find that although narrowest beams on longest baselines maximize raw foreground reduction, they also introduce spectral ripples that are difficult to remove. Hence we will find intermediate beam and baseline sizes to be optimal.} 
 
@@ -258,7 +259,7 @@ Figures \ref{fig:subPoly6_T0_beamSize} and \ref{fig:subPoly9_T0_beamSize} show t
 Yet another consideration in choosing baseline length is instrumental noise. As we have already alluded to, short baselines have greater sensitivity to the spatial monopole of the sky, and therefore have better signal-to-noise. Thus, if one were to add instrumental noise to the preceding discussion, the optimal baseline length would shift towards smaller values (with the primary beam correspondingly increasing in width). Picking a baseline length based on the foregrounds-only analysis of this subsection is therefore in principle sub-optimal. In practice, however, instrumental noise is a sub-dominant contribution to the error budgets of most $21\,\textrm{cm}$ global signal experiments, and the optimal baseline length will only be slightly shorter than the one advocated here. Moreover, since interferometers consist of many baselines, the collective signal-to-noise of an array can compensate for a lower signal-to-noise in any individual baseline, a point that we will explore in the following subsection. \mep{Looking great so far! :)}
 
 \subsection{How many elements?}
-
+\label{sec:numElems}
 Thus far, we have established that the ideal global signal interferometer is one comprised of elements with full-width-half-max primary beam widths of $\sim25^\circ$, packed as closely together as possible. However, we have yet to specify the number of elements. In this section we imagine a regular square grid of $N \times N$ antennas and ask what value of $N$ is required for an interferometer to perform as well as a single dipole in a measurement of the global signal.\acl{Should mention that we're not using the auto-correlation mode} \mep{What's the auto-correlation mode?}
 
 As one adds more and more elements to a regular array (increasing $N$), the main effect is an increase in the number of short baselines, providing repeated measurements of the same visibilities that can be combined to average down instrumental noise. While it is true that adding more elements to an array also gives rise to some longer baselines (since the only way to add antenna elements to a closely packed array is to add them to the periphery), these baselines have minimal response to the global signal and only provide information regarding foregrounds. This information can in principle be used to help with foreground mitigation, but as we shall see when we discuss data analysis in Section \ref{sec:MathForm}, it is difficult to use this information without introducing chromatic signatures into the final global spectrum estimates. It is thus safer to severely downweight the influence of long baselines, minimizing their influence on the final result.
@@ -442,13 +443,13 @@ For the global signal (i.e., spatial monopole), we are interested in the first c
 \begin{equation}
 \widehat{T}_0 = \frac{y}{ \int d\Omega A(\mathbf{\hat{r}}) },
 \end{equation}
-which is the estimator that one would have guessed from simple considerations---the measurement $y$ is just a weighted average of the sky, and the denominator normalizes the weights. This is in fact also a special case of the estimator given in Equation \eqref{eq:singleBlSillyEst}, where the baseline vector $\mathbf{b}$ is set to zero.
+which is the estimator that one would have guessed from simple considerations---the measurement $y$ is just a weighted average of the sky, and the denominator normalizes the weights. This is in fact also a special case of the estimator given in Equation \eqref{eq:singleBlSillyEst}, where the baseline vector $\mathbf{b}$ is set to zero. Note that there was no need to specify the matrix $\N$, because with only a single measurement from a single dipole, $\N$ reduces to a single scalar. The copy of $\N$ in Equation \eqref{eqn:xhat} will therefore always cancel the copy in \eqref{eq:diagM}.
 %
 %Note that we did not have to specify a form for the noise covariance $\mathbf{N}$. With a single dipole experiment, our measurement consists of a single number, so $\mathbf{N}$ becomes a single scalar and the factor of $\mathbf{N}^{-1}$ in Equation \eqref{eqn:xhat} is always canceled out by the one appearing in Equation \eqref{eq:diagM}. This is a limitation of single dipole experiments. With the instrument having performed an irreversible spatial averaging over the sky, we lose the ability to judiciously downweight low signal-to-noise and/or foreground systematics-dominated data.
 
 Explicitly evaluating Equation \eqref{eq:Wform} for our single dipole case, the window function for the sky monopole (i.e., the first row of $\W$) is given by
 \begin{equation}
-W_{0}(\ell,m) = \frac{\int d\Omega A(\mathbf{\hat{r}}) Y_{\ell m} (\mathbf{\hat{r}})}{\int d\Omega A(\mathbf{\hat{r}}) / \sqrt{4 \pi}}.
+\W_{0}(\ell,m) = \frac{\int d\Omega A(\mathbf{\hat{r}}) Y_{\ell m} (\mathbf{\hat{r}})}{\int d\Omega A(\mathbf{\hat{r}}) / \sqrt{4 \pi}}.
 \label{eq:singleDipoleW0}
 \end{equation}
 Naively, one might have hoped for $W_0$ to be zero for all values of $\ell$ and $m$ except for $(\ell, m) = (0,0)$, so that our estimator for the sky monopole does not contain any leaked power from other spherical harmonics. This is what the $\M$ matrix of Section \ref{sec:badMmatrix} would have achieved, and is what was sacrificed by our new choice of $\M$. On closer examination, however, the leakage appears to be rather innocuous, and is simply the result of our having only surveyed a small portion of the sky (the part that lies within the primary beam). Confirming this interpretation is the form of the numerator in Equation \eqref{eq:singleDipoleW0}, which is the spherical harmonic decomposition of the primary beam.
@@ -457,31 +458,50 @@ As discussed above in Section \ref{sec:BackOfEnvelopeArrayDesign}, it is advanta
 
 \subsubsection{Multi-baseline case}
 
-We now turn to the multi-baseline case. With our measurement $\mathbf{y}$ now consisting of more than just a single number, there is the opportunity to weight our data in non-trivial ways, emphasizing certain portions (or certain modes) of the sky relative to others. Our model for the noise covariance will no longer cancel out when we form $\hat{\mathbf{x}}$. It will therefore be necessary to decide on a form for $\mathbf{N}$. The form that we pick will ideally match the true sky covariance, \acl{Need to go through the whole paper and emphasize that this isn't really a ``noise" covariance in the usual sense.} but if not, at least to yield an estimator $\hat{\mathbf{x}}$ that suits our needs.
+We now turn to the multi-baseline case. With our measurement $\mathbf{y}$ now consisting of more than just a single number, there is the opportunity to weight our data in non-trivial ways. Put another way, it will be necessary to decide on a form for $\N$, since its two copies will no longer cancel when forming $\xhat$.
 
-Consider first a simple case where the only source of variance is instrumental noise. Further assume that the noise is uncorrelated between different baselines, so that $\N \propto \mathbf{I}$. The window function matrix then simplifies to $\W \propto \M \Q^\dagger \Q$, with the key piece being $\Q^\dagger \Q$. Evaluating it explicitly, we obtain
+Consider first the simple case where $\N = \mathbf{I}$. The window function matrix then simplifies to $\W \propto \M \Q^\dagger \Q$, with the key piece being $\Q^\dagger \Q$. The $\M$ matrix is irrelevant to any discussion of leakage between different spherical harmonics, since the form given by Equation \eqref{eq:diagM} is diagonal, and thus the matrix provides only a per-spherical harmonic normalization without further mixing between modes. Evaluating the window function matrix explicitly, we obtain
+\begin{eqnarray}
+\W_{\ell m, \ell^\prime m^\prime} &\propto& \left( \Q^\dagger \Q \right)_{\ell m, \ell^\prime m^\prime} \nonumber \\
+& \propto & \sum_k \left( \int d\Omega A(\rhat) Y^*_{\ell m}(\rhat) e^{i 2 \pi \frac{\mathbf{b}_k}{\lambda} \cdot \rhat }\right) \nonumber \\
+&& \times \left( \int d\Omega^\prime A(\rhat^\prime) Y_{\ell^\prime m^\prime}(\rhat) e^{-i 2 \pi \frac{\mathbf{b}_k}{\lambda} \cdot \rhat^\prime }\right).
+\end{eqnarray}
+For the purposes of measuring the global signal, it is again the first row of this matrix that is the most relevant. Making the flat-sky approximation for the sake of intuition yields
 \begin{equation}
-\Q^\dagger \Q = \int d\Omega d\Omega^\prime A(\
+\W_{0}(\mathbf{u}) \propto \sum_k \widetilde{A}^* \left( \frac{\mathbf{b}_k}{\lambda} \right) \widetilde{A} \left( \mathbf{u} - \frac{\mathbf{b}_k}{\lambda} \right).
 \end{equation}
+Now, $\widetilde{A}$ is a function that peaks at the origin and drops off on a characteristic scale $(2 \pi \theta_b)^{-1}$. Thus, this expression tells us that the highest $u = | \mathbf{u} |$ scale that is probed by our global signal interferometer is
+\begin{equation}
+u \sim \frac{b_\textrm{max}}{\lambda} + \frac{1}{2 \pi \theta_b} = \frac{N\sqrt{2} +1}{2 \pi \theta_b},
+\end{equation}
+where $b_\textrm{max}$ is the longest baseline in the array, and in the last equality we assumed a closely packed $N \times N$ square array, just as we did in Section \ref{sec:numElems}. The reciprocal of this expression gives the finest angular scale $\theta_\textrm{fine}$ that our interferometer is sensitive to:
+\begin{equation}
+\theta_\textrm{fine} \sim 9^\circ \left( \frac{\textrm{FWHM}}{26.5^\circ} \right) \left( \frac{N \sqrt{2} + 1}{5 \sqrt{2} + 1} \right)^{-1}.
+\end{equation}
+Here, we have eliminated $\theta_b$ (which corresponds to the standard deviation for a Gaussian beam) in favor of the FWHM, and have used a fiducial array size of $N=5$ to be slightly on the conservative side of our optimal $N=3$ or $4$ from Section \ref{sec:numElems}. We may thus conclude that an interferometer that is designed in accordance with the principles laid out in Section \ref{sec:BackOfEnvelopeArrayDesign} will not be sensitive to scales finer than $\sim 10^\circ$. Since the anisotropies of the cosmological $21\,\textrm{cm}$ signal are negligible beyond a scale of $\sim 1^\circ$ to $2^\circ$ \acl{Cite the Bittner \& Loeb paper}, the modes that are measured by our interferometer are essentially global signal modes, even if they are not formally the $\mathbf{u} = 0$ (or $\ell = m = 0$) mode. Indeed, this argument is one that is implicitly invoked by most theoretical simulations of the global signal---since full sky simulations are too computationally expensive to perform, most (if not all) simulations simply average over an angular field of view that is much greater than the angular scale of anisotropies, and declare the result the global signal. \acl{Point out that this is actually a conservative estimate. In practice one might be able to build out larger, because the longer baselines are downweighted by the first factor of A-tilde.}
 
-\acl{Make the point that because we have a single measurement, the noise covariance always drops out. We can't really do anything to weight}
+In short, the leakage of higher spherical harmonic modes into our estimate of the global signal is likely not a concern. Importantly, however, our argument relied on the fall-off of $\widetilde{A}$. If the primary beam contains fine features, $\widetilde{A}$ becomes a rather broad function, and one's interferometer begins to be sensitive to the more substantial small-scale modes of the $21\,\textrm{cm}$ anisotropies. This may be an important effect for the global signal measurements performed at LOFAR using lunar occultations, which imprints small spatial structures in the beam \acl{Cite Harish's paper}. Fortunately, our formalism provides an easy way to compute the relevant window functions to assess the viability of occultation measurements.
 
-
-
-\acl{Should probably also include stuff about window function normalization}
-\acl{Also don't forget to mention how $\N$ is regularized}
-
-\mep{Figure time! Show the green/pink plots of 1st row of window function for different arrays.}
-\acl{I'm wondering if it might actually be good to display the window function plots in a way that's averaged over $m$, since for a given $\ell$ the $m$ value basically just changes the direction.  One could imagine something analogous to the angular power spectrum, which is often estimated by computing $\hat{C}_\ell = \frac{1}{2\ell + 1} \sum_{m=-\ell}^{\ell} |a_{\ell m}|^2$.  We could do an analogous sum.  On the other hand, the baseline vector breaks the symmetry and does pick out a direction.  So if we want to build that intuition, it could be useful to show the different $m$ values separately.}
-
-\begin{figure}[h]
-	\centering
-	%\includegraphics[width=0.55\textwidth]{figures/oldFigures/W_matrix_filler.pdf}
-	\caption{\mep{Of course, this will have to be updated when the new data comes in. Probably to show several figures for different arrays?}\mep{Uh.... Weird stuff happens if I try to make the figure bigger. It's not wrapping the text and is trying to keep the figure in the column somehow?? Not sure what's up with the formatting style here.}\acl{Is this better? Or did you actually want to make this a figure that spans both columns? If so, change ``figure" to ``figure*" when you do \textbackslash begin.}}
-	\label{fig:WindowFunction}
-\end{figure}
-
-\acl{The tone of the writing is excellent, btw.}
+\acl{We could extend this section to make it more imaging-centric, but it's probably not worth it}
+%
+%\acl{Make the point that because we have a single measurement, the noise covariance always drops out. We can't really do anything to weight}
+%
+%
+%
+%\acl{Should probably also include stuff about window function normalization}
+%\acl{Also don't forget to mention how $\N$ is regularized}
+%
+%\mep{Figure time! Show the green/pink plots of 1st row of window function for different arrays.}
+%\acl{I'm wondering if it might actually be good to display the window function plots in a way that's averaged over $m$, since for a given $\ell$ the $m$ value basically just changes the direction.  One could imagine something analogous to the angular power spectrum, which is often estimated by computing $\hat{C}_\ell = \frac{1}{2\ell + 1} \sum_{m=-\ell}^{\ell} |a_{\ell m}|^2$.  We could do an analogous sum.  On the other hand, the baseline vector breaks the symmetry and does pick out a direction.  So if we want to build that intuition, it could be useful to show the different $m$ values separately.}
+%
+%\begin{figure}[h]
+%	\centering
+%	%\includegraphics[width=0.55\textwidth]{figures/oldFigures/W_matrix_filler.pdf}
+%	\caption{\mep{Of course, this will have to be updated when the new data comes in. Probably to show several figures for different arrays?}\mep{Uh.... Weird stuff happens if I try to make the figure bigger. It's not wrapping the text and is trying to keep the figure in the column somehow?? Not sure what's up with the formatting style here.}\acl{Is this better? Or did you actually want to make this a figure that spans both columns? If so, change ``figure" to ``figure*" when you do \textbackslash begin.}}
+%	\label{fig:WindowFunction}
+%\end{figure}
+%
+%\acl{The tone of the writing is excellent, btw.}
 
 
 
@@ -494,76 +514,178 @@ Consider first a simple case where the only source of variance is instrumental n
 %\item Rules of thumb for designing a global signal interferometer.
 %\end{itemize}
 
+\subsection{Choices for $\N$}
 
+Having motivated our diagonal choice for $\M$, we now consider our choice for $\N$, which weights the visibilities. We will find that although the presence of $\N$ in our estimator provides additional flexibility that can in principle be harnessed to better suppress foregrounds, a ``simple is best" approach of setting $\N = \mathbf{I}$ is more robust and gives better final results.
 
-\section{Foregrounds and their mitigation}
-\label{sec:Foregrounds}
+To see how $\N$ can aid in foreground mitigation, imagine we were able to accurately model the full covariance matrix of foregrounds. The copy of $\N^{-1}$ in Equation \eqref{eqn:xhat} then downweights select modes in the visibilities $\y$ that are particularly foreground-contaminated, before the $\Q^\dagger$ matrix converts the collection of visibilities into estimates of spherical harmonic estimates (albeit unnormalized ones, prior to the action of $\M$). In practice, one does not possess sufficient information to construct a full covariance matrix, and approximations must be made.
+
+Suppose that one were to approximate the foreground covariance matrix as diagonal in some judiciously chosen basis. Of course, any matrix is by construction diagonal in its own eigenbasis. However, moving into this basis would require knowing the exact covariance matrix to begin with. Instead, our goal should be to find some basis that sufficiently captures the features of the matrix that are needed for foreground mitigation. Consider, for example, a matrix that is diagonal in harmonic space. Modeling the foreground sky in such a way is tantamount to saying that the foregrounds are statistically isotropic, and therefore describable using a power spectrum. While this may be sufficient for some applications, in our case it is relatively unhelpful. To see this, consider the action of an interferometer in the flat sky approximation. If it were not for the primary beam, each baseline would simply measure a different Fourier mode of the sky, and $\Q^\dagger$ would be the identity. The $\M$ matrix would reduce to $\N$, and the estimator would become $\xhat = \y$. Essentially, the visibilities are already a measurement of the harmonics of the sky, and thus the different visibilities never have to mix with each other to produce our final (harmonic) estimator. Any downweighting of a strong foreground mode in harmonic space is then simply upweighted back to its original strength, and no foreground mitigation happens. Of course, in a realistic situation we violate the assumptions of the flat-sky and a uniform primary beam, but the foreground suppression effects are still likely to be minimal.
+
+In contrast, consider a foreground covariance matrix that is diagonal---but not the identity---in image space. When transformed into visibility space, the $\N$ matrix then contains off-diagonal elements. In acting on $\y$, different visibilities are then mixed together in an effort to suppress foregrounds. Physically, this corresponds to the statement that if the foregrounds are not statistically isotropic (so that the diagonal elements of the covariance vary), the harmonic coefficients of the sky will end up possessing correlated phases. Since the visibilities are approximately measurements of the harmonic sky, they too will be correlated. These correlations can then be used to downweight the contributions of brighter parts of the foreground sky.
+
+Concretely, suppose we form an image-space covariance matrix $\R$, which is given by
+\begin{equation}
+\label{eq:Rmatrix}
+\R_{ij} = m^2(\rhat_i) \delta_{ij}
+\end{equation}
+where $m^2(\rhat_i)$ is the model for the foreground sky brightness at the $i$th pixel, with angular position $\rhat_i$. To use this in our estimator then requires translating this matrix into visibility space by constructing
+\begin{equation}
+\label{eq:GRG}
+\N = \mathbf{G} \R \mathbf{G}^\dagger,
+\end{equation}
+where
+\begin{equation}
+\mathbf{G}_{ij} = A(\rhat_j)\exp\left(-2\pi i \frac{\mathbf{b_\textit{i}}}{\lambda} \cdot \boldsymbol \rhat_j\right) \Delta \Omega,
+\end{equation}
+with $\Delta \Omega$ being the solid angle encompassed by each pixel of our sky model. Note that in general $\N$ is a smaller matrix than $\R$, since the former measures $N_\textrm{bl} \times N_\textrm{bl}$ while the latter measures $N_\textrm{pix} \times N_\textrm{pix}$, where $N_\textrm{pix}$ is the number of pixels in our model.
+
+In Figure \ref{fig:Ncomparison}, we compare the global signal estimators that result from analyzing simulated data using $\N=\mathbf{I}$ to those that are obtained using the form of $\N$ given by Equation \eqref{eq:GRG}. For the foreground model in Equation \eqref{eq:Rmatrix}, we use the Haslam map at $408\,\textrm{MHz}$. Note that even though the Haslam map will have the wrong amplitude for observations in our frequency band, the overall amplitude of our foreground map will always cancel out in our final estimator, since $\N$ appears both in Equation \eqref{eqn:xhat} and our normalization $\M$. In other words, only the angular \emph{shape} of the foreground sky matters. The instrumental simulations used for Figure \ref{fig:Ncomparison} are identical to those of Section \ref{sec:beamSize}, except with the FWHM of the primary beams set to $88^\circ$. With a broader beam, one exaggerates the effect of using our foreground-motivated choice of $\N$. This is because a larger field of view captures more of the strongly anisotropic nature of foregrounds, which makes a selective downweighting of the brighter parts of the sky more important. Figure \ref{fig:Ncomparison} shows that such a downweighting does in fact reduce the brightness of the foregrounds, but only by a small amount. We find that the reduction is more pronounced if observations are centered on the galactic plane. There, the foregrounds vary strongly with galactic latitude, making downweightings much more important, and reductions of up to a factor of $\sim 2$ are possible. In practice, however, one tends to avoid observing in the galactic plane anyway. Therefore, the benefits of using the $\N$ matrix given by Equation \eqref{eq:GRG} are likely to be minimal, particularly when one moves back to using narrower beams suggested in Section \ref{sec:beamSize}, which can more easily isolate patches of the sky that are more approximately isotropic.
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=0.50\textwidth]{figures/Ncomparison.pdf}
+	\caption{\acl{Do this}}
+	\label{fig:Ncomparison}
+\end{figure}
+
+More seriously, the use of the foreground-motivated $\N$ has the potential to introduce harmful artifacts into the final spectra. For example, bumpy spectral features are clearly visible in Figure \ref{fig:Ncomparison}, which can easily be confused with true spectral features in the cosmological signal. We find that such unsmooth structures are reasonably generic with the foreground-motivated $\N$. Much of this is because the quest to downweight brighter portions of the foreground sky requires the isolation of spatially small patches. To isolate these patches, high angular resolution is necessary, which means that the estimator must weight longer---and more chromatic---baselines more heavily. Long baselines also have the disadvantage of having low sensitivity to the monopole. With a heavier weighting of long baselines, it is more difficult for an interferometer to match the thermal noise sensitivity of a single dipole experiment. \acl{Why do we keep calling it a single dipole experiment? Single element would be better} Although it may be possible to eliminate all of these issues with a more sophisticated form for a foreground-motivated $\N$ in future work, for now we propose the use of $\N = \mathbf{I}$. \acl{This last line is perhaps not the most elegantly stated}
+
+\subsection{Step 2: Fitting smooth foregrounds}
+
+After the frequency-by-frequency combination of visibilities into an initial estimate of the monopole mode, one obtains spectra such as those shown in Figure \ref{fig:unsub_T0_beamSize} and Figure \ref{fig:Ncomparison} \acl{Be consistent about "Fig." versus "Figure"}. The spectra are clearly still dominated by smooth, near-power law foregrounds. It is therefore necessary to take further steps to mitigate foregrounds once the data have been reduced to a single spectrum.
+
+One approach is to subtract off smooth functions from the spectrum, be they polynomials or more data-driven forms (such as principal component spectra used in \acl{Cite Eric and I}). The (hopefully foreground-free) residuals can then be compared to theoretical models for the global signal, although care must be taken to properly account for the possibility that part of the cosmological signal may have been subtracted along with the foregrounds. An alternate approach, which we adopt in the rest of this paper, is to follow in the footsteps of \acl{Cite DARE, Jonathan, and Bernardi et. al.} and to fit for foreground and cosmological model parameters simultaneously. Doing so provides a natural description for signal loss, which manifests itself as degeneracies between foreground parameters and cosmological model parameters. One important trade-off is to decide how many foreground parameters to include. If too many parameters are used, much of the cosmological signal will be 
+
+\subsection{Summary of data analysis methods}
+
+In summary, we propose a ``simple is best" approach for extracting the global signal from interferometric data. In what follows, we will set $\N = \mathbf{I}$ and adopt Equation \eqref{eq:diagM} for $\M$. Plugging these into Equation \eqref{eqn:xhat}, recasting our vector/matrix expressions in terms of continuous functions, we obtain
+\begin{equation}
+\widehat{T}_0 (\nu)= \frac{\sum_j \left[ \int d\Omega A(\rhat, \nu) \exp\left( i 2 \pi \frac{\nu }{c} \mathbf{b}_k \cdot \rhat \right)\right] V(\mathbf{b}_j, \nu)}{\sum_k \big{|} \int d\Omega A(\rhat, \nu) \exp\left( i 2 \pi \frac{\nu }{c} \mathbf{b}_k \cdot \rhat \right) \big{|}^2},
+\end{equation}
+where we have re-introduced the frequency-dependence of various quantities in our notation. Following this, we fit the spectrum with a model that includes foreground fits and cosmological parameters. For our foreground fits, we use the same parametric forms as we did in Section \ref{sec:beamSize}, namely Legendre polynomials in $\log \widehat{T}$-$\log \nu$.
+
+\acl{Talk about how it doesn't really matter how many spherical harmonic coefficients one solves for. Maybe?}
+\section{Set-up of numerical studies}
+%
+%\section{Foregrounds and their mitigation}
+%\label{sec:Foregrounds}
+%\begin{itemize}
+%\item General characteristics of foregrounds.
+%\item Desire to avoid using too much spectral information because the signal itself is a spectrum.
+%\item How to use angular information.
+%\item (Modifications to array design to account for foregrounds).
+%\end{itemize}
+%
+%The primary source of contamination in a global signal experiment comes from galactic foregrounds, which make extraction of the global signal difficult for a number of reasons. Primarily, the galactic foregrounds are many orders of magnitude brighter than our expected signal, so finding the global signal through a simple spatial average over the sky would result in a measurement dominated by foregrounds. Also, since both the galactic foregrounds and the expected global re-ionization signal are spectrally smooth, foreground subtraction techniques will likely be unreliable. Therefore, we propose using angular information to differentiate galactic foregrounds from the global signal. 
+%
+%In order to best remove the foregrounds from our data, we construct a noise covariance matrix for the foregrounds: $\Nfg$. $\Nfg$  shows the correlation between the Fourier modes probed by the antenna array, and hence has dimensions $\Nbl \times \Nbl$. One method \mep{Are there other methods?} to generate $\Nfg$ from a model of the sky is to first find a covariance matrix of the sky $\R$ and transform that matrix into the Fourier domain of the visibilities via the matrix transformation 
+%
+%\begin{equation}
+%\Nfg = \mathbf{G} \R \mathbf{G}^\dagger
+%\label{eqn:Nfg}
+%\end{equation}
+%Since $\R$ has dimensions $N_{\textrm{pix}} \times N_{\textrm{pix}}$, note that $\mathbf{G}$ must have dimensions $\Nbl \times N_{\textrm{pix}}$. Although $\mathbf{G}$ serves a purpose similar to a Fourier transformation matrix, it is not precisely a Fourier matrix as that would probe every single possible Fourier mode, and we only want those that correspond to our array's baselines. As such, $\mathbf{G}$ is defined by 
+%\begin{equation}
+%G_{i,j} = A(\rhat_j)e^{-2\pi i \frac{\mathbf{b_\textit{i}}}{\lambda} \cdot \boldsymbol \rhat_j} \Delta \Omega
+%\end{equation}
+%where $\rhat_j$ is the angular position of the $j$th pixel,  $\Delta \Omega$ is the solid angle encompassed by each pixel, and $\mathbf{b_\textit{i}}$ is the $i$th baseline. 
+%
+%\mep{Insert here stuff on how you're calculating $\R$?}
+%
+%Once $\mathbf{G}$ has been found, all that remains is to find the covariance in the image space: $\R$. A naive model for the image covariance would be to create a diagonal matrix defined by 
+%\begin{equation}
+%\R_{i,i} = m^2(\rhat_i)
+%\end{equation}
+%where $m^2(\rhat_i)$ is the brightness of the sky \mep{Is this true?} at the pixel with angular position $\rhat_i$. This model can be useful because it ensures that there will be non-diagonal correlations in the spherical harmonic space and because it makes equation (\ref{eqn:Nfg}) easy to compute. However, a diagonal covariance is not a realistic portrayal of the true sky, since each pixel is clearly correlated to the ones near it. 
+%
+%At the other extreme, 
+%
+%\acl{An interesting point I just realized.  We can make the argument that since the normalization of $\mathbf{N}$ scales out of the expression for $\hat{\mathbf{x}}$, our foreground mitigation scheme is a very conservative one that only uses shape information, and not the detailed spectral form of our foreground model.}
+%\acl{Somewhere, we also need to address rotation synthesis}
+%\acl{Also need to add noise to simulations}.
+
+\section{Simulation results}
+
+To evaluate the effectiveness of our global signal interferometer, we employ a Fisher matrix formalism. Our set-up is essentially identical to that of \acl{Cite Gianni et al.}, and thus we relegate our review of the formalism to Appendix \ref{fisher}. As a toy model for the dark ages \acl{Are we doing ``dark ages" or ``Dark Ages"?}, we again follow \acl{Cite Gianni et al.} and model the dip at $\sim 70\,\textrm{MHz}$ as a Gaussian:
+\begin{equation}
+T(\nu) = -A \textrm{exp}\left ( -\frac{(\nu - \nu_0)^2}{2\sigma^2} \right ),
+\end{equation}
+where $A$ is the amplitude of the signal, $\nu_0$ is the center of the absorption dip, and $\sigma$ is the width. For the reionization signal, we use the form
+\begin{equation}
+T(\nu) = \frac{T_{21}}{2} \sqrt{\frac{1+z}{10}} \tanh \left( 1 + \frac{z-z_r}{\Delta z} \right),
+\end{equation}
+where $z_r$ is the redshift of the mid-point of reionization, $\Delta z$ is its rough duration, $T_{21}$ is an overall amplitude, and $z = (1420 \,\textrm{MHz} / \nu) - 1$.
+%
+%\section{Monte carlo / foreground simulation results}
+%\label{sec:MonteCarlos}
+%
+%
+%\begin{itemize}
+%\item $\mathbf{N}_\textrm{fg}$ might not be properly modeled, so we can't use $[\mathbf{Q}^\dagger \mathbf{N}^{-1} \mathbf{Q}]^{-1}$ as a reliable indicator of the errors.  (Although recall that it's a perfectly fine choice for extracting the signal).
+%\item To get reliable estimates...Monte Carlo!
+%\item Really great results! (Error bars and covariance on the recovered spectra).
+%\end{itemize}
+%
+%Recall from Section \ref{sec:MathForm} that using the least-squares method for recovering $\xhat$ allows us to analytically determine the error covariance of $\xhat$ via Equation \eqref{eqn:Covxhat}. However, this formula for the covariance is only true if we exactly know the noise covariance matrix. Thus, since $\Nfg$ might not be properly modeled, we must still resort to Monte Carlo simulations to determine the error bars on our measurements. 
+%
+%Our Monte Carlo simulations generate many visibilities $V(\mathbf{b}_i)$ from randomly perturbed sky models. \mep{Is ``randomly perturbed'' an appropriate way to describe it?} The sky models are derived by taking the all-sky survey from \citet{Haslam_408MHz_map} and using the power-law model of the foreground spectrum used in \citet{Liu_21cm_Fg} to extrapolate a map at the desired frequency. For a pixel at $\boldsymbol \theta$, the brightness at a certain frequency $\nu$ is 
+%\begin{equation}
+%I(\boldsymbol \theta) = I_H(\boldsymbol \theta) \left ( \frac{\nu}{\nu_H} \right ) ^{-\alpha + \Delta \alpha}
+%\end{equation}
+%where $I_H$ is the sky map from \citet{Haslam_408MHz_map}, $\nu_H=408$MHz, $\alpha = 2.8$, and $\Delta \alpha$ is a perturbing index randomly generated with variance 0.1. From this model, we can generate a vector of visibilities for all of the different baselines in an array. This vector is $\y$ from Equation \eqref{eqn:yQxn}. The visibilities are defined as 
+%\begin{equation}
+%V(\mathbf{b}_i) = \int d \Omega A(\boldsymbol \theta) I(\boldsymbol \theta) e^{-2\pi i\frac{\nu}{c} \mathbf{b}_i \cdot \boldsymbol \theta}
+%\end{equation}
+%where $\boldsymbol \theta$ is the angular position on the sky, $A$ is the primary beam for the antennas, $\mathbf{b_{\textit{j}}}$ is the $j$th baseline, $\nu$ is the frequency of observation, and $I$ is the intensity \mep{What's the correct name for this?} of the sky model. 
+%
+%Once we have generated a $\y$ vector, we can use Equation \eqref{eqn:xhat} to find the estimator for the global signal that our analysis would produce for that particular sky. The variance of a large set of estimators from many such sky models provides us with the error bars for an experiment measuring the global signal. \mep{I don't like the phrasing of this paragraph.} 
+
+%\section{Fisher matrix results}
+%\label{sec:Fisher}
+%\begin{itemize}
+%\item Fisher matrix formalism for translating error statistics from recovered spectra to parameterizations of the signal.
+%\end{itemize}
+%
+%
+%\mep{Insert figures of pairwise projections and discussion thereof.} 
+%
+%\begin{figure}[h]
+%	\centering
+%	%\includegraphics[width=0.55\textwidth]{figures/oldFigures/contours_A_nu0.pdf}
+%	\caption{\acl{Fill this in.  Probably also want to make this a horizontal stripe of constraints.}}
+%	\label{fig:contours}
+%\end{figure}
+%
+%\begin{figure}[h]
+%	\centering
+%	%\includegraphics[width=0.55\textwidth]{figures/oldFigures/contours_A_sigma.pdf}
+%	\caption{\acl{Fill this in}}
+%\end{figure}
+%
+%\begin{figure}[h]
+%	\centering
+%	%\includegraphics[width=0.55\textwidth]{figures/oldFigures/contours_nu0_sigma.pdf}
+%	\caption{\acl{Fill this in}}
+%\end{figure}
+
+\section{Conclusions}
+\label{sec:Conc}
+\acl{On the theme of better relating this to a broad audience, we can also relate this to the high redshift galaxy people.  If their (collective) constraints are to be believed, there should be a sharp rise in ionization fraction at a redshift that's *just* below what EDGES is able to constrain.  So perhaps this can be motivation for building a global signal experiment that can confirm/refute the optical and IR people}
 \begin{itemize}
-\item General characteristics of foregrounds.
-\item Desire to avoid using too much spectral information because the signal itself is a spectrum.
-\item How to use angular information.
-\item (Modifications to array design to account for foregrounds).
+\item This is a great way to do this measurement.  It will produce lots of great science! And eternal glory!
 \end{itemize}
 
-The primary source of contamination in a global signal experiment comes from galactic foregrounds, which make extraction of the global signal difficult for a number of reasons. Primarily, the galactic foregrounds are many orders of magnitude brighter than our expected signal, so finding the global signal through a simple spatial average over the sky would result in a measurement dominated by foregrounds. Also, since both the galactic foregrounds and the expected global re-ionization signal are spectrally smooth, foreground subtraction techniques will likely be unreliable. Therefore, we propose using angular information to differentiate galactic foregrounds from the global signal. 
 
-In order to best remove the foregrounds from our data, we construct a noise covariance matrix for the foregrounds: $\Nfg$. $\Nfg$  shows the correlation between the Fourier modes probed by the antenna array, and hence has dimensions $\Nbl \times \Nbl$. One method \mep{Are there other methods?} to generate $\Nfg$ from a model of the sky is to first find a covariance matrix of the sky $\R$ and transform that matrix into the Fourier domain of the visibilities via the matrix transformation 
 
-\begin{equation}
-\Nfg = \mathbf{G} \R \mathbf{G}^\dagger
-\label{eqn:Nfg}
-\end{equation}
-Since $\R$ has dimensions $N_{\textrm{pix}} \times N_{\textrm{pix}}$, note that $\mathbf{G}$ must have dimensions $\Nbl \times N_{\textrm{pix}}$. Although $\mathbf{G}$ serves a purpose similar to a Fourier transformation matrix, it is not precisely a Fourier matrix as that would probe every single possible Fourier mode, and we only want those that correspond to our array's baselines. As such, $\mathbf{G}$ is defined by 
-\begin{equation}
-G_{i,j} = A(\rhat_j)e^{-2\pi i \frac{\mathbf{b_\textit{i}}}{\lambda} \cdot \boldsymbol \rhat_j} \Delta \Omega
-\end{equation}
-where $\rhat_j$ is the angular position of the $j$th pixel,  $\Delta \Omega$ is the solid angle encompassed by each pixel, and $\mathbf{b_\textit{i}}$ is the $i$th baseline. 
 
-\mep{Insert here stuff on how you're calculating $\R$?}
+\appendix
+\section{Proof of minimum-variance property of global signal estimator}
+\label{minVarProof}
 
-Once $\mathbf{G}$ has been found, all that remains is to find the covariance in the image space: $\R$. A naive model for the image covariance would be to create a diagonal matrix defined by 
-\begin{equation}
-\R_{i,i} = m^2(\rhat_i)
-\end{equation}
-where $m^2(\rhat_i)$ is the brightness of the sky \mep{Is this true?} at the pixel with angular position $\rhat_i$. This model can be useful because it ensures that there will be non-diagonal correlations in the spherical harmonic space and because it makes equation (\ref{eqn:Nfg}) easy to compute. However, a diagonal covariance is not a realistic portrayal of the true sky, since each pixel is clearly correlated to the ones near it. 
+\section{Global signal Fisher matrix forecasting methods}
+\label{fisher}
 
-At the other extreme, 
-
-\acl{An interesting point I just realized.  We can make the argument that since the normalization of $\mathbf{N}$ scales out of the expression for $\hat{\mathbf{x}}$, our foreground mitigation scheme is a very conservative one that only uses shape information, and not the detailed spectral form of our foreground model.}
-\acl{Somewhere, we also need to address rotation synthesis}
-\acl{Also need to add noise to simulations}.
-
-\section{Monte carlo / foreground simulation results}
-\label{sec:MonteCarlos}
-
-\acl{TODO: Let's be conservative and try to do some arrays that are quite widely spaced and also to add some curvature into our Monte Carlos.  Plus frequency-dependent beams.}
-\acl{TODO: Do some pictures of spherical harmonics in the Mollweide projection to build some intuition.}
-
-\begin{itemize}
-\item $\mathbf{N}_\textrm{fg}$ might not be properly modeled, so we can't use $[\mathbf{Q}^\dagger \mathbf{N}^{-1} \mathbf{Q}]^{-1}$ as a reliable indicator of the errors.  (Although recall that it's a perfectly fine choice for extracting the signal).
-\item To get reliable estimates...Monte Carlo!
-\item Really great results! (Error bars and covariance on the recovered spectra).
-\end{itemize}
-
-Recall from Section \ref{sec:MathForm} that using the least-squares method for recovering $\xhat$ allows us to analytically determine the error covariance of $\xhat$ via Equation \eqref{eqn:Covxhat}. However, this formula for the covariance is only true if we exactly know the noise covariance matrix. Thus, since $\Nfg$ might not be properly modeled, we must still resort to Monte Carlo simulations to determine the error bars on our measurements. 
-
-Our Monte Carlo simulations generate many visibilities $V(\mathbf{b}_i)$ from randomly perturbed sky models. \mep{Is ``randomly perturbed'' an appropriate way to describe it?} The sky models are derived by taking the all-sky survey from \citet{Haslam_408MHz_map} and using the power-law model of the foreground spectrum used in \citet{Liu_21cm_Fg} to extrapolate a map at the desired frequency. For a pixel at $\boldsymbol \theta$, the brightness at a certain frequency $\nu$ is 
-\begin{equation}
-I(\boldsymbol \theta) = I_H(\boldsymbol \theta) \left ( \frac{\nu}{\nu_H} \right ) ^{-\alpha + \Delta \alpha}
-\end{equation}
-where $I_H$ is the sky map from \citet{Haslam_408MHz_map}, $\nu_H=408$MHz, $\alpha = 2.8$, and $\Delta \alpha$ is a perturbing index randomly generated with variance 0.1. From this model, we can generate a vector of visibilities for all of the different baselines in an array. This vector is $\y$ from Equation \eqref{eqn:yQxn}. The visibilities are defined as 
-\begin{equation}
-V(\mathbf{b}_i) = \int d \Omega A(\boldsymbol \theta) I(\boldsymbol \theta) e^{-2\pi i\frac{\nu}{c} \mathbf{b}_i \cdot \boldsymbol \theta}
-\end{equation}
-where $\boldsymbol \theta$ is the angular position on the sky, $A$ is the primary beam for the antennas, $\mathbf{b_{\textit{j}}}$ is the $j$th baseline, $\nu$ is the frequency of observation, and $I$ is the intensity \mep{What's the correct name for this?} of the sky model. 
-
-Once we have generated a $\y$ vector, we can use Equation \eqref{eqn:xhat} to find the estimator for the global signal that our analysis would produce for that particular sky. The variance of a large set of estimators from many such sky models provides us with the error bars for an experiment measuring the global signal. \mep{I don't like the phrasing of this paragraph.} 
-
-\section{Fisher matrix results}
-\label{sec:Fisher}
-\begin{itemize}
-\item Fisher matrix formalism for translating error statistics from recovered spectra to parameterizations of the signal.
-\end{itemize}
 
 While the Monte Carlo simulations give us constraints on how well a certain experiment (defined by a given $\Q$ and $\N$) can measure the global signal $\hat \x_{00}$, they do not provide us with constraints on scientifically relevant cosmic parameters. In order to find how well an experiment could constrain parameters relevant to the time evolution of the global signal, we employ a Fisher matrix formalism. The Fisher information matrix is defined as 
 \begin{equation}
@@ -591,41 +713,6 @@ so that the parameter vector is $\boldsymbol \theta = (A,\nu_0,\sigma)$, where $
 L(\boldsymbol \theta) \approx \frac{1}{(2\pi)^{n/2}(\textrm{det} \F^{-1})^{1/2}} \textrm{exp} \left ( -\frac{1}{2}(\boldsymbol \theta - \boldsymbol \theta_{\textrm{m}})^t \F (\boldsymbol \theta - \boldsymbol \theta_{\textrm{m}}) \right )
 \end{equation}
 where $n$ is the length of the parameter vector and $\boldsymbol \theta_{\textrm{m}}$ are the parameters with maximum likelihood. In order to more easily visualize the 3-dimensional contours of $L(\boldsymbol \theta)$, we examine the parameters pairwise by integrating over the third parameter in order to produce a new 2-dimensional likelihood function. Fig. \ref{fig:contours} shows contours of such pairwise likelihood functions for ... 
-
-\mep{Insert figures of pairwise projections and discussion thereof.} 
-
-\begin{figure}[h]
-	\centering
-	%\includegraphics[width=0.55\textwidth]{figures/oldFigures/contours_A_nu0.pdf}
-	\caption{\acl{Fill this in.  Probably also want to make this a horizontal stripe of constraints.}}
-	\label{fig:contours}
-\end{figure}
-
-\begin{figure}[h]
-	\centering
-	%\includegraphics[width=0.55\textwidth]{figures/oldFigures/contours_A_sigma.pdf}
-	\caption{\acl{Fill this in}}
-\end{figure}
-
-\begin{figure}[h]
-	\centering
-	%\includegraphics[width=0.55\textwidth]{figures/oldFigures/contours_nu0_sigma.pdf}
-	\caption{\acl{Fill this in}}
-\end{figure}
-
-\section{Conclusions}
-\label{sec:Conc}
-\acl{On the theme of better relating this to a broad audience, we can also relate this to the high redshift galaxy people.  If their (collective) constraints are to be believed, there should be a sharp rise in ionization fraction at a redshift that's *just* below what EDGES is able to constrain.  So perhaps this can be motivation for building a global signal experiment that can confirm/refute the optical and IR people}
-\begin{itemize}
-\item This is a great way to do this measurement.  It will produce lots of great science! And eternal glory!
-\end{itemize}
-
-
-
-
-\appendix
-\section{Proof of minimum-variance property of global signal estimator}
-\label{minVarProof}
 
 \bibliographystyle{apj}
 \bibliography{globalSig}{}
