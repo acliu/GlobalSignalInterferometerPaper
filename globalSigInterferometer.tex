@@ -221,9 +221,9 @@ Although we defer a full discussion of data analysis to Section \ref{sec:MathFor
 
 Following an initial estimate of the sky spectrum, we further suppress foregrounds by fitting a polynomial to the logarithm of the spectrum. Subtracting off the smooth polynomial fit, one obtains a residual spectrum
 \begin{equation}
-T_\textrm{res} (\nu) = \widehat{T}_0(\nu) -  \exp \left[ \sum_{n=0}^{N} a_n p_n( \log \nu) \right],
+T_\textrm{res} (\nu) = \widehat{T}_0(\nu) -  \exp \left[ \sum_{n=0}^{N_\textrm{poly}} a_n p_n( \log \nu) \right],
 \end{equation}
-where $p_n$ denotes the $n$th Legendre polynomial, with a corresponding expansion coefficient $a_n$ obtained from fitting $\log \widehat{T}_0$ up to order $N$. The set of polynomials that one fits to is arbitrary, and our choice of Legendre polynomials is simply one of convenience. \mep{So orthogonality had nothing to do with it? If the polys weren't orthogonal, wouldn't stuff get subtracted off more than once?}
+where $p_n$ denotes the $n$th Legendre polynomial, with a corresponding expansion coefficient $a_n$ obtained from fitting $\log \widehat{T}_0$ up to order $N_\textrm{poly}$. The set of polynomials that one fits to is arbitrary, and our choice of Legendre polynomials is simply one of convenience. \mep{So orthogonality had nothing to do with it? If the polys weren't orthogonal, wouldn't stuff get subtracted off more than once?}
 
 In Figure \ref{fig:unsub_T0_beamSize} we show simulations of an interferometric recovery of the global signal, $\widehat{T}_0 (\nu)$, averaged over $10,000$ random realizations of the simulated foregrounds. Because our simulations do not contain any cosmological signal, this is equal to $\Delta T_0$, the expected foreground bias. Each curve shows the result for a $12\times12$ square grid of tightly packed antennas with varying primary beam widths (and therefore varying baseline lengths). As expected, arrays with smaller beams/longer baselines exhibit a lower foreground bias, since our observations are centered around the NGP, so wider beams pick up more foregrounds from lower galactic latitudes, where they are typically brighter.
 
@@ -617,11 +617,44 @@ T(\nu) = -A \textrm{exp}\left ( -\frac{(\nu - \nu_0)^2}{2\sigma^2} \right ),
 \end{equation}
 where $A$ is the amplitude of the signal, $\nu_0$ is the center of the absorption dip, and $\sigma$ is the width. For the reionization signal, we use the form
 \begin{equation}
-T(\nu) = \frac{T_{21}}{2} \sqrt{\frac{1+z}{10}}\left[ 1 +  \tanh \left( \frac{z-z_r}{\Delta z} \right)\right],
+T_\textrm{reion}(\nu) = \frac{T_{21}}{2} \sqrt{\frac{1+z}{10}}\left[ 1 +  \tanh \left( \frac{z-z_r}{\Delta z} \right)\right],
 \end{equation}
 where $z_r$ is the redshift of the mid-point of reionization, $\Delta z$ is its rough duration, $T_{21}$ is an overall amplitude, and $z = (1420 \,\textrm{MHz} / \nu) - 1$.
 
-The final model parameters 
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=0.5\textwidth]{figures/reionScenarios.pdf}
+	\caption{\acl{Fill this in.}}
+	\label{fig:reionScenarios}
+\end{figure}
+
+The errors on final model parameters will depend on the fiducial ``true" values that are used in our simulations. Consider three different reionization scenarios:
+\begin{itemize}
+\item A pessimistic scenario, with $(T_{21}, z_r, \Delta z) = (10\,\textrm{mK}, 12, 3) $. With reionization occurring in a rather extended fashion at relatively high redshifts, this scenario should be the most difficult one to detect, since foregrounds are brighter at high redshifts. Additionally, an extended reionization scenario more closely mimics smooth foregrounds.
+\item A moderate scenario, with $(T_{21}, z_r, \Delta z) = (27\,\textrm{mK}, 10.5, 1) $. This model is motivated by the best-fit value of $z_r$ from \acl{Cite WMAP}. The value of $T_{21}$ is taken from theoretical calculations \acl{Cite Jonathan}, while $\Delta z$ is chosen to be neither too extended nor too abrupt.
+\item A optimistic scenario, with $(T_{21}, z_r, \Delta z) = (27\,\textrm{mK}, 8, 0.5) $. Here we choose to roughly match expectations from recent results from optical and infrared observations, which (in contrast to results from CMB experiments) typically favor reasonably rapid reionization at lower redshifts.
+\end{itemize}
+
+\begin{figure*}[h]
+	\centering
+	\includegraphics[width=1.00\textwidth,trim=3cm 2cm 3cm 0cm,clip]{figures/reionContoursPoly7Poly6.pdf}
+	\caption{\acl{Fill this in. Polynomial order was 7, and integration time was 300 hours. Also need to rerun for smaller array and smaller beam}}
+	\label{fig:reionContoursPoly7Poly6}
+\end{figure*}
+
+These scenarios are depicted in Figure \ref{fig:reionScenarios}. The corresponding model parameters are summarized in Table \acl{Do this}, along with the associated Fisher matrix projections for each parameter's $1\sigma$ error bars after having marginalized over the other parameters. Pairwise parameter contours are shown in Figures \ref{fig:reionContoursPoly7Poly6} and \ref{fig:reionContoursPoly7Poly7}. The results for single dipole experiments are shown using the filled regions, with orange portions signifying $95\%$ confidence regions and the enclosed white portions signifying $68\%$ confidence regions. Solid lines demarcate the corresponding confidence regions for our interferometer. The black point in each plot shows the fiducial parameter values used.
+
+Immediately obvious from Figures \ref{fig:reionContoursPoly7Poly6} and \ref{fig:reionContoursPoly7Poly7} is the fact that the pessimistic scenario will be extremely difficult to measure, whether using an interferometer or a single element. Reionization is simply too extended, and occurring at too high of a redshift for the cosmological signal to be easily distinguished from the bright foregrounds. Encouragingly, we see that both the moderate and the optimistic scenarios should be detectable by both types of instrument.
+
+In Figure \ref{fig:reionContoursPoly7Poly6} the polynomial order $N_\textrm{poly}$ for the $\log \widehat{T}$-$\log \nu$ foreground fits were taken to be 7 and 6 for the inteferometer and the single element experiments, respectively. These values were chosen to be as small as possible under the constraint that the final parameter biases fall within the $68\%$ confidence regions. The interferometer measurement contains slightly stronger unsmooth foreground residuals, necessitating higher order spectral foreground subtraction. The result is greater degeneracy with the cosmological signal, and thus larger error bars. However, the constraints are still reasonably competitive with single element instruments. In addition, suppose one is disturbed the fact that the biases for the single-element constraints in Figure \ref{fig:reionContoursPoly7Poly6} come uncomfortably close to moving beyond the $68\%$ confidence region. The solution to this would be to increase $N_\textrm{poly}$ to 7 for the single-element experiment. The results are shown in Figure \ref{fig:reionContoursPoly7Poly7}, and one sees that the interferometer now performs just as well as the single-element experiment does.
+
+\begin{figure*}[h]
+	\centering
+	\includegraphics[width=1.00\textwidth,trim=3cm 2cm 3cm 0cm,clip]{figures/reionContoursPoly7Poly7.pdf}
+	\caption{\acl{Fill this in. Polynomial order was 7, and integration time was 300 hours. Also need to rerun for smaller array and smaller beam}}
+	\label{fig:reionContoursPoly7Poly7}
+\end{figure*}
+
 %
 %\section{Monte carlo / foreground simulation results}
 %\label{sec:MonteCarlos}
