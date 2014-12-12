@@ -221,6 +221,7 @@ Although we defer a full discussion of data analysis to Section \ref{sec:MathFor
 
 Following an initial estimate of the sky spectrum, we further suppress foregrounds by fitting a polynomial to the logarithm of the spectrum. Subtracting off the smooth polynomial fit, one obtains a residual spectrum
 \begin{equation}
+\label{eq:FgFit}
 T_\textrm{res} (\nu) = \widehat{T}_0(\nu) -  \exp \left[ \sum_{n=0}^{N_\textrm{poly}} a_n p_n( \log \nu) \right],
 \end{equation}
 where $p_n$ denotes the $n$th Legendre polynomial, with a corresponding expansion coefficient $a_n$ obtained from fitting $\log \widehat{T}_0$ up to order $N_\textrm{poly}$. The set of polynomials that one fits to is arbitrary, and our choice of Legendre polynomials is simply one of convenience. \mep{So orthogonality had nothing to do with it? If the polys weren't orthogonal, wouldn't stuff get subtracted off more than once?}
@@ -340,6 +341,7 @@ Since $\Q$ is not in general invertible (or even a square matrix), we cannot sol
 \mathbf{\hat x} = \M \Q^\dagger \N^{-1} \y,
 \label{eqn:xhat}
 \end{equation}
+\acl{Maybe we should consider using a symbol other than $\N$}
 where $\N$ and $\M$ are both matrices that can be chosen by the data analyst. The $\N$ matrix measures $N_\textrm{bl} \times N_\textrm{bl}$, and its role is to encode (via $\N^{-1}$) how the data analyst might wish to weigh the different visibilities in forming estimates of the various spherical harmonics. Note that this weighting is in addition to the weighting that is naturally provided by $\Q^\dagger$, which (for a given spherical harmonic mode) upweights baselines if their visibilities are sensitive to that mode and downweights them otherwise. The matrix $\M$ measures $(\ell_\textrm{max} +1)^2 \times (\ell_\textrm{max} +1)^2$, and therefore operates on a set of estimated spherical harmonic modes; its role is to normalize our estimates of the different modes, and to possibly disentangle them from each other if there is leaked power between the modes. Our choices for $\M$ and $\N$ will determine the statistical properties of our final global signal estimates.
 
 \subsection{A possible choice for $\M$}
@@ -392,6 +394,7 @@ For all the reasons listed above, we therefore recommend against the use of Equa
 
 
 \subsection{A better choice for $\M$}
+\label{sec:BetterM}
 
 As an alternative to Equation \eqref{eqn:M}, consider the diagonal matrix given by 
 \begin{equation}
@@ -422,7 +425,7 @@ Defining a window function matrix $\W$ as
 we see that $\langle \xhat \rangle  = \W \mathbf{x}$, so each row of $\W$ gives the linear combination of spherical harmonics actually probed by our estimator $\hat{a}_{\ell m}$. The matrix $\W$ quantifies the amount of leakage between modes, and it depends on both our instrument (via $\Q$) and our data analysis method [via Equations \eqref{eqn:xhat} and \eqref{eq:diagM}]. Of particular interest will be the first row of $\W$, which will tell us what combination of spherical harmonics are actually being measured when we attempt to constrain the monopole $a_{00}$ mode.
 
 The choice of $\M$ used here has several attractive properties. In the Appendix we prove that our choice minimizes the variance (and therefore the error bars) in $\mathbf{\hat{x}}$. Additionally, Equation \eqref{eq:diagM} has the property that diagonal elements of $\W$ always equal unity. Focusing on the first row, then, we have $\W_{11} =1$, which implies that the amplitude of a pure monopole sky is preserved by our measurement and data analysis procedures. In other words, there is by construction never any signal loss.
-
+\acl{Gotta be careful. Our choice is only minimum variance if $\N$ is the noise}\\
 \acl{Talk about normalization as well as the Fisher matrix interpretation}
 %
 %In order to quantify the relative amount of leakage from the different modes, it is convenient to define
@@ -552,7 +555,7 @@ In Figure \ref{fig:Ncomparison}, we compare the global signal estimators that re
 More seriously, the use of the foreground-motivated $\N$ has the potential to introduce harmful artifacts into the final spectra. For example, bumpy spectral features are clearly visible in Figure \ref{fig:Ncomparison}, which can easily be confused with true spectral features in the cosmological signal. We find that such unsmooth structures are reasonably generic with the foreground-motivated $\N$. Much of this is because the quest to downweight brighter portions of the foreground sky requires the isolation of spatially small patches. To isolate these patches, high angular resolution is necessary, which means that the estimator must weight longer---and more chromatic---baselines more heavily. Long baselines also have the disadvantage of having low sensitivity to the monopole. With a heavier weighting of long baselines, it is more difficult for an interferometer to match the thermal noise sensitivity of a single dipole experiment. \acl{Why do we keep calling it a single dipole experiment? Single element would be better} Although it may be possible to eliminate all of these issues with a more sophisticated form for a foreground-motivated $\N$ in future work, for now we propose the use of $\N = \mathbf{I}$. \acl{This last line is perhaps not the most elegantly stated}
 
 \subsection{Step 2: Fitting smooth foregrounds}
-
+\label{sec:fitting}
 After the frequency-by-frequency combination of visibilities into an initial estimate of the monopole mode, one obtains spectra such as those shown in Figure \ref{fig:unsub_T0_beamSize} and Figure \ref{fig:Ncomparison} \acl{Be consistent about "Fig." versus "Figure"}. The spectra are clearly still dominated by smooth, near-power law foregrounds. It is therefore necessary to take further steps to mitigate foregrounds once the data have been reduced to a single spectrum.
 
 One approach is to subtract off smooth functions from the spectrum, be they polynomials or more data-driven forms (such as principal component spectra used in \acl{Cite Eric and I}). The (hopefully foreground-free) residuals can then be compared to theoretical models for the global signal, although care must be taken to properly account for the possibility that part of the cosmological signal may have been subtracted along with the foregrounds. An alternate approach, which we adopt in the rest of this paper, is to follow in the footsteps of \acl{Cite DARE, Jonathan, and Bernardi et. al.} and to fit for foreground and cosmological model parameters simultaneously. Doing so provides a natural description for signal loss, which manifests itself as degeneracies between foreground parameters and cosmological model parameters. One important trade-off is to decide how many foreground parameters to include. If too many parameters are used, much of the cosmological signal will be absorbed into the foreground model, resulting in large degeneracies and large final error bars on the parameters. On the other hand, having too few parameters will result in foreground residuals that will bias cosmological parameter values. We take the same approach as \acl{Cite Bernardi et al.}, where we include just enough foreground parameters for the cosmological parameter bias to be subdominant to the errors.
@@ -610,13 +613,15 @@ where we have re-introduced the frequency-dependence of various quantities in ou
 %\acl{Also need to add noise to simulations}.
 
 \section{Simulation results}
-
+\label{sec:SimResults}
 To evaluate the effectiveness of our global signal interferometer, we employ a Fisher matrix formalism. Our set-up is essentially identical to that of \acl{Cite Gianni et al.}, and thus we relegate our review of the formalism to Appendix \ref{fisher}. As a toy model for the dark ages \acl{Are we doing ``dark ages" or ``Dark Ages"?}, we again follow \acl{Cite Gianni et al.} and model the dip at $\sim 70\,\textrm{MHz}$ as a Gaussian:
 \begin{equation}
-T(\nu) = -A \textrm{exp}\left ( -\frac{(\nu - \nu_0)^2}{2\sigma^2} \right ),
+\label{eq:Dip}
+T_\textrm{dip}(\nu) = -A \textrm{exp}\left ( -\frac{(\nu - \nu_0)^2}{2\sigma^2} \right ),
 \end{equation}
 where $A$ is the amplitude of the signal, $\nu_0$ is the center of the absorption dip, and $\sigma$ is the width. For the reionization signal, we use the form
 \begin{equation}
+\label{eq:Step}
 T_\textrm{reion}(\nu) = \frac{T_{21}}{2} \sqrt{\frac{1+z}{10}}\left[ 1 +  \tanh \left( \frac{z-z_r}{\Delta z} \right)\right],
 \end{equation}
 where $z_r$ is the redshift of the mid-point of reionization, $\Delta z$ is its rough duration, $T_{21}$ is an overall amplitude, and $z = (1420 \,\textrm{MHz} / \nu) - 1$.
@@ -648,7 +653,7 @@ Immediately obvious from Figures \ref{fig:reionContoursPoly7Poly6} and \ref{fig:
 
 In Figure \ref{fig:reionContoursPoly7Poly6} the polynomial order $N_\textrm{poly}$ for the $\log \widehat{T}$-$\log \nu$ foreground fits were taken to be 7 and 6 for the inteferometer and the single element experiments, respectively. These values were chosen to be as small as possible under the constraint that the final parameter biases fall within the $68\%$ confidence regions. The interferometer measurement contains slightly stronger unsmooth foreground residuals, necessitating higher order spectral foreground subtraction. The result is greater degeneracy with the cosmological signal, and thus larger error bars. However, the constraints are still reasonably competitive with single element instruments. In addition, suppose one is disturbed the fact that the biases for the single-element constraints in Figure \ref{fig:reionContoursPoly7Poly6} come uncomfortably close to moving beyond the $68\%$ confidence region. The solution to this would be to increase $N_\textrm{poly}$ to 7 for the single-element experiment. The results are shown in Figure \ref{fig:reionContoursPoly7Poly7}, and one sees that the interferometer now performs just as well as the single-element experiment does.
 
-\begin{figure*}[h]
+\begin{figure*}[t]
 	\centering
 	\includegraphics[width=1.00\textwidth,trim=3cm 2cm 3cm 0cm,clip]{figures/reionContoursPoly7Poly7.pdf}
 	\caption{\acl{Fill this in. Polynomial order was 7, and integration time was 300 hours. Also need to rerun for smaller array and smaller beam}}
@@ -715,43 +720,69 @@ In Figure \ref{fig:reionContoursPoly7Poly6} the polynomial order $N_\textrm{poly
 \item This is a great way to do this measurement.  It will produce lots of great science! And eternal glory!
 \end{itemize}
 
-
+\acl{Acknowledge Carina and NERSC}
 
 
 \appendix
 \section{Proof of minimum-variance property of global signal estimator}
 \label{minVarProof}
 
+In this Appendix, we provide a constructive proof that choosing $\M$ to be diagonal (as we do in this paper starting in Section \ref{sec:BetterM}) minimizes the variance of our estimator $\xhat$, provided $\N$ represents the covariance of our measurement, i.e., $\N = \langle \mathbf{y} \mathbf{y}^\dagger \rangle - \langle \mathbf{y} \rangle \langle \mathbf{y} \rangle^\dagger$. \acl{I'm trying to figure out how to make this more self-contained and say what xhat is here.} The general form for the covariance $\boldsymbol \Sigma$ of $\xhat$ follows from Equation \eqref{eqn:xhat}, and is given by
+\begin{equation}
+\boldsymbol \Sigma \equiv \langle \xhat \xhat^\dagger \rangle - \langle \xhat \rangle \langle \xhat \rangle^\dagger = \M \Q^\dagger \N^{-1} \Q \M \equiv \M \mathbf{B} \M^\dagger,
+\end{equation}
+where we have made the definition $\mathbf{B} \equiv \Q^\dagger \N^{-1} \Q$ for convenience. With this notation, the window function matrix becomes $\W = \M \mathbf{B}$.
+
+To derive a minimum-variance estimator, we minimize the diagonal elements of $\boldsymbol \Sigma$ subject to the constraint that the window functions satisfy $\W_{ii} = (\M \mathbf{B})_{ii} =1$. Introducing a Lagrange multiplier $\lambda_i$, we seek to minimize the quantity
+\begin{equation}
+L = (\M \mathbf{B} \M^\dagger)_{ii} - \lambda_i  (\M \mathbf{B})_{ii}.
+\end{equation}
+Differentiating with respect to the real and imaginary parts of a generic component $\M_{jk}$ of $\M$, one obtains
+\begin{equation}
+\frac{\partial L}{\partial \textrm{Re} \M_{jk}} = (\mathbf{B} \M^\dagger + \M \mathbf{B})_{jk} - \lambda_j \mathbf{B}_{kj} =0
+\end{equation}
+and
+\begin{equation}
+\frac{\partial L}{\partial \textrm{Im} \M_{jk}} = (\mathbf{B} \M^\dagger - \M \mathbf{B})_{jk} - \lambda_j \mathbf{B}_{kj} =0,
+\end{equation}
+where we have set each expression to zero in order to perform a minimization. Now, recall that $\mathbf{B}$ is Hermitian. However, the combination $\mathbf{B} \M^\dagger - \M \mathbf{B}$ is by construction anti-Hermitian. For the second equation to hold, then, we require that $\mathbf{B} \M^\dagger = \M \mathbf{B}$. With this, the first equation reduces to $2 \M \mathbf{B} = \boldsymbol \Lambda \mathbf{B}$, where $\boldsymbol \Lambda_{ij} = \lambda_i \delta_{ij}$. Acting on both sides with $\mathbf{B}^{-1}$ then gives $\M = \boldsymbol \Lambda / 2$, which tells us that $\M$ must be diagonal. To fix the values of the Lagrange multipliers along the diagonal, we use our constraint $\W_{ii} = (\M \mathbf{B})_{ii} =1$ to yield $\M_{ij} = \delta_{ij} / \mathbf{B}_{ii}$. This is precisely the form of Equation \eqref{eq:diagM}, completing our proof.
+
 \section{Global signal Fisher matrix forecasting methods}
 \label{fisher}
+In this Appendix, we review the Fisher matrix formalism used in \acl{Cite Gianni} to forecast the error bars and biases in a global signal measurement. We do not claim any originality here, and include a description of the formalism only for completeness.
 
+The Fisher information matrix is defined as
+\begin{equation}
+\F_{ij} \equiv -\left \langle \frac{\partial^2 \ln \mathscr{L}(\boldsymbol \theta | \xhat)}{\partial \theta_i \partial \theta_j} \Big{|}_{\boldsymbol \theta_0} \right \rangle
+\end{equation}
+where $\mathscr{L}(\boldsymbol \theta | \xhat)$ is the likelihood function of a set of model parameters $\boldsymbol \theta$ given the measurements $\xhat$, with $\boldsymbol \theta_0$ denoting a set of fiducial values for the parameters. In our case, $\xhat$ should be thought of as a vector containing the final spectrum that one obtains after performing all the analysis steps prior to Section \ref{sec:fitting}. This spectrum will contain the cosmological signal (parameterized by one of the forms given in Section \ref{sec:SimResults}), foregrounds, and noise, and may be written as
+\begin{equation}
+\xhat = \xhat _\textrm{cosmo} + \xhat_\textrm{fg} + \boldsymbol \sigma = \boldsymbol \mu (\boldsymbol \theta) +\delta \xhat_\textrm{fg} + \boldsymbol \sigma,
+\end{equation}
+where $\xhat _\textrm{cosmo}$ is the cosmological signal, $\xhat_\textrm{fg}$ the foregrounds, and $\boldsymbol \sigma$ the residual instrumental noise. In the second equality, we separated the foreground contribution into a portion accounted for by the smooth spectrum fits described in Section \ref{sec:fitting} and a residual, $\delta \xhat_\textrm{fg}$. The former contribution is combined with the cosmological signal to give a model $\boldsymbol \mu (\boldsymbol \theta)$ for our spectrum. Since this model contains our foreground fits, the parameter vector $\boldsymbol \theta$ records not only the astrophysical/cosmological parameters such as those in Equations \eqref{eq:Dip} and \eqref{eq:Step}, but also the foreground parameters in Equation \eqref{eq:FgFit}. Assuming that the instrumental noise is Gaussian and has zero mean and covariance $\boldsymbol \Sigma \equiv \langle \boldsymbol \sigma \boldsymbol \sigma^t \rangle$, the Fisher matrix takes the form
+\begin{equation}
+\F_{ij} = \frac{\partial \boldsymbol \mu ^t}{\partial \theta_i} \boldsymbol \Sigma ^{-1} \frac{\partial \boldsymbol \mu}{\partial \theta_j}.
+\end{equation}
+Once the Fisher matrix has been computed, the smallest possible error $\Delta \theta_i$ (in the information theoretic sense) on the parameter $\theta_i$ is obtained by calculating $\Delta \theta_i = \sqrt{(\F^{-1})_{ii}}$. While an actual experiment may not necessarily deliver error bars that are as tight as this, the predictions of the Fisher matrix formalism are nonetheless a useful guide for experimental design.
 
-While the Monte Carlo simulations give us constraints on how well a certain experiment (defined by a given $\Q$ and $\N$) can measure the global signal $\hat \x_{00}$, they do not provide us with constraints on scientifically relevant cosmic parameters. In order to find how well an experiment could constrain parameters relevant to the time evolution of the global signal, we employ a Fisher matrix formalism. The Fisher information matrix is defined as 
+So far, we have only concerned ourselves with the variance of the final parameter constraints. However, foreground residuals will cause more than a spread in the parameter fits, biasing them in a systematic way. This bias is given by
 \begin{equation}
-\F_{i,j} = \left \langle \frac{\partial \mathscr{L}(\boldsymbol \theta | \x)}{\partial \theta_i \partial \theta_j} \right \rangle
+\delta \theta_i = \sum_{j} (\F^{-1})_{ij} \frac{\partial \boldsymbol \mu ^t}{\partial \theta_j} C^{-1} \delta \xhat_\textrm{fg}.
 \end{equation}
-where $\mathscr{L}(\boldsymbol \theta | \x)$ is the likelihood of a set of parameters $\boldsymbol \theta$ given the measurements $\x$ \acl{Careful: the thing that you differentiate to get the Fisher matrix is the *log* likelihood}. Given a Gaussian likelihood function with covariance matrix $C$ and centered on a model $\boldsymbol \mu(\boldsymbol \theta)$, and assuming that the measurements are unbiased, the elements of the Fisher matrix become
-\begin{equation}
-\F_{i,j} = \frac{\partial \boldsymbol \mu ^t}{\partial \theta_i} C^{-1} \frac{\partial \boldsymbol \mu}{\partial \theta_j}
-\end{equation}
-Note that the inverse of the Fisher matrix is the covariance of the parameters. Therefore, the error in $\theta_i$ is on the order of $\sigma_i \sim \sqrt{(\F^{-1})_{ii}}$. 
+In Section \ref{sec:SimResults}, $\delta \xhat_\textrm{fg}$ is obtained by running Monte Carlo simulations. We generate realizations of the foreground sky, which are then fed through a simulation of a measurement and data analysis. Averaging over simulations, the resulting spectra are then fit to logarithmic polynomials. The residuals (i.e., $\delta \xhat_\textrm{fg}$) are given by Equation \eqref{eq:FgFit}.
 
-Now, this methodology has assumed that the measurements are unbiased, i.e. $\langle \xhat \rangle = \boldsymbol \mu (\boldsymbol \theta)$. If the measurements are biased by $\delta \xhat$, then the parameters will be biased by 
-\begin{equation}
-\delta \theta_i = \sum_{j} (\F^{-1})_{ij} \frac{\partial \boldsymbol \mu ^t}{\partial \theta_j} C^{-1} \delta \xhat 
-\end{equation}
-Note that the dimensions here work out because $\delta \xhat$ and $\boldsymbol \mu(\boldsymbol \theta)$ have length $N_\textrm{fq}$, and $C^{-1}$ has dimensions $N_\textrm{fq} \times N_\textrm{fq}$.  
-
-Using the Fisher matrix formalism, we analyzed how well different arrays would be able to constrain models for different epochs in the evolution of the global signal. %\mep{It seems at this point that it would be helpful to refer to a picture of the fiducial model of the global signal, such as the one in your designer's guide paper. Actually, should we in an earlier section describe in more detail what we think the signal will look like? If so, where would that be? In the introduction?} \acl{Yep, I think the intro is the right place for it.  Earlier today I sneakily added a second sentence to the second bullet point there.} 
-At about $z\sim 30$ when the first galaxies form, we expect a significant absorption feature as Lyman-alpha photons couple the spin and gas temperatures (see Fig. \ref{fig:21cmSignal}). This dip can be modeled as a Gaussian in frequency
-\begin{equation}
-\boldsymbol \mu = -A\textrm{exp}\left ( -\frac{(\nu - \nu_0)^2}{2\sigma^2} \right ) 
-\end{equation}
-so that the parameter vector is $\boldsymbol \theta = (A,\nu_0,\sigma)$, where $A$ is the amplitude of the signal, $\nu_0$ is the center of the absorption dip, and $\sigma$ is the width. Given a model and a fisher matrix, we can approximate the likelihood function of the parameter values as a multivariate Gaussian with covariance $\F^{-1}$.  
-\begin{equation}
-L(\boldsymbol \theta) \approx \frac{1}{(2\pi)^{n/2}(\textrm{det} \F^{-1})^{1/2}} \textrm{exp} \left ( -\frac{1}{2}(\boldsymbol \theta - \boldsymbol \theta_{\textrm{m}})^t \F (\boldsymbol \theta - \boldsymbol \theta_{\textrm{m}}) \right )
-\end{equation}
-where $n$ is the length of the parameter vector and $\boldsymbol \theta_{\textrm{m}}$ are the parameters with maximum likelihood. In order to more easily visualize the 3-dimensional contours of $L(\boldsymbol \theta)$, we examine the parameters pairwise by integrating over the third parameter in order to produce a new 2-dimensional likelihood function. Fig. \ref{fig:contours} shows contours of such pairwise likelihood functions for ... 
+%Note that the dimensions here work out because $\delta \xhat$ and $\boldsymbol \mu(\boldsymbol \theta)$ have length $N_\textrm{fq}$, and $C^{-1}$ has dimensions $N_\textrm{fq} \times N_\textrm{fq}$.  
+%
+%Using the Fisher matrix formalism, we analyzed how well different arrays would be able to constrain models for different epochs in the evolution of the global signal. %\mep{It seems at this point that it would be helpful to refer to a picture of the fiducial model of the global signal, such as the one in your designer's guide paper. Actually, should we in an earlier section describe in more detail what we think the signal will look like? If so, where would that be? In the introduction?} \acl{Yep, I think the intro is the right place for it.  Earlier today I sneakily added a second sentence to the second bullet point there.} 
+%At about $z\sim 30$ when the first galaxies form, we expect a significant absorption feature as Lyman-alpha photons couple the spin and gas temperatures (see Fig. \ref{fig:21cmSignal}). This dip can be modeled as a Gaussian in frequency
+%\begin{equation}
+%\boldsymbol \mu = -A\textrm{exp}\left ( -\frac{(\nu - \nu_0)^2}{2\sigma^2} \right ) 
+%\end{equation}
+%so that the parameter vector is $\boldsymbol \theta = (A,\nu_0,\sigma)$, where $A$ is the amplitude of the signal, $\nu_0$ is the center of the absorption dip, and $\sigma$ is the width. Given a model and a fisher matrix, we can approximate the likelihood function of the parameter values as a multivariate Gaussian with covariance $\F^{-1}$.  
+%\begin{equation}
+%L(\boldsymbol \theta) \approx \frac{1}{(2\pi)^{n/2}(\textrm{det} \F^{-1})^{1/2}} \textrm{exp} \left ( -\frac{1}{2}(\boldsymbol \theta - \boldsymbol \theta_{\textrm{m}})^t \F (\boldsymbol \theta - \boldsymbol \theta_{\textrm{m}}) \right )
+%\end{equation}
+%where $n$ is the length of the parameter vector and $\boldsymbol \theta_{\textrm{m}}$ are the parameters with maximum likelihood. In order to more easily visualize the 3-dimensional contours of $L(\boldsymbol \theta)$, we examine the parameters pairwise by integrating over the third parameter in order to produce a new 2-dimensional likelihood function. Fig. \ref{fig:contours} shows contours of such pairwise likelihood functions for ... 
 
 \bibliographystyle{apj}
 \bibliography{globalSig}{}
