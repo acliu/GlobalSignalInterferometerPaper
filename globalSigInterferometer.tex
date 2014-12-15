@@ -800,7 +800,7 @@ The authors would like to thank Carina Cheng and Zaki Ali for useful discussions
 \section{Proof of minimum-variance property of global signal estimator}
 \label{minVarProof}
 
-In this Appendix, we provide a constructive proof that choosing $\M$ to be diagonal (as we do in this paper starting in Section \ref{sec:BetterM}) minimizes the variance of our estimator $\xhat$, provided $\N$ represents the covariance of our measurement, i.e., $\N = \langle \mathbf{y} \mathbf{y}^\dagger \rangle - \langle \mathbf{y} \rangle \langle \mathbf{y} \rangle^\dagger$. \acl{I'm trying to figure out how to make this more self-contained and say what xhat is here.} The general form for the covariance $\boldsymbol \Sigma$ of $\xhat$ follows from Equation \eqref{eqn:xhat}, and is given by
+In this Appendix, we provide a constructive proof that choosing $\M$ to be diagonal (as we do in this paper starting in Section \ref{sec:BetterM}) minimizes the variance of our estimator $\xhat$, provided $\N$ represents the covariance of our measurement, i.e., $\N = \langle \mathbf{y} \mathbf{y}^\dagger \rangle - \langle \mathbf{y} \rangle \langle \mathbf{y} \rangle^\dagger$. \acl{I'm trying to figure out how to make this more self-contained and say what xhat is here.} As discussed in Section \ref{sec:SimResults}, the general form for the covariance $\boldsymbol \Sigma$ of $\xhat$ follows from Equation \eqref{eqn:xhat}, and is given by
 \begin{equation}
 \boldsymbol \Sigma \equiv \langle \xhat \xhat^\dagger \rangle - \langle \xhat \rangle \langle \xhat \rangle^\dagger = \M \Q^\dagger \N^{-1} \Q \M \equiv \M \mathbf{B} \M^\dagger,
 \end{equation}
@@ -824,15 +824,15 @@ where we have set each expression to zero in order to perform a minimization. No
 \label{fisher}
 In this Appendix, we review the Fisher matrix formalism used in \acl{Cite Gianni} to forecast the error bars and biases in a global signal measurement. We do not claim any originality here, and include a description of the formalism only for completeness.
 
-The Fisher information matrix is defined as
+Suppose we group our final estimate of the global signal $\widehat{T}_0 (\nu)$ into a vector $\widehat{\mathbf{T}}$, so that each component corresponds to the measured global signal value at a particular frequency. With this notation, the Fisher information matrix is defined as
 \begin{equation}
-\F_{ij} \equiv -\left \langle \frac{\partial^2 \ln \mathscr{L}(\boldsymbol \theta | \xhat)}{\partial \theta_i \partial \theta_j} \Big{|}_{\boldsymbol \theta_0} \right \rangle
+\F_{ij} \equiv -\left \langle \frac{\partial^2 \ln \mathscr{L}(\boldsymbol \theta | \widehat{\mathbf{T}})}{\partial \theta_i \partial \theta_j} \Big{|}_{\boldsymbol \theta_0} \right \rangle
 \end{equation}
-where $\mathscr{L}(\boldsymbol \theta | \xhat)$ is the likelihood function of a set of model parameters $\boldsymbol \theta$ given the measurements $\xhat$, with $\boldsymbol \theta_0$ denoting a set of fiducial values for the parameters. In our case, $\xhat$ should be thought of as a vector containing the final spectrum that one obtains after performing all the analysis steps prior to Section \ref{sec:fitting}. This spectrum, which contains the cosmological signal (parameterized by one of the forms given in Section \ref{sec:SimResults}), foregrounds, and noise, may be written as
+where $\mathscr{L}(\boldsymbol \theta | \widehat{\mathbf{T}})$ is the likelihood function of a set of model parameters $\boldsymbol \theta$ given the measurements $\widehat{\mathbf{T}}$, with $\boldsymbol \theta_0$ denoting a set of fiducial values for the parameters. Now, recall that $\widehat{\mathbf{T}}$ contains the measured global signal spectrum prior to the smooth foreground fitting described in Section \ref{sec:fitting}. It therefore contains not only the cosmological signal (parameterized by one of the forms given in Section \ref{sec:SimResults}), but also foregrounds and noise, and may be written as
 \begin{equation}
-\xhat = \xhat _\textrm{cosmo} + \xhat_\textrm{fg} + \boldsymbol \sigma = \boldsymbol \mu (\boldsymbol \theta) +\delta \xhat_\textrm{fg} + \boldsymbol \sigma,
+\widehat{\mathbf{T}}= \widehat{\mathbf{T}} _\textrm{cosmo} + \widehat{\mathbf{T}}_\textrm{fg} + \boldsymbol \sigma = \boldsymbol \mu (\boldsymbol \theta) +\delta \widehat{\mathbf{T}}_\textrm{fg} + \boldsymbol \sigma,
 \end{equation}
-where $\xhat _\textrm{cosmo}$ is the cosmological signal, $\xhat_\textrm{fg}$ the foregrounds, and $\boldsymbol \sigma$ the residual instrumental noise. In the second equality, we separated the foreground contribution into a portion accounted for by the smooth spectrum fits described in Section \ref{sec:fitting} and a residual, $\delta \xhat_\textrm{fg}$. The former contribution is combined with the cosmological signal to give a model $\boldsymbol \mu (\boldsymbol \theta)$ for our spectrum. Since this model contains our foreground fits, the parameter vector $\boldsymbol \theta$ records not only the astrophysical/cosmological parameters such as those in Equations \eqref{eq:Dip} and \eqref{eq:Step}, but also the foreground parameters in Equation \eqref{eq:FgFit}. Assuming that the instrumental noise is Gaussian, has zero mean, and has covariance $\boldsymbol \Pi \equiv \langle \boldsymbol \sigma \boldsymbol \sigma^t \rangle$, the Fisher matrix takes the form
+where $\widehat{\mathbf{T}} _\textrm{cosmo}$ is the cosmological signal, $\widehat{\mathbf{T}}_\textrm{fg}$ the foregrounds, and $\boldsymbol \sigma$ the residual instrumental noise. In the second equality, we separated the foreground contribution into a portion accounted for by the smooth spectrum fits described in Section \ref{sec:fitting} and a residual, $\delta \widehat{\mathbf{T}}_\textrm{fg}$. The former contribution is combined with the cosmological signal to give a model $\boldsymbol \mu (\boldsymbol \theta)$ for our spectrum. Since this model contains our foreground fits, the parameter vector $\boldsymbol \theta$ records not only the astrophysical/cosmological parameters such as those in Equations \eqref{eq:Dip} and \eqref{eq:Step}, but also the foreground parameters in Equation \eqref{eq:FgFit}. Assuming that the instrumental noise is Gaussian and has zero mean and covariance $\boldsymbol \Pi \equiv \langle \boldsymbol \sigma \boldsymbol \sigma^t \rangle$, the Fisher matrix takes the form
 \begin{equation}
 \F_{ij} = \frac{\partial \boldsymbol \mu ^t}{\partial \theta_i} \boldsymbol \Pi ^{-1} \frac{\partial \boldsymbol \mu}{\partial \theta_j}.
 \end{equation}
@@ -840,9 +840,9 @@ Once the Fisher matrix has been computed, the smallest possible error $\Delta \t
 
 So far, we have only concerned ourselves with the variance of the final parameter constraints. However, foreground residuals will cause more than a spread in the parameter fits --- they will also bias the fits in a systematic way. This bias is given by
 \begin{equation}
-\delta \theta_i = \sum_{j} (\F^{-1})_{ij} \frac{\partial \boldsymbol \mu ^t}{\partial \theta_j} \boldsymbol \Pi ^{-1} \delta \xhat_\textrm{fg}.
+\delta \theta_i = \sum_{j} (\F^{-1})_{ij} \frac{\partial \boldsymbol \mu ^t}{\partial \theta_j} \boldsymbol \Pi ^{-1} \delta \widehat{\mathbf{T}}_\textrm{fg}.
 \end{equation}
-In Section \ref{sec:SimResults}, $\delta \xhat_\textrm{fg}$ is obtained by running Monte Carlo simulations. We generate realizations of the foreground sky, which are then fed through a simulation of a measurement and data analysis. Averaging over simulations, the resulting spectra are then fit to logarithmic polynomials. The residuals (i.e., $\delta \xhat_\textrm{fg}$) are given by Equation \eqref{eq:FgFit}.
+In Section \ref{sec:SimResults}, $\delta \xhat_\textrm{fg}$ is obtained by running Monte Carlo simulations. We generate realizations of the foreground sky, which are then fed through a simulation of a measurement and data analysis. Averaging over simulations, the resulting spectra are then fit to logarithmic polynomials. The residuals (i.e., $\delta \widehat{\mathbf{T}}_\textrm{fg}$) are given by Equation \eqref{eq:FgFit}.
 
 %Note that the dimensions here work out because $\delta \xhat$ and $\boldsymbol \mu(\boldsymbol \theta)$ have length $N_\textrm{fq}$, and $C^{-1}$ has dimensions $N_\textrm{fq} \times N_\textrm{fq}$.  
 %
