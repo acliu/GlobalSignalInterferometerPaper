@@ -212,8 +212,14 @@ One important property of the foreground sky is the fact that it is not rotation
 
 Narrow primary beams, however, are not without their drawbacks. In general, angular avoidance strategies alone will be unable to mitigate foregrounds to the level required for a detection of the cosmological global signal. An angular avoidance strategy in principle allows the rejection of any foregrounds that are not spatially constant (i.e., are not the monopole), but are unable to remove the monopole component of foregrounds. Put another way, an observational strategy that avoids the strongest foregrounds will reduce the magnitude of foreground contamination considerably, but will at best only be able to reduce the contamination to the minimum foreground temperature on the sky, which can still be much brighter than the cosmological signal. Ultimately, one must therefore also rely on spectral foreground subtraction methods, and this is where narrow beams and long baselines may not be advantageous. Spectral subtraction typically exploits the intrinsic smoothness of foreground spectra, projecting out smooth components of the data. For such a procedure to be successful, then, one must avoid having an instrument that imprints extra spectral features into the data. Long baselines are particularly prone to such imprints, since the angular mode number $\ell \sim 2 \pi u \sim 2 \pi b / \lambda$ probed by a baseline $b$ varies more rapidly with frequency (or wavelength) when $b$ is large, allowing non-uniform spatial features of the sky to couple more strongly into spectral ripples. \mep{Just for my curiosity: is there an intuitive explanation for why frequency imprints are more common for larger baselines? Is it a fluke of instrument design, or is there a more fundamental reason?} \footnote{Indeed, this is a common concern for $21\,\textrm{cm}$ tomography, and is the origin of the ``foreground wedge" signature seen in power spectrum measurements\acl{cite some stuff}. However, one key difference is that most interferometer arrays targeting the power spectrum are not tightly packed (though they do tend to be quite compact). Such arrays are therefore not subject to our constraint that the primary beam width and the baseline length vary in a strictly reciprocal fashion. \acl{Talk about how HERA is an exception}} Such spectral ripples will survive a spectral foreground subtraction that projects out smooth modes (although see \acl{cite myself} for a proposal for how these ripples can be modeled \emph{in situ} from the data itself), leaving residuals that may be indistinguishable from the cosmological signal. Combining this with our previous discussion, we see that an array with longer baselines and narrower primary beams may see dimmer foregrounds prior to spectral foreground subtraction, but may imprint spectral signatures that result in greater post-subtraction foreground residuals. An optimal array is one with a beam size that is chosen to balance these two competing demands.
 
-Because spatial features of the foreground sky such as the Galactic plane are difficult to model statistically, numerical simulations are required to find the right balance in primary beam size. To perform such simulations, we first form simulated foreground skies between $100$ and $200\,\textrm{MHz}$ by extrapolating the $408\,\textrm{MHz}$ Haslam map \acl{cite} pixel-by-pixel using a power-law-like relation \acl{Insert equation}. Observations are assumed to be centered on the Northern Galactic Pole (NGP) with the extent of the field defined by the primary beam of the instrument, which we take to be a Gaussian attenuated by a cosine (to ensure that the primary beam vanishes at the horizon):
+Because spatial features of the foreground sky such as the Galactic plane are difficult to model statistically, numerical simulations are required to find the right balance in primary beam size. To perform such simulations, we first form simulated foreground skies between $100$ and $200\,\textrm{MHz}$ by extrapolating the $408\,\textrm{MHz}$ Haslam map \acl{cite} pixel-by-pixel using a power-law-like relation \acl{Insert equation}
 \begin{equation}
+\label{sec:HaslamExtrap}
+T(\nu).
+\end{equation}
+Observations are assumed to be centered on the Northern Galactic Pole (NGP) with the extent of the field defined by the primary beam of the instrument, which we take to be a Gaussian attenuated by a cosine (to ensure that the primary beam vanishes at the horizon):
+\begin{equation}
+\label{eq:TaperedGauss}
 A(\theta, \varphi) = \exp \left( -\frac{1}{2} \frac{\theta^2}{\theta_b^2} \right) \cos \theta,
 \end{equation}
 \acl{Gotta talk about how the beam width changes with frequency}
@@ -347,7 +353,12 @@ Since $\Q$ is not in general invertible (or even a square matrix), we cannot sol
 \label{eqn:xhat}
 \end{equation}
 \acl{Maybe we should consider using a symbol other than $\N$}\mep{What's wrong with $\N$?}
-where $\N$ and $\M$ are both matrices that can be chosen by the data analyst. The $\N$ matrix measures $N_\textrm{bl} \times N_\textrm{bl}$, and its role is to encode (via $\N^{-1}$) how the data analyst might wish to weigh the different visibilities in forming estimates of the various spherical harmonics. Note that this weighting is in addition to the weighting that is naturally provided by $\Q^\dagger$, which (for a given spherical harmonic mode) upweights baselines if their visibilities are sensitive to that mode and downweights them otherwise. The matrix $\M$ measures $(\ell_\textrm{max} +1)^2 \times (\ell_\textrm{max} +1)^2$, and therefore operates on a set of estimated spherical harmonic modes. Its role is to normalize our estimates of the different modes, and to possibly disentangle them from each other if there is leaked power between the modes. Our choices for $\M$ and $\N$ will determine the statistical properties of our final global signal estimates.
+where $\N$ and $\M$ are both matrices that can be chosen by the data analyst. The $\N$ matrix measures $N_\textrm{bl} \times N_\textrm{bl}$, and its role is to encode (via $\N^{-1}$) how the data analyst might wish to weigh the different visibilities in forming estimates of the various spherical harmonics. Note that this weighting is in addition to the weighting that is naturally provided by $\Q^\dagger$, which (for a given spherical harmonic mode) upweights baselines if their visibilities are sensitive to that mode and downweights them otherwise. The matrix $\M$ measures $(\ell_\textrm{max} +1)^2 \times (\ell_\textrm{max} +1)^2$, and therefore operates on a set of estimated spherical harmonic modes. Its role is to normalize our estimates of the different modes, and to possibly disentangle them from each other if there is leaked power between the modes. Our choices for $\M$ and $\N$ will determine the statistical properties of our final global signal estimates. For example, the variance $\boldsymbol \Sigma$ of our estimator (the square root of which gives the error bars from instrumental noise) is given by
+\begin{equation}
+\label{eq:NoiseMatrixSigma}
+\boldsymbol \Sigma \equiv \langle \xhat \xhat^\dagger \rangle - \langle \xhat \rangle \langle \xhat \rangle^\dagger = \M \Q^\dagger \mathbf{H} \N \mathbf{H} \Q \M,
+\end{equation}
+where $\mathbf{N} \equiv \langle \y \y^\dagger \rangle - \langle \y \rangle \langle \y \rangle^\dagger$ is the instrumental noise covariance of the visibilities. This is clearly affected by our choices for $\mathbf{H}$ and $\M$. \acl{Ok, having written things like this, we are committed to using $\mathbf{H}$ instead of $\N$.}
 
 \subsection{A possible choice for $\M$}
 \label{sec:badMmatrix}
@@ -449,6 +460,7 @@ Equations \eqref{eqn:xhat} and \eqref{eq:diagM} then reduce to
 \end{equation}
 For the global signal (i.e., spatial monopole), we are interested in the first component of this $\mathbf{\hat{x}}$ vector. Isolating this and dividing both sides $\sqrt{4\pi}$ to convert from our $a_{00}$ to the all-sky average, we obtain
 \begin{equation}
+\label{eq:singleElementExtraction}
 \widehat{T}_0 = \frac{y}{ \int d\Omega A(\mathbf{\hat{r}}) },
 \end{equation}
 which is the estimator that one would have guessed from simple considerations---the measurement $y$ is just a weighted average of the sky, and the denominator normalizes the weights. This is in fact also a special case of the estimator given in Equation \eqref{eq:singleBlSillyEst}, where the baseline vector $\mathbf{b}$ is set to zero. Note that there was no need to specify the matrix $\N$, because with only a single measurement from a single dipole, $\N$ reduces to a single scalar. The copy of $\N$ in Equation \eqref{eqn:xhat} will therefore always cancel the copy in \eqref{eq:diagM}. \mep{Wait, so how does the noise come into our analysis?} 
@@ -569,15 +581,20 @@ One approach is to subtract off smooth functions from the spectrum, be they poly
 
 In summary, we propose a ``simple is best" approach for extracting the global signal from interferometric data. In what follows, we will set $\N = \mathbf{I}$ and adopt Equation \eqref{eq:diagM} for $\M$. Plugging these into Equation \eqref{eqn:xhat}, recasting our vector/matrix expressions in terms of continuous functions, we obtain
 \begin{equation}
-\widehat{T}_0 (\nu)= \frac{\sum_j \left[ \int d\Omega A(\rhat, \nu) \exp\left( i 2 \pi \frac{\nu }{c} \mathbf{b}_k \cdot \rhat \right)\right] V(\mathbf{b}_j, \nu)}{\sum_k \big{|} \int d\Omega A(\rhat, \nu) \exp\left( i 2 \pi \frac{\nu }{c} \mathbf{b}_k \cdot \rhat \right) \big{|}^2},
+\label{eq:IntegralEstInterferometer}
+\widehat{T}_0 (\nu)= \frac{\sum_j \left[ \int d\Omega A(\rhat, \nu) \exp\left( i 2 \pi \frac{\nu }{c} \mathbf{b}_j \cdot \rhat \right)\right] V(\mathbf{b}_j, \nu)}{\sum_k \big{|} \int d\Omega A(\rhat, \nu) \exp\left( i 2 \pi \frac{\nu }{c} \mathbf{b}_k \cdot \rhat \right) \big{|}^2},
 \end{equation}
-where we have re-introduced the frequency-dependence of various quantities in our notation. Following this, we fit the spectrum with a model that includes foreground fits and cosmological parameters. For our foreground fits, we use the same parametric forms as we did in Section \ref{sec:beamSize}, namely Legendre polynomials in $\log \widehat{T}$-$\log \nu$.
+where we have re-introduced the frequency-dependence of various quantities in our notation. Essentially, our estimator amounts to performing a linear fit (frequency-by-frequency) to our data in order to find the value of the monopole that is most consistent with our measured visibility. Following this, we fit the spectrum with a model that includes foreground fits and cosmological parameters. For our foreground fits, we use the same parametric forms as we did in Section \ref{sec:beamSize}, namely Legendre polynomials in $\log \widehat{T}$-$\log \nu$.
 
 \acl{Talk about how it doesn't really matter how many spherical harmonic coefficients one solves for. Maybe?}
 
 
-\section{Set-up of numerical studies}
-\acl{Be sure to include a formula for noise}
+%\section{Set-up of numerical studies}
+%\acl{Be sure to include a formula for noise}
+%In the following section, we will 
+
+
+
 
 %
 %\section{Foregrounds and their mitigation}
@@ -617,9 +634,28 @@ where we have re-introduced the frequency-dependence of various quantities in ou
 %\acl{Somewhere, we also need to address rotation synthesis}
 %\acl{Also need to add noise to simulations}.
 
-\section{Simulation results}
+\section{Numerical simulations}
 \label{sec:SimResults}
-To evaluate the effectiveness of our global signal interferometer, we employ a Fisher matrix formalism. Our set-up is essentially identical to that of \acl{Cite Gianni et al.}, and thus we relegate our review of the formalism to Appendix \ref{fisher}. As a toy model for the dark ages \acl{Are we doing ``dark ages" or ``Dark Ages"?}, we again follow \acl{Cite Gianni et al.} and model the dip at $\sim 70\,\textrm{MHz}$ as a Gaussian:
+
+In this section, we bring together the various lessons that we have learned regarding instrument design and data analysis to numerically forecast the performance of a fiducial global signal interferometer. Much of our simulation methodology has already been employed in previous sections to produce intermediate results, but we will provide a quick summary here (and add new details) for the reader's convenience.
+
+Guided by the rough arguments of Section \ref{sec:BackOfEnvelopeArrayDesign}, we simulate visibilities from a $5\times5$ square grid of tightly packed antennas. The primary beam of each element is taken to be a tapered Gaussian of the form given by Equation \eqref{eq:TaperedGauss}, with $\theta_b = 0.2\,\textrm{rad}$ (for a FWHM of $26.5^\circ$). \acl{Talk about beam evolution} We assume that observations are centered on the Northern Galactic Pole and span a band consisting of $1\,\textrm{MHz}$ channels from $100\,\textrm{MHz}$ to $200\,\textrm{MHz}$. For comparison, we also predict the performance of a single-element global signal experiment using the same type of antenna element and the same observing strategy.
+
+For our simulated foreground sky, we use the same set-up as we did in Section \ref{sec:beamSize}, where each pixel of the $408\,\textrm{MHz}$ map is extrapolated to the relevant frequencies on a pixel-by-pixel basis using Equation \eqref{eq:HaslamExtrap}. The parameters in the power-law-like extrapolation are drawn randomly as before, and we generate $10,000$ different realizations of the foreground sky. With each sky, we then simulate visibilities and total power measurements for the interferometric and single element measurements, respectively. Frequency-by-frequency estimates are of the global signal are then obtained using Equation \eqref{eq:singleElementExtraction} for the single element and Equation \eqref{eq:IntegralEstInterferometer} for the interferometer. The results are then averaged together to yield mean foreground spectra for each type of experiment. Finally, smooth foreground components are fit from these spectra in the manner described in Sections \ref{sec:beamSize} and \ref{sec:fitting}. The result is a set of residual foreground spectra.
+
+Aside from residual foregrounds, our forecasts must also incorporate instrumental noise. Modeling this contribution requires three separate covariance matrices. The first is the instrumental noise covariance $\N$ of the visibilities. We assume that the instrumental noise is uncorrelated between different baselines, so that\footnote{Note that our expression differs from the standard radiometer equation by a factor of $\Omega_p$ because we have adopted an unusual convention where our visibilities have units of temperature times solid angle\acl{Instead of the usual...}}
+\begin{equation}
+\N_{ij} (\nu) = \frac{T^2_\textrm{sys}(\nu) \Omega_p}{t_\textrm{int} \Delta \nu} \delta_{ij},
+\end{equation}
+where the indices refer to different baselines, $\Omega_p = \int  A(\mathbf{\hat{r}}) d\Omega$ is the size of the primary beam, $T_\textrm{sys}$ is the system temperature, $\Delta \nu$ is the channel width, and $t_\textrm{int}$ is the total integration time. We take $\Delta \nu = 1\,\textrm{MHz}$ and $t_\textrm{int} = 300\,\textrm{hrs}$. For the system temperature we assume that the measurements are sky-noise dominated, and we set $T_\textrm{sys}$ equal to the primary beam averaged sky temperature.
+
+With the noise covariance of the visibilities $\N$ in hand, we can obtain the covariance matrix $\boldsymbol \Sigma$ of our estimator $\xhat$. To do so, we insert $\N$ into Equation \eqref{eq:NoiseMatrixSigma}. Since $\xhat$ contains estimates of all the spherical harmonic modes that we wish to solve for,   it is an $(\ell_\textrm{max} +1)^2 \times (\ell_\textrm{max}+1)^2$ matrix relating all the errors on the $a_{\ell m}$ estimates to one another. With our focus being the monopole term, we require only the first element on the diagonal of $\boldsymbol \Sigma$. Extracting this element for every observation frequency, we can place the resulting variances along the diagonal of yet another covariance matrix $\boldsymbol \Pi$. This is the frequency-frequency noise covariance matrix of our final spectrum, and by populating only its diagonal elements (setting all other elements to zero), we are assuming that noise contributions from different frequencies are uncorrelated. Note that in the case of the single element experiment, the diagonals of $\boldsymbol \Pi$ reduce to $T^2_\textrm{sys}(\nu) \Omega_p / t_\textrm{int} \Delta \nu$, as one might expect.
+
+\acl{Add comment about rotation synthesis, as well as why we're allowed to average of MCs}
+
+With a final noise covariance and a residual foreground spectrum on hand, we can translate our 
+
+To evaluate the effectiveness of our global signal interferometer, we employ a Fisher matrix formalism. Our set-up is essentially identical to that of \acl{Cite Gianni et al.}, and thus we relegate a review of the formalism to Appendix \ref{fisher}. As a toy model for the dark ages \acl{Are we doing ``dark ages" or ``Dark Ages"?}, we again follow \acl{Cite Gianni et al.} and model the dip at $\sim 70\,\textrm{MHz}$ as a Gaussian:
 \begin{equation}
 \label{eq:Dip}
 T_\textrm{dip}(\nu) = -A \textrm{exp}\left ( -\frac{(\nu - \nu_0)^2}{2\sigma^2} \right ),
