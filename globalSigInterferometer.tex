@@ -117,7 +117,7 @@ In this paper, we build on \citet{VedanthamLOFAR2}, generalizing their work to c
 \end{itemize}
 
 The rest of this paper is organized as follows.  In Section \ref{sec:BackOfEnvelopeArrayDesign} we provide some qualitative intuition for using interferometry to measure monopole signals.  This is made more mathematically rigorous in Section \ref{sec:MathForm}, where we establish a matrix-based framework for signal extraction.  Section \ref{sec:Foregrounds} introduces foregrounds and our strategy for their mitigation.  Its effectiveness is demonstrated using Monte Carlo simulations in Section \ref{sec:MonteCarlos}.  The Monte Carlo results are then propagated through to theory parameters in Section \ref{sec:Fisher} using a Fisher matrix formalism.  We summarize our conclusions in Section \ref{sec:Conc}.
-
+\acl{Gotta talk about systematics like RFI, cross-talk, noise bias, etc.}
 \acl{Insert guide for readers who don't like math.}
 
 %\section{Why we're really not crazy}
@@ -826,7 +826,7 @@ The authors would like to thank Carina Cheng and Zaki Ali for useful discussions
 \appendix
 \section{Proof of minimum-variance property of global signal estimator}
 \label{minVarProof}
-
+\acl{Check generality wrt H}
 In this Appendix, we provide a constructive proof that choosing $\M$ to be diagonal (as we do in this paper starting in Section \ref{sec:BetterM}) minimizes the variance of our estimator $\xhat$, provided $\N$ represents the covariance of our measurement, i.e., $\N = \langle \mathbf{y} \mathbf{y}^\dagger \rangle - \langle \mathbf{y} \rangle \langle \mathbf{y} \rangle^\dagger$. \acl{I'm trying to figure out how to make this more self-contained and say what xhat is here.} As discussed in Section \ref{sec:SimResults}, the general form for the covariance $\boldsymbol \Sigma$ of $\xhat$ follows from Equation \eqref{eqn:xhat}, and is given by
 \begin{equation}
 \boldsymbol \Sigma \equiv \langle \xhat \xhat^\dagger \rangle - \langle \xhat \rangle \langle \xhat \rangle^\dagger = \M \Q^\dagger \N^{-1} \Q \M \equiv \M \mathbf{B} \M^\dagger,
