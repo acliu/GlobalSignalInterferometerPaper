@@ -142,6 +142,21 @@ In this section, we use simplified toy models to build intuition for the types o
 
 Consider first a purely qualitative picture of an 
 
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=0.50\textwidth]{figures/beam_pattern_cartoon.pdf}
+	\caption{}
+	\label{fig:beam_pattern_cartoon}
+\end{figure}
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=0.50\textwidth]{figures/uv_cartoon.pdf}
+	\caption{}
+	\label{fig:uv_cartoon}
+\end{figure}
+
+
 \subsection{Sparse or packed arrays?}
 
 Suppose we consider an array consisting of just a single baseline, and ask what baseline length $b$ optimizes measurements of the global signal.  Intuitively, a short $b$ increases sensitivity to the signal, since (for a given $uv$ plane primary beam kernel) short baselines have the greatest overlap with the $\mathbf{u}=0$ mode, which is precisely what we are seeking to measure.  On the other hand, foregrounds contamination is worst for short baselines, since they are mostly sensitive to the smoothest spatial modes of the sky, where foregrounds dominate.  There must therefore exist an intermediate baseline length that best balances these two competing demands, which we will now compute.
