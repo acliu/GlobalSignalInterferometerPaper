@@ -30,6 +30,7 @@
 \newcommand{\A}{\mathbf{A}}
 \newcommand{\y}{\mathbf{y}}
 \newcommand{\N}{\mathbf{N}}
+\newcommand{\Hmat}{\mathbf{H}}
 \newcommand{\Nfg}{\mathbf{N}_{\textrm{fg}}}
 \newcommand{\Q}{\mathbf{Q}}
 \newcommand{\M}{\mathbf{M}}
@@ -276,6 +277,8 @@ Thus far, we have established that the ideal global signal interferometer is one
 
 As one adds more and more elements to a regular array (increasing $N$), the main effect is an increase in the number of short baselines, providing repeated measurements of the same visibilities that can be combined to average down instrumental noise. While it is true that adding more elements to an array also gives rise to some longer baselines (since the only way to add antenna elements to a closely packed array is to add them to the periphery), these baselines have minimal response to the global signal and only provide information regarding foregrounds. This information can in principle be used to help with foreground mitigation, but as we shall see when we discuss data analysis in Section \ref{sec:MathForm}, it is difficult to use this information without introducing chromatic signatures into the final global spectrum estimates. It is thus safer to severely downweight the influence of long baselines, minimizing their influence on the final result.
 
+\acl{Gotta switch notations for the covariance below}
+
 With multiple copies of the same baselines, an interferometer can have just as high a signal-to-noise as single dipole experiment, even if each individual baseline is less sensitive to the global signal. To quantify precisely how many such copies are necessary, we will now compute the expected noise variance from our estimator $\widehat{T}_0 (\nu) $ of the global signal. Starting with Equation \eqref{eq:NormedSimpleEst}, we perturb the $j$th visibility $V(\mathbf{b}_j, \nu)$ by adding an additive noise contribution $n_j (\nu)$. Computing the variance $\boldsymbol \Sigma(\nu,\nu)$ of the final estimator then gives
 \begin{eqnarray}
 \boldsymbol \Sigma(\nu,\nu) &\equiv& \langle \widehat{T}_0 (\nu)^2 \rangle - \langle  \widehat{T}_0 (\nu) \rangle^2 \nonumber \\
@@ -349,11 +352,11 @@ where $\boldsymbol \theta$ is the angular position on the sky, $A$ is the primar
 
 Since $\Q$ is not in general invertible (or even a square matrix), we cannot solve Equation \eqref{eqn:yQxn} for $\mathbf{x}$ directly and instead can only recover an estimator for $\mathbf{x}$. We consider an estimator of the form 
 \begin{equation}
-\mathbf{\hat x} = \M \Q^\dagger \N^{-1} \y,
+\mathbf{\hat x} = \M \Q^\dagger \Hmat \y,
 \label{eqn:xhat}
 \end{equation}
 \acl{Maybe we should consider using a symbol other than $\N$}\mep{What's wrong with $\N$?}
-where $\N$ and $\M$ are both matrices that can be chosen by the data analyst. The $\N$ matrix measures $N_\textrm{bl} \times N_\textrm{bl}$, and its role is to encode (via $\N^{-1}$) how the data analyst might wish to weigh the different visibilities in forming estimates of the various spherical harmonics. Note that this weighting is in addition to the weighting that is naturally provided by $\Q^\dagger$, which (for a given spherical harmonic mode) upweights baselines if their visibilities are sensitive to that mode and downweights them otherwise. The matrix $\M$ measures $(\ell_\textrm{max} +1)^2 \times (\ell_\textrm{max} +1)^2$, and therefore operates on a set of estimated spherical harmonic modes. Its role is to normalize our estimates of the different modes, and to possibly disentangle them from each other if there is leaked power between the modes. Our choices for $\M$ and $\N$ will determine the statistical properties of our final global signal estimates. For example, the variance $\boldsymbol \Sigma$ of our estimator (the square root of which gives the error bars from instrumental noise) is given by
+where $\Hmat$ and $\M$ are both matrices that can be chosen by the data analyst. The $\Hmat$ matrix is of size $N_\textrm{bl} \times N_\textrm{bl}$, and its role is to encode how the data analyst might wish to weight the different visibilities in forming estimates of the various spherical harmonics. Note that this weighting is in addition to the weighting that is naturally provided by $\Q^\dagger$, which (for a given spherical harmonic mode) upweights baselines if their visibilities are sensitive to that mode and downweights them otherwise. The matrix $\M$ measures $(\ell_\textrm{max} +1)^2 \times (\ell_\textrm{max} +1)^2$, and therefore operates on a set of estimated spherical harmonic modes. Its role is to normalize our estimates of the different modes, and to possibly disentangle them from each other if there is leaked power between the modes. Our choices for $\M$ and $\Hmat$ will determine the statistical properties of our final global signal estimates. For example, the variance $\boldsymbol \Sigma$ of our estimator (the square root of which gives the error bars from instrumental noise) is given by
 \begin{equation}
 \label{eq:NoiseMatrixSigma}
 \boldsymbol \Sigma \equiv \langle \xhat \xhat^\dagger \rangle - \langle \xhat \rangle \langle \xhat \rangle^\dagger = \M \Q^\dagger \mathbf{H} \N \mathbf{H} \Q \M,
@@ -364,10 +367,12 @@ where $\mathbf{N} \equiv \langle \y \y^\dagger \rangle - \langle \y \rangle \lan
 \label{sec:badMmatrix}
 As a first guess, picking
 \begin{equation}
-\M = [\Q^\dagger \N^{-1} \Q]^{-1}.
+\M = [\Q^\dagger \Hmat \Q]^{-1}.
 \label{eqn:M}
 \end{equation}
-might be considered an attractive choice. This form for $\M$ produces an estimator that minimizes $\chi^2 \equiv (\y-\Q \mathbf{\hat x})^\dagger \N^{-1} (\y-\Q \mathbf{\hat x})$. The final estimator has the desirable property that its ensemble average $\langle \mathbf{\hat x} \rangle$ satisfies the condition $\langle \mathbf{\hat x} \rangle = \mathbf{x}$. This means that on average, the estimator for a particular spherical harmonic coefficient $\hat{a}_{\ell m}$ is equal to the true coefficient ${a}_{\ell m}$, and there is no leakage between different spherical harmonic modes. An estimate of the monopole is thus truly an estimate of the monopole only, with no contributions from other modes.
+might be considered an attractive choice.
+%This form for $\M$ produces an estimator that minimizes $\chi^2 \equiv (\y-\Q \mathbf{\hat x})^\dagger \N^{-1} (\y-\Q \mathbf{\hat x})$. 
+The final estimator has the desirable property that its ensemble average $\langle \mathbf{\hat x} \rangle$ satisfies the condition $\langle \mathbf{\hat x} \rangle = \mathbf{x}$. This means that on average, the estimator for a particular spherical harmonic coefficient $\hat{a}_{\ell m}$ is equal to the true coefficient ${a}_{\ell m}$, and there is no leakage between different spherical harmonic modes. An estimate of the monopole is thus truly an estimate of the monopole only, with no contributions from other modes.
 
 However, the $\M$ matrix defined by Equation \eqref{eqn:M} makes an assumption that may not be justified---it assumes that the combination $[\Q^\dagger \N^{-1} \Q]$ is invertible. Essentially, since the inversion results in $\langle \mathbf{\hat x} \rangle = \mathbf{x}$, we can reverse our line of reasoning to see that any time our observations do not allow different $\hat{a}_{\ell m}$ to be perfectly disentangled from each other, $\Q^\dagger \N^{-1} \Q$ will be uninvertible. For example, if only part of the sky is surveyed, the best that one can do is to measure linear combinations of different $\hat{a}_{\ell m}$s. Even if the full sky is surveyed (for example by observing the sky with a hypothetical wide-field instrument located at the equator), it is typically difficult to design a broadband instrument that allows for a full inversion without sacrificing the design principles of the previous section, as we will now show. \acl{This sentence is way too long} \mep{ I think it's ok. It might be long, but it flows well so that the reader doesn't stumble over it.}
 
@@ -399,9 +404,9 @@ as a \emph{minimum} beam size.  Since this critical beam size depends on the rat
 
 \acl{Really need to address the issue of faceting here. Wait, do we?} \mep{What is faceting?}
 
-From this, we see that if one is to adhere to the design principles of Section \ref{sec:BackOfEnvelopeArrayDesign}, the conditions required for $\Q^\dagger \N^{-1} \Q$ to be invertible will necessarily be violated at some observation frequencies. This problem can be alleviated slightly if one is willing to construct multiple narrowband arrays to collectively cover a wide frequency range. However, this is not only an expensive solution, but also a relatively ineffective one---the best that one can do is to pursue an extreme approach where a different array is constructed (or a single array reconfigured) for every observation frequency, but that corresponds precisely to the $\nu_\textrm{max} = \nu_\textrm{min}$ case discussed above, and we have already seen that the required beam sizes are still to wide.
+From this, we see that if one is to adhere to the design principles of Section \ref{sec:BackOfEnvelopeArrayDesign}, the conditions required for $\Q^\dagger \Hmat \Q$ to be invertible will necessarily be violated at some observation frequencies. This problem can be alleviated slightly if one is willing to construct multiple narrowband arrays to collectively cover a wide frequency range. However, this is not only an expensive solution, but also a relatively ineffective one---the best that one can do is to pursue an extreme approach where a different array is constructed (or a single array reconfigured) for every observation frequency, but that corresponds precisely to the $\nu_\textrm{max} = \nu_\textrm{min}$ case discussed above, and we have already seen that the required beam sizes are still to wide.
 
-Alternatively, one may simply replace the inverse of $\Q^\dagger \N^{-1} \Q$ with its pseudo-inverse whenever the matrix $\Q^\dagger \N^{-1} \Q$ is uninvertible. In doing so, however, one runs the risk of imprinting sharp spectral features into the final estimate of the global signal. This is because a pseudo-inverse inverts only the modes of a matrix that are present with non-zero eigenvalue, and the set of modes that are present will in general be frequency-dependent. The imprint of sharp spectral features should be avoided at all costs, since sharp features have the ability to masquerade as the cosmological signal.
+Alternatively, one may simply replace the inverse of $\Q^\dagger \Hmat \Q$ with its pseudo-inverse whenever the matrix $\Q^\dagger \Hmat \Q$ is uninvertible. In doing so, however, one runs the risk of imprinting sharp spectral features into the final estimate of the global signal. This is because a pseudo-inverse inverts only the modes of a matrix that are present with non-zero eigenvalue, and the set of modes that are present will in general be frequency-dependent. The imprint of sharp spectral features should be avoided at all costs, since sharp features have the ability to masquerade as the cosmological signal.
 
 For all the reasons listed above, we therefore recommend against the use of Equation \eqref{eqn:M} for $\M$. 
 
@@ -411,6 +416,7 @@ For all the reasons listed above, we therefore recommend against the use of Equa
 
 \subsection{A better choice for $\M$}
 \label{sec:BetterM}
+\acl{Got to here with the $\N^{-1}$ to $\Hmat$ replacement}
 
 As an alternative to Equation \eqref{eqn:M}, consider the diagonal matrix given by 
 \begin{equation}
