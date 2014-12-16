@@ -16,7 +16,6 @@
 \def\k{\mathbf{k}}
 \def\r{\mathbf{r}}
 \def\q{\mathbf{q}}
-\def\b{\mathbf{b}}
 \def\kp{\mathbf{k}^\prime}
 \def\kpp{\mathbf{k}^{\prime\prime}}
 \def\V{\mathbb{V}}
@@ -141,19 +140,23 @@ In this section, we use simplified toy models to build intuition for the types o
 
 \subsection{A qualitative picture of a global signal interferometer}
 
-Consider first a purely qualitative picture of an 
+Consider first a purely qualitative picture of a two-element interferometer. An interferometer measures the sky convolved with the antennae's beam pattern and with the spherical harmonic corresponding to the interferometer's baseline. Without the beam pattern it would be impossible to measure a monopole signal since a constant convolved with a spherical harmonic returns zero. However, as shown schematically in Figure \ref{fig:beam_pattern_cartoon}, when the beam pattern is added into the convolution, its enveloping effect will prevent the convolution from integrating to zero, making an interferometer sensitive to the monopole signal. 
 
+An equivalent way to look at the problem is to move into spherical-harmonic space and examine the $uv$ plane, shown in Figure \ref{fig:uv_cartoon}. An interferometer with baseline length $\b$ will measure the sky at the point $\mathbf{u} = \frac{\nu\b}{c}$ in the $uv$ plane. To measure the monopole, one must recover information from the origin, which corresponds to a zero-length baseline. This is possible because the convolution with the beam pattern smears out the point of measurement (i.e. the measurement incorporates information from other nearby baselines), with narrower beams corresponding to larger smears. As shown by the green circle in Figure \ref{fig:uv_cartoon}, if the baseline is short enough and the beam is narrow enough, then the measured signal will include information from the global signal. 
+
+In the rest of Section \ref{sec:BackOfEnvelopeArrayDesign} we will make this qualitative picture more mathematically precise and develop an array design that will maximize sensitivity to the global signal and minimize contamination from foregrounds and other spherical harmonic modes. 
+ 
 \begin{figure}[h]
 	\centering
 	\includegraphics[width=0.50\textwidth]{figures/beam_pattern_cartoon.pdf}
-	\caption{}
+	\caption{A schematic illustration of a two-element interferometer. The two antennae, separated by a baseline length $\b$, measure a spherical harmonic on the sky, shown as a cosine function on an arc. This function would integrate to zero over the entire sky. However, the antennae also produce a beam pattern which is strongest at the zenith and fades to the horizon. Due to this envelope, a monopole signal convolved with the beam pattern and spherical harmonic will not return zero when integrated over the entire sky. Therefore, an interferometer will in fact be sensitive to a monopole signal.}
 	\label{fig:beam_pattern_cartoon}
 \end{figure}
 
 \begin{figure}[h]
 	\centering
 	\includegraphics[width=0.50\textwidth]{figures/uv_cartoon.pdf}
-	\caption{}
+	\caption{A schematic illustration of the $uv$ plane for an interferometer. Since the uv plane represents baselines in Fourier space, an interferometer with baseline $\b$ makes a measurement at the point $\mathbf{u} = \frac{\nu\b}{c}$. Measuring the monopole signal would require making a measurement at the origin of the uv plane, which is probed by a baseline of zero length. This seems impossible until one recalls that a real interferometer does not measure an exact point: the antenna's beam pattern smears the measurement in the uv plane, so that the measurement contains information from nearby baselines. Since a narrower beam corresponds to a larger smear, two narrow-beam antennae placed close together would make a measurement that incorporates information from the monopole, as shown by the green circle in the figure.}
 	\label{fig:uv_cartoon}
 \end{figure}
 
