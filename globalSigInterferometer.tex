@@ -588,7 +588,7 @@ In Figure \ref{fig:Ncomparison}, we compare the global signal estimators that re
 \begin{figure}[h]
 	\centering
 	\includegraphics[width=0.50\textwidth]{figures/Ncomparison.pdf}
-	\caption{\acl{Do this}}
+	\caption{The foreground bias $\Delta T_0$ as a function of frequency, comparing the data analysis method that weights visibilities by the inverse of the foreground amplitude (the solid blue line) with one that weights visibilities uniformly (the dashed orange line). The experimental setup consists of a closely-packed array of antennas with a primary beam of $88^\circ$, with observations centered on the NGP. Adding the foreground-motivated weighting does not significantly reduce the bias away from the galactic plane.}
 	\label{fig:Ncomparison}
 \end{figure}
 
@@ -664,7 +664,7 @@ In this section, we bring together the various lessons that we have learned rega
 
 Guided by the rough arguments of Section \ref{sec:BackOfEnvelopeArrayDesign}, we simulate visibilities from a $5\times5$ square grid of tightly packed antennas. The primary beam of each element is taken to be a tapered Gaussian of the form given by Equation \eqref{eq:TaperedGauss}, with $\theta_b = 0.2\,\textrm{rad}$ (for a FWHM of $26.5^\circ$). \acl{Talk about beam evolution} We assume that observations are centered on the Northern Galactic Pole and span a band consisting of $1\,\textrm{MHz}$ channels from $100\,\textrm{MHz}$ to $200\,\textrm{MHz}$. For comparison, we also predict the performance of a single-element global signal experiment using the same type of antenna element and the same observing strategy.
 
-For our simulated foreground sky, we use the same set-up as we did in Section \ref{sec:beamSize}, where each pixel of the $408\,\textrm{MHz}$ map is extrapolated to the relevant frequencies on a pixel-by-pixel basis using Equation \eqref{eq:HaslamExtrap}. The parameters in the power-law-like extrapolation are drawn randomly as before, and we generate $10,000$ different realizations of the foreground sky. With each sky, we then simulate visibilities and total power measurements for the interferometric and single element measurements, respectively. Frequency-by-frequency estimates are of the global signal are then obtained using Equation \eqref{eq:singleElementExtraction} for the single element and Equation \eqref{eq:IntegralEstInterferometer} for the interferometer. The results are then averaged together to yield mean foreground spectra for each type of experiment. Finally, smooth foreground components are fit from these spectra in the manner described in Sections \ref{sec:beamSize} and \ref{sec:fitting}. The result is a set of residual foreground spectra.
+For our simulated foreground sky, we use the same set-up as we did in Section \ref{sec:beamSize}, where each pixel of the $408\,\textrm{MHz}$ map is extrapolated to the relevant frequencies on a pixel-by-pixel basis using Equation \eqref{eq:HaslamExtrap}. \mep{This equation doesn't exist!} The parameters in the power-law-like extrapolation are drawn randomly as before, and we generate $10,000$ different realizations of the foreground sky. With each sky, we then simulate visibilities and total power measurements for the interferometric and single element measurements, respectively. Frequency-by-frequency estimates are of the global signal are then obtained using Equation \eqref{eq:singleElementExtraction} for the single element and Equation \eqref{eq:IntegralEstInterferometer} for the interferometer. The results are then averaged together to yield mean foreground spectra for each type of experiment. Finally, smooth foreground components are fit from these spectra in the manner described in Sections \ref{sec:beamSize} and \ref{sec:fitting}. The result is a set of residual foreground spectra.
 
 Aside from residual foregrounds, our forecasts must also incorporate instrumental noise. Modeling this contribution requires three separate covariance matrices. The first is the instrumental noise covariance $\N$ of the visibilities. We assume that the instrumental noise is uncorrelated between different baselines, so that\footnote{Note that our expression differs from the standard radiometer equation by a factor of $\Omega_p$ because we have adopted an unusual convention where our visibilities have units of temperature times solid angle\acl{Instead of the usual...}}
 \begin{equation}
@@ -693,7 +693,7 @@ where $z_r$ is the redshift of the mid-point of reionization, $\Delta z$ is its 
 \begin{figure}[h]
 	\centering
 	\includegraphics[width=0.5\textwidth]{figures/reionScenarios.pdf}
-	\caption{\acl{Fill this in.}}
+	\caption{Fiducial model of the brightness temperature during reionization as a function of frequency, following three scenarios: Pessimistic (blue), Moderate (orange), and Optimistic (green). Increasing optimism corresponds to reionization occurring more rapidly and at lower redshifts, making detection easier.}
 	\label{fig:reionScenarios}
 \end{figure}
 
@@ -701,7 +701,7 @@ where $z_r$ is the redshift of the mid-point of reionization, $\Delta z$ is its 
 \begin{figure}[h]
 	\centering
 	\includegraphics[width=0.5\textwidth]{figures/dipScenarios.pdf}
-	\caption{\acl{Fill this in.}}
+	\caption{Fiducial model of the brightness temperature during the pre-reionization dip as a function of frequency, following three scenarios: Pessimistic (blue), Moderate (orange), and Optimistic (green). Increasing optimism corresponds to a deeper dip occurring at lower redshifts, making detection easier.}
 	\label{fig:dipScenarios}
 \end{figure}
 
@@ -727,7 +727,7 @@ Similarly, we consider three different pre-reionization scenarios of varying deg
 \begin{figure*}[t]
 	\centering
 	\includegraphics[width=1.00\textwidth,trim=3cm 2cm 3cm 0cm,clip]{figures/reionContoursPoly7Poly7.pdf}
-	\caption{\acl{Fill this in. Polynomial order was 7, and integration time was 300 hours. Also need to rerun for smaller array and smaller beam}}
+	\caption{Pairwise parameter contours for interferometer and single element experiments probing reionization. For the single element experiment, the orange contours correspond to the $95\%$ confidence regions, and the white areas within the orange contours correspond to the $68\%$ confidence region. For the interferometer experiment, the outer solid black contour line bound the $95\%$ confidence region, while the inner black contour bounds the $68\%$ confidence region. The black dot locates the fiducial value to be recovered and thus indicates the bias in each detection. The interferometer experiment used an $N\times N$ \mep{Fill this in} array of antennas with a primary beam of $\theta^\circ$\mep{Fill this in}. Both experiments had an integration time of 300 hours \mep{Check this} and used a $7$th order polynomial in the final foreground subtraction. \mep{Also, is this the final data?}}
 	\label{fig:reionContoursPoly7Poly7}
 \end{figure*}
 
@@ -735,11 +735,11 @@ Similarly, we consider three different pre-reionization scenarios of varying deg
 \begin{figure*}[t]
 	\centering
 	\includegraphics[width=1.00\textwidth,trim=3cm 2cm 3cm 0cm,clip]{figures/dipContoursPoly7Poly7.pdf}
-	\caption{\acl{Fill this in. Polynomial order was 7, and integration time was 300 hours. Also need to rerun for smaller array and smaller beam}}
+	\caption{Pairwise parameter contours for interferometer and single element experiments probing the pre-reionization dip. See Figure \ref{fig:reionContoursPoly7Poly7} for the simulation set-up.}
 	\label{fig:dipContoursPoly7Poly7}
 \end{figure*}
 
-These scenarios are depicted in Figurse \ref{fig:reionScenarios} and  \ref{fig:dipScenarios}. The corresponding model parameters are summarized in Table \acl{Do this}, along with the associated Fisher matrix projections for each parameter's $1\sigma$ error bars after having marginalized over the other parameters. Pairwise parameter contours are shown in Figures \ref{fig:reionContoursPoly7Poly7} and Figures \ref{fig:dipContoursPoly7Poly7}. The results for single element experiments are shown using the filled regions, with orange portions signifying $95\%$ confidence regions and the enclosed white portions signifying $68\%$ confidence regions. Solid lines demarcate the corresponding confidence regions for our interferometer. For both types of experiment, we found that setting the polynomial order $N_\textrm{poly}$ to $7$ gave biases subdominant to the errors. The black point in each plot shows the fiducial (``true") parameter values used.
+These scenarios are depicted in Figurse \ref{fig:reionScenarios} and  \ref{fig:dipScenarios}. The corresponding model parameters are summarized in Table \ref{tab:params}, along with the associated Fisher matrix projections for each parameter's $1\sigma$ error bars after having marginalized over the other parameters. Pairwise parameter contours are shown in Figures \ref{fig:reionContoursPoly7Poly7} and Figures \ref{fig:dipContoursPoly7Poly7}. The results for single element experiments are shown using the filled regions, with orange portions signifying $95\%$ confidence regions and the enclosed white portions signifying $68\%$ confidence regions. Solid lines demarcate the corresponding confidence regions for our interferometer. For both types of experiment, we found that setting the polynomial order $N_\textrm{poly}$ to $7$ gave biases subdominant to the errors. The black point in each plot shows the fiducial (``true") parameter values used.
 
 Immediately obvious is the fact that the pessimistic scenarios will be extremely difficult to measure, whether using an interferometer or a single element. 
 With those scenarios, the cosmological signals are simply too extended, and occur at too high redshifts for them to be easily distinguished from the bright foregrounds. Encouragingly, we see that both the moderate and the optimistic scenarios should be detectable by both types of instrument. Importantly, one sees that the interferometer performs just as well as the single-element experiment does, suggesting that an interferometric measurement of the global signal may be a interesting viable alternative.
@@ -779,7 +779,7 @@ With those scenarios, the cosmological signals are simply too extended, and occu
       \bottomrule
    \end{tabular}
    \caption{Table of parameters and error bars for different reionization scenarios and experiments.}
-   \label{tab:booktabs}
+   \label{tab:params}
 \end{table*}
 
 %
