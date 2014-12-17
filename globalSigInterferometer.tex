@@ -293,18 +293,18 @@ As one adds more and more elements to a regular array (increasing $N$), the main
 
 \acl{Gotta switch notations for the covariance below}
 
-With multiple copies of the same baselines, an interferometer can have just as high a signal-to-noise as single dipole experiment, even if each individual baseline is less sensitive to the global signal. To quantify precisely how many such copies are necessary, we will now compute the expected noise variance from our estimator $\widehat{T}_0 (\nu) $ of the global signal. Starting with Equation \eqref{eq:NormedSimpleEst}, we perturb the $j$th visibility $V(\mathbf{b}_j, \nu)$ by adding an additive noise contribution $n_j (\nu)$. Computing the variance $\boldsymbol \Sigma(\nu,\nu)$ of the final estimator then gives
+With multiple copies of the same baselines, an interferometer can have just as high a signal-to-noise as single dipole experiment, even if each individual baseline is less sensitive to the global signal. To quantify precisely how many such copies are necessary, we will now compute the expected noise variance from our estimator $\widehat{T}_0 (\nu) $ of the global signal. Starting with Equation \eqref{eq:NormedSimpleEst}, we perturb the $j$th visibility $V(\mathbf{b}_j, \nu)$ by adding an additive noise contribution $n_j (\nu)$. Computing the variance $\boldsymbol \Pi(\nu,\nu)$ of the final estimator then gives
 \begin{eqnarray}
-\boldsymbol \Sigma(\nu,\nu) &\equiv& \langle \widehat{T}_0 (\nu)^2 \rangle - \langle  \widehat{T}_0 (\nu) \rangle^2 \nonumber \\
+\boldsymbol \Pi(\nu,\nu) &\equiv& \langle \widehat{T}_0 (\nu)^2 \rangle - \langle  \widehat{T}_0 (\nu) \rangle^2 \nonumber \\
 &=&  \frac{\sigma^2}{ \sum_k \big{|} \int  A(\rhat, \nu) \exp\left(i 2\pi \frac{\nu }{c}\mathbf{b}_k \cdot \rhat \right)d\Omega \big{|}^2},
 \end{eqnarray}
 where we have assumed that the instrumental noise has zero mean, so that $\langle n_j \rangle = 0$. We have additionally assumed that the noise is uncorrelated between baselines, and has a variance of $\sigma^2$, so that $\langle n_i n_j^* \rangle = \sigma^2 \delta_{ij}$. Making the approximation that the sensitivity of the array to the global signal is dominated by the shortest baseline $\mathbf{b}_\textrm{short}$ of which there are $N_\textrm{short}$ copies, the noise variance of an interferometer-estimated global signal reduces to
 \begin{equation}
-\boldsymbol \Sigma(\nu,\nu) \approx \frac{\sigma^2}{ N_\textrm{short} \big{|} \int  A(\rhat, \nu) \exp\left(i 2\pi \frac{\nu }{c}\mathbf{b}_\textrm{short} \cdot \rhat \right)d\Omega \big{|}^2}.
+\boldsymbol \Pi(\nu,\nu) \approx \frac{\sigma^2}{ N_\textrm{short} \big{|} \int  A(\rhat, \nu) \exp\left(i 2\pi \frac{\nu }{c}\mathbf{b}_\textrm{short} \cdot \rhat \right)d\Omega \big{|}^2}.
 \end{equation}
 On the other hand, for a single dipole experiment we have only a single baseline of length zero, so the noise variance is
 \begin{equation}
-\boldsymbol \Sigma(\nu,\nu) = \frac{\sigma^2}{\big{|} \int  A(\rhat, \nu) d\Omega \big{|}^2}.
+\boldsymbol \Pi(\nu,\nu) = \frac{\sigma^2}{\big{|} \int  A(\rhat, \nu) d\Omega \big{|}^2}.
 \end{equation}
 Equating these two expression then allows one to solve for the number of short baselines $N_\textrm{short}$ that are needed for an interferometer to have the same thermal noise sensitivity as a single dipole experiment:
 \begin{equation}
@@ -696,32 +696,54 @@ where $z_r$ is the redshift of the mid-point of Reionization, $\Delta z$ is its 
 	\label{fig:reionScenarios}
 \end{figure}
 
-The errors on final model parameters will depend on the fiducial ``true" values that are used in our simulations. Consider three different Reionization scenarios:
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=0.5\textwidth]{figures/dipScenarios.pdf}
+	\caption{\acl{Fill this in.}}
+	\label{fig:dipScenarios}
+\end{figure}
+
+The errors on final model parameters will depend on the fiducial ``true" values that are used in our simulations. We consider three different Reionization scenarios:
 \begin{itemize}
-\item A pessimistic scenario, with $(T_{21}, z_r, \Delta z) = (10\,\textrm{mK}, 12, 3) $. With Reionization occurring in a rather extended fashion at relatively high redshifts, this scenario should be the most difficult one to detect, since foregrounds are brighter at high redshifts. Additionally, an extended Reionization scenario more closely mimics smooth foregrounds.
-\item A moderate scenario, with $(T_{21}, z_r, \Delta z) = (27\,\textrm{mK}, 10.5, 1) $. This model is motivated by the best-fit value of $z_r$ from \acl{Cite WMAP}. The value of $T_{21}$ is taken from theoretical calculations \acl{Cite Jonathan}, while $\Delta z$ is chosen to be neither too extended nor too abrupt.
-\item A optimistic scenario, with $(T_{21}, z_r, \Delta z) = (27\,\textrm{mK}, 8, 0.5) $. Here we choose to roughly match expectations from recent results from optical and infrared observations, which (in contrast to results from CMB experiments) typically favor reasonably rapid reionization at lower redshifts.
+\item Pessimistic reionization scenario, with $(T_{21}, z_r, \Delta z) = (10\,\textrm{mK}, 12, 3) $. With Reionization occurring in a rather extended fashion at relatively high redshifts, this scenario should be the most difficult one to detect, since foregrounds are brighter at high redshifts. Additionally, an extended Reionization scenario more closely mimics smooth foregrounds.
+\item Moderate reionization scenario, with $(T_{21}, z_r, \Delta z) = (27\,\textrm{mK}, 10.5, 0.8) $. This model is motivated by the best-fit value of $z_r$ from \acl{Cite WMAP}. The value of $T_{21}$ is taken from theoretical calculations \acl{Cite Jonathan}, while $\Delta z$ is chosen to be neither too extended nor too abrupt.
+\item Optimistic reionization scenario, with $(T_{21}, z_r, \Delta z) = (27\,\textrm{mK}, 8, 0.5) $. Here we choose to roughly match expectations from recent results from optical and infrared observations, which (in contrast to results from CMB experiments) typically favor reasonably rapid reionization at lower redshifts.
+\end{itemize}
+Similarly, we consider three different pre-reionization scenarios of varying degrees of optimism, although without the CMB as a guide in the pre-reionization era, the parameters are somewhat more arbitrary:
+\begin{itemize}
+\item Pessimistic pre-reionization scenario, with $(A, \nu_0, \Delta z) = (10\,\textrm{mK}, 60\,\textrm{MHz}, 10\,\textrm{MHz}) $.
+\item Moderate pre-reionization scenario, with $(A, \nu_0 \Delta z) = (100\,\textrm{mK}, 70\,\textrm{MHz}, 5\,\textrm{MHz}) $.
+\item Optimistic pre-reionization scenario, with $(A, \nu_0, \Delta z) = (200\,\textrm{mK}, 80\,\textrm{MHz}, 5\,\textrm{MHz}) $.
 \end{itemize}
 
-\begin{figure*}[h]
-	\centering
-	\includegraphics[width=1.00\textwidth,trim=3cm 2cm 3cm 0cm,clip]{figures/reionContoursPoly7Poly6.pdf}
-	\caption{\acl{Fill this in. Polynomial order was 7, and integration time was 300 hours. Also need to rerun for smaller array and smaller beam}}
-	\label{fig:reionContoursPoly7Poly6}
-\end{figure*}
-
-These scenarios are depicted in Figure \ref{fig:reionScenarios}. The corresponding model parameters are summarized in Table \acl{Do this}, along with the associated Fisher matrix projections for each parameter's $1\sigma$ error bars after having marginalized over the other parameters. Pairwise parameter contours are shown in Figures \ref{fig:reionContoursPoly7Poly6} and \ref{fig:reionContoursPoly7Poly7}. The results for single dipole experiments are shown using the filled regions, with orange portions signifying $95\%$ confidence regions and the enclosed white portions signifying $68\%$ confidence regions. Solid lines demarcate the corresponding confidence regions for our interferometer. The black point in each plot shows the fiducial parameter values used.
-
-Immediately obvious from Figures \ref{fig:reionContoursPoly7Poly6} and \ref{fig:reionContoursPoly7Poly7} is the fact that the pessimistic scenario will be extremely difficult to measure, whether using an interferometer or a single element. Reionization is simply too extended, and occurring at too high of a redshift for the cosmological signal to be easily distinguished from the bright foregrounds. Encouragingly, we see that both the moderate and the optimistic scenarios should be detectable by both types of instrument.
-
-In Figure \ref{fig:reionContoursPoly7Poly6} the polynomial order $N_\textrm{poly}$ for the $\log \widehat{T}$-$\log \nu$ foreground fits were taken to be 7 and 6 for the inteferometer and the single element experiments, respectively. These values were chosen to be as small as possible under the constraint that the final parameter biases fall within the $68\%$ confidence regions. The interferometer measurement contains slightly stronger unsmooth foreground residuals, necessitating higher order spectral foreground subtraction. The result is greater degeneracy with the cosmological signal, and thus larger error bars. However, the constraints are still reasonably competitive with single element instruments. In addition, suppose one is disturbed the fact that the biases for the single-element constraints in Figure \ref{fig:reionContoursPoly7Poly6} come uncomfortably close to moving beyond the $68\%$ confidence region. The solution to this would be to increase $N_\textrm{poly}$ to 7 for the single-element experiment. The results are shown in Figure \ref{fig:reionContoursPoly7Poly7}, and one sees that the interferometer now performs just as well as the single-element experiment does.
-
+%\begin{figure*}[h]
+%	\centering
+%	\includegraphics[width=1.00\textwidth,trim=3cm 2cm 3cm 0cm,clip]{figures/reionContoursPoly7Poly6.pdf}
+%	\caption{\acl{Fill this in. Polynomial order was 7, and integration time was 300 hours. Also need to rerun for smaller array and smaller beam}}
+%	\label{fig:reionContoursPoly7Poly6}
+%\end{figure*}
 \begin{figure*}[t]
 	\centering
 	\includegraphics[width=1.00\textwidth,trim=3cm 2cm 3cm 0cm,clip]{figures/reionContoursPoly7Poly7.pdf}
 	\caption{\acl{Fill this in. Polynomial order was 7, and integration time was 300 hours. Also need to rerun for smaller array and smaller beam}}
 	\label{fig:reionContoursPoly7Poly7}
 \end{figure*}
+
+
+\begin{figure*}[t]
+	\centering
+	\includegraphics[width=1.00\textwidth,trim=3cm 2cm 3cm 0cm,clip]{figures/dipContoursPoly7Poly7.pdf}
+	\caption{\acl{Fill this in. Polynomial order was 7, and integration time was 300 hours. Also need to rerun for smaller array and smaller beam}}
+	\label{fig:dipContoursPoly7Poly7}
+\end{figure*}
+
+These scenarios are depicted in Figurse \ref{fig:reionScenarios} and  \ref{fig:dipScenarios}. The corresponding model parameters are summarized in Table \acl{Do this}, along with the associated Fisher matrix projections for each parameter's $1\sigma$ error bars after having marginalized over the other parameters. Pairwise parameter contours are shown in Figures \ref{fig:reionContoursPoly7Poly7} and Figures \ref{fig:dipContoursPoly7Poly7}. The results for single dipole experiments are shown using the filled regions, with orange portions signifying $95\%$ confidence regions and the enclosed white portions signifying $68\%$ confidence regions. Solid lines demarcate the corresponding confidence regions for our interferometer. For both types of experiment, we found that setting the polynomial order $N_\textrm{poly}$ to $7$ gave biases subdominant to the errors. The black point in each plot shows the fiducial (``true") parameter values used.
+
+Immediately obvious is the fact that the pessimistic scenarios will be extremely difficult to measure, whether using an interferometer or a single element. 
+With those scenarios, the cosmological signals are simply too extended, and occur at too high redshifts for them to be easily distinguished from the bright foregrounds. Encouragingly, we see that both the moderate and the optimistic scenarios should be detectable by both types of instrument. Importantly, one sees that the interferometer performs just as well as the single-element experiment does, suggesting that an interferometric measurement of the global signal may be a interesting viable alternative.
+
+
 
 %
 %\section{Monte carlo / foreground simulation results}
