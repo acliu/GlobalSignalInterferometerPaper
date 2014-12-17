@@ -260,21 +260,21 @@ Figures \ref{fig:subPoly6_T0_beamSize} and \ref{fig:subPoly9_T0_beamSize} show t
 \begin{figure}[h]
 	\centering
 	\includegraphics[width=0.50\textwidth]{figures/unsub_T0_beamSize.pdf}
-	\caption{\acl{Do this}\mep{What's FWHM?}}
+	\caption{The foreground bias $\Delta T_0$ as a function of frequency $\nu$ from simulations of an interferometric recovery of the global signal, averaged over $10,000$ random realizations of the simulated foregrounds. The data is shown for three different $12\times12$ square grid arrays of tightly-packed antennae. The blue, orange, and green arrays are composed of antennae with full-width-half-max (FWHM) beam sizes of $13.4^\circ$, $26.5^\circ$, and $38.7^\circ$, respectively. Note that narrower beams have less pre-subtraction foreground bias, as expected.}
 	\label{fig:unsub_T0_beamSize}
 \end{figure}
 
 \begin{figure}[h]
 	\centering
 	\includegraphics[width=0.50\textwidth]{figures/subPoly6_T0_beamSize.pdf}
-	\caption{\acl{Do this}}
+	\caption{The foreground residuals after subtracting off a $6$th degree polynomial in log space. The data are shown for the same arrays as from Figure \ref{fig:unsub_T0_beamSize}. Note that unlike in the case of the raw foreground bias, the array with the narrowest beams no longer has the least foreground contamination. Instead, the intermediate-size beam results in the lowest foreground residuals. This is likely due to the fact that narrower beams come with longer baselines that introduce chromatic ripples that are difficult to subtract.}
 	\label{fig:subPoly6_T0_beamSize}
 \end{figure}
 
 \begin{figure}[h]
 	\centering
 	\includegraphics[width=0.50\textwidth]{figures/subPoly9_T0_beamSize.pdf}
-	\caption{Same as Figure \ref{fig:subPoly6_T0_beamSize}, but with a $9$th order spectral subtraction. \acl{Add more description}}
+	\caption{The foreground residuals after subtracting off a $6$th degree polynomial in log space. The data are shown for the same arrays as from Figures \ref{fig:unsub_T0_beamSize} and \ref{fig:subPoly6_T0_beamSize}. With the higher-order subtraction, more of the chromatic ripples introduced in the narrowest-beam array are subtracted, reducing the residuals as compared with those from a $6$th order subtraction. However, the intermediate-beam array still has the smallest residuals, leading us to conclude that an intermediate-beam array will be a more optimal design for a global signal experiment.}
 	\label{fig:subPoly9_T0_beamSize}
 \end{figure}
 
