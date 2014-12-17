@@ -1,5 +1,6 @@
 %\documentclass[preprint]{aastex}
 \documentclass[twolcolumn,apj,iop,numberedappendix]{emulateapj}
+%\usepackage{deluxetable}
 \usepackage{ctable}
 \usepackage{amsmath}
 \usepackage{graphicx}
@@ -744,6 +745,24 @@ Immediately obvious is the fact that the pessimistic scenarios will be extremely
 With those scenarios, the cosmological signals are simply too extended, and occur at too high redshifts for them to be easily distinguished from the bright foregrounds. Encouragingly, we see that both the moderate and the optimistic scenarios should be detectable by both types of instrument. Importantly, one sees that the interferometer performs just as well as the single-element experiment does, suggesting that an interferometric measurement of the global signal may be a interesting viable alternative.
 
 
+% Requires the booktabs if the memoir class is not being used
+\begin{table*}[htbp]
+   \centering
+   %\topcaption{Table captions are better up top} % requires the topcapt package
+   \begin{tabular}{@{} llcccccc @{}} % Column formatting, @{} suppresses leading/trailing space
+      \toprule
+      & & \multicolumn{3}{c}{Reionization} & \multicolumn{3}{c}{Pre-reionization Dip} \\
+      \cmidrule(lr){3-5} % Partial rule. (r) trims the line a little bit on the right; (l) & (lr) also possible
+      \cmidrule(lr){6-8} 
+      Model & Experiment & $T_{21}$ & $z_r$ & $\delta z$ & $A$ & $\nu_0$ & $\sigma$\\
+      \midrule
+      Pessimistic & Interferometer & 16.75398763 & 356.25276456 & 855.66925855 & 2.97731189 & 949.77697322 & 468.32190486 \\
+      			 & Single Dipole  & 16.8380905 & 360.06644227 & 854.48767336 & 2.90875735 & 930.74419582 & 461.23575203 \\
+      \bottomrule
+   \end{tabular}
+   \caption{Table of parameters for different reionization scenarios.}
+   \label{tab:booktabs}
+\end{table*}
 
 %
 %\section{Monte carlo / foreground simulation results}
