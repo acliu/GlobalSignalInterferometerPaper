@@ -257,26 +257,26 @@ where $p_n$ denotes the $n$th Legendre polynomial, with a corresponding expansio
 
 In Figure \ref{fig:unsub_T0_beamSize} we show simulations of an interferometric recovery of the global signal, $\widehat{T}_0 (\nu)$, averaged over $10,000$ random realizations of the simulated foregrounds. Because our simulations do not contain any cosmological signal, this is equal to $\Delta T_0$, the expected foreground bias. Each curve shows the result for a $12\times12$ square grid of tightly packed antennas with varying primary beam widths (and therefore varying baseline lengths). As expected, arrays with smaller beams/longer baselines exhibit a lower foreground bias, since our observations are centered around the NGP, so wider beams pick up more foregrounds from lower galactic latitudes, where they are typically brighter.
 
-Figures \ref{fig:subPoly6_T0_beamSize} and \ref{fig:subPoly9_T0_beamSize} show the foreground residuals that remain after the subtraction of $6$th and $9$th order log-space polynomials, respectively. One immediately sees that whereas the narrowest beams/longest baselines gave the dimmest \emph{initial} pre-subtraction spectra, the post-subtraction residuals are minimized for intermediate-sized beams. This is precisely the trade-off that we qualitatively alluded to above: the long baselines that inevitably come with narrow beams cause low-level chromatic ripples in the data that are not easily removed by smooth low-order polynomials, while the broad beams that come with short baselines incorporate brighter lower-latitude foregrounds. Further evidence can be seen by comparing Figures \ref{fig:subPoly6_T0_beamSize} and \ref{fig:subPoly9_T0_beamSize}. One sees that higher-order polynomial fits allows further suppression of the chromatic residuals introduced by long baselines, but only results in slight decreases in residuals for the wide beam case, since the higher residuals for the latter are the result of an overall increase in foreground amplitude, which affects all polynomial orders.
+Figures \ref{fig:subPoly6_T0_beamSize} and \ref{fig:subPoly9_T0_beamSize} show the foreground residuals that remain after the subtraction of $6$th and $9$th order log-space polynomials, respectively.\acl{Update description to reflect updated runs} One immediately sees that whereas the narrowest beams/longest baselines gave the dimmest \emph{initial} pre-subtraction spectra, the post-subtraction residuals are minimized for intermediate-sized beams. This is precisely the trade-off that we qualitatively alluded to above: the long baselines that inevitably come with narrow beams cause low-level chromatic ripples in the data that are not easily removed by smooth low-order polynomials, while the broad beams that come with short baselines incorporate brighter lower-latitude foregrounds. Further evidence can be seen by comparing Figures \ref{fig:subPoly6_T0_beamSize} and \ref{fig:subPoly9_T0_beamSize}. One sees that higher-order polynomial fits allows further suppression of the chromatic residuals introduced by long baselines, but only results in slight decreases in residuals for the wide beam case, since the higher residuals for the latter are the result of an overall increase in foreground amplitude, which affects all polynomial orders.
 
 \begin{figure}[h]
 	\centering
 	\includegraphics[width=0.50\textwidth]{figures/unsub_T0_beamSize.pdf}
-	\caption{The foreground bias $\Delta T_0$ as a function of frequency $\nu$ from simulations of an interferometric recovery of the global signal, averaged over $10,000$ random realizations of the simulated foregrounds. The data is shown for three different $12\times12$ square grid arrays of tightly-packed antennae. The blue, orange, and green arrays are composed of antennae with full-width-half-max (FWHM) beam sizes of $13.4^\circ$, $26.5^\circ$, and $38.7^\circ$, respectively. Note that narrower beams have less pre-subtraction foreground bias, as expected.}
+	\caption{The foreground bias $\Delta T_0$ as a function of frequency $\nu$ from simulations of an interferometric recovery of the global signal, averaged over $10,000$ random realizations of the simulated foregrounds. The data is shown for three different $12\times12$ square grid arrays of tightly-packed antennae. The blue, orange, and green arrays are composed of antennae with full-width-half-max (FWHM) beam sizes of $13.4^\circ$, $26.5^\circ$, and $38.7^\circ$, respectively. Note that narrower beams have less pre-subtraction foreground bias, as expected. \acl{Update caption to reflect updated runs}}
 	\label{fig:unsub_T0_beamSize}
 \end{figure}
 
 \begin{figure}[h]
 	\centering
-	\includegraphics[width=0.50\textwidth]{figures/subPoly6_T0_beamSize.pdf}
-	\caption{The foreground residuals after subtracting off a $6$th degree polynomial in log space. The data are shown for the same arrays as from Figure \ref{fig:unsub_T0_beamSize}. Note that unlike in the case of the raw foreground bias, the array with the narrowest beams no longer has the least foreground contamination. Instead, the intermediate-size beam results in the lowest foreground residuals. This is likely due to the fact that narrower beams come with longer baselines that introduce chromatic ripples that are difficult to subtract.}
+	\includegraphics[width=0.50\textwidth]{figures/subPoly7_T0_beamSize.pdf}
+	\caption{The foreground residuals after subtracting off a $6$th degree polynomial in log space. The data are shown for the same arrays as from Figure \ref{fig:unsub_T0_beamSize}. Note that unlike in the case of the raw foreground bias, the array with the narrowest beams no longer has the least foreground contamination. Instead, the intermediate-size beam results in the lowest foreground residuals. This is likely due to the fact that narrower beams come with longer baselines that introduce chromatic ripples that are difficult to subtract.\acl{Update caption to reflect updated runs}}
 	\label{fig:subPoly6_T0_beamSize}
 \end{figure}
 
 \begin{figure}[h]
 	\centering
-	\includegraphics[width=0.50\textwidth]{figures/subPoly9_T0_beamSize.pdf}
-	\caption{The foreground residuals after subtracting off a $6$th degree polynomial in log space. The data are shown for the same arrays as from Figures \ref{fig:unsub_T0_beamSize} and \ref{fig:subPoly6_T0_beamSize}. With the higher-order subtraction, more of the chromatic ripples introduced in the narrowest-beam array are subtracted, reducing the residuals as compared with those from a $6$th order subtraction. However, the intermediate-beam array still has the smallest residuals, leading us to conclude that an intermediate-beam array will be a more optimal design for a global signal experiment.}
+	\includegraphics[width=0.50\textwidth]{figures/subPoly8_T0_beamSize.pdf}
+	\caption{The foreground residuals after subtracting off a $6$th degree polynomial in log space. The data are shown for the same arrays as from Figures \ref{fig:unsub_T0_beamSize} and \ref{fig:subPoly6_T0_beamSize}. With the higher-order subtraction, more of the chromatic ripples introduced in the narrowest-beam array are subtracted, reducing the residuals as compared with those from a $6$th order subtraction. However, the intermediate-beam array still has the smallest residuals, leading us to conclude that an intermediate-beam array will be a more optimal design for a global signal experiment.\acl{Update caption to reflect updated runs}}
 	\label{fig:subPoly9_T0_beamSize}
 \end{figure}
 
@@ -589,9 +589,16 @@ In Figure \ref{fig:Ncomparison}, we compare the global signal estimators that re
 
 \begin{figure}[h]
 	\centering
-	\includegraphics[width=0.50\textwidth]{figures/Ncomparison.pdf}
-	\caption{The foreground bias $\Delta T_0$ as a function of frequency, comparing the data analysis method that weights visibilities by the inverse of the foreground amplitude (the solid blue line) with one that weights visibilities uniformly (the dashed orange line). The experimental setup consists of a closely-packed array of antennas with a primary beam of $88^\circ$, with observations centered on the NGP. Adding the foreground-motivated weighting does not significantly reduce the bias away from the galactic plane.}
+	\includegraphics[width=0.50\textwidth]{figures/NcomparisonNoSub.pdf}
+	\caption{The foreground bias $\Delta T_0$ as a function of frequency, comparing the data analysis method that weights visibilities by the inverse of the foreground amplitude (the solid blue line) with one that weights visibilities uniformly (the dashed orange line). The experimental setup consists of a closely-packed array of antennas with a primary beam of $88^\circ$, with observations centered on the NGP. Adding the foreground-motivated weighting does not significantly reduce the bias away from the galactic plane.\acl{Update caption}}
 	\label{fig:Ncomparison}
+\end{figure}
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=0.50\textwidth]{figures/NcomparisonPoly6.pdf}
+	\caption{\acl{Update caption} \acl{Also need to talk about how the minimum is reasonably flat.}}
+	\label{fig:NcomparisonPoly6}
 \end{figure}
 
 More seriously, setting $\Hmat = \Nfg^{-1}$ has the potential to introduce harmful artifacts into the final spectra. For example, bumpy spectral features are clearly visible in Figure \ref{fig:Ncomparison}, which can easily be confused with true spectral features in the cosmological signal. We find that such unsmooth structures are reasonably generic with this choice of $\Hmat$. Much of this is because the quest to downweight brighter portions of the foreground sky requires the isolation of spatially small patches. To isolate these patches, high angular resolution is necessary, which means that the estimator must weight longer---and more chromatic---baselines more heavily. Long baselines also have the disadvantage of having low sensitivity to the monopole. With a heavier weighting of long baselines, it is more difficult for an interferometer to match the thermal noise sensitivity of a single element experiment. \acl{Why do we keep calling it a single element experiment? Single element would be better} Although in future work it may be possible to eliminate all of these issues with a more sophisticated foreground-motivated form of $\Nfg$, for now we propose the use of $\Hmat = \mathbf{I}$.
@@ -700,26 +707,26 @@ where $z_r$ is the redshift of the mid-point of reionization, $\Delta z$ is its 
       & & \multicolumn{3}{c}{Reionization} & \multicolumn{3}{c}{Pre-reionization Dip} \\
       \cmidrule(lr){3-5} % Partial rule. (r) trims the line a little bit on the right; (l) & (lr) also possible
       \cmidrule(lr){6-8} 
-      Model &  & $T_{21}$ [mK] & $z_r$ & $\Delta z$ & $A$ [mK] & $\nu_0$ [MHz] & $\sigma$ [MHz]\\
+      Model &  & $T_{21}$ [K] & $z_r$ & $\Delta z$ & $A$ [K] & $\nu_0$ [MHz] & $\sigma$ [MHz]\\
       \midrule
-      Pessimistic & Fiducial Value & 10 & 12 & 3 & 10 & 60 & 10 \\
+      Pessimistic & Fiducial Value & 0.010 & 12 & 3 & 0.01 & 60 & 10 \\
       \cmidrule(l){2-8} 
       			 & Interferometer Bias & 2.43 & 67.7 & 128 & -0.599 & -190 & 93.1 \\
 			 & Single Element Bias & 4.41 & 132 & 227& 0.105 & 35.8 & -16.3 \\	 
       			 & Interferometer Error & $\pm 16.0$ & $\pm 342$ & $\pm 819$ & $\pm 2.97$ & $\pm 939$ & $\pm 466$ \\
       			 & Single Element Error  & $\pm 7.05$ & $\pm 223$ & $\pm 379$ & $\pm 0.646$ & $\pm 209$ & $\pm 130$ \\
       \midrule
-      Moderate & Fiducial Value & 27 & 10.5 & 0.8 & 100 & 70 & 5 \\
+      Moderate & Fiducial Value & 0.027 & 10.5 & 0.8 & 0.1 & 70 & 5 \\
       \cmidrule(l){2-8}
-			 & Interferometer Bias & -5.72e-4 & -0.00229 & -0.00714 & 1.56e-4 & 0.00152 & -0.00189 \\
-			 & Single Element Bias & 3.70e-3 & 0.0124 & 0.0409 & 1.07e-3 & 0.0639 & -0.0237 \\	
+			 & Interferometer Bias & $-5.72\times 10^{-4} $& -0.00229 & -0.00714 & $1.56\times 10^{-4}$ & 0.00152 & -0.00189 \\
+			 & Single Element Bias & $3.70\times 10^{-3}$ & 0.0124 & 0.0409 & $1.07\times 10^{-3}$ & 0.0639 & -0.0237 \\	
       			 & Interferometer Error & $\pm 0.0115$ & $\pm 0.0376$ & $\pm 0.143$ & $\pm 0.0133$ & $\pm 0.184$ & $\pm 0.284$ \\
       			 & Single Element Error  & $\pm 0.00662$ & $\pm 0.0224$ & $\pm 0.0966$ & $\pm 0.0122$ & $\pm 0.172$ & $\pm 0.269$ \\
       \midrule
-      Optimistic & Fiducial Value & 27 & 8 & 0.5 & 200 & 80 & 5 \\
+      Optimistic & Fiducial Value & 0.027 & 8 & 0.5 & 0.2 & 80 & 5 \\
       \cmidrule(l){2-8}
-			 & Interferometer Bias & -3.63e-05 & -5.48e-05 & -4.50e-04 & -9.24e-05 & -3.25e-04 & 8.86e-04 \\
-			 & Single Element Bias & 1.12e-3 & -1.25e-3 & 9.95e-3 & -6.01e-4 & -1.71e-2 & 6.33e-3 \\	
+			 & Interferometer Bias & $-3.63\times 10^{-5 }$& $-5.48\times 10{-5}$ & $-4.50\times 10^{-4}$ & $-9.24\times 10^{-5}$ &$ -3.25\times 10^{-4}$ & $8.86\times 10^{-4}$ \\
+			 & Single Element Bias & $1.12\times 10^{-3}$ & $-1.25\times 10^{-3}$ &$ 9.95\times 10^{-3}$ & $-6.01\times 10^{-4 }$& $-1.71\times 10^{-2}$ & $6.33\times 10^{-3}$ \\	
       			 & Interferometer Error & $\pm 0.00411$ & $\pm 0.0107$ & $\pm 0.0431$ & $\pm 0.009.03$ & $\pm 0.0567$ & $\pm 0.109$ \\
       			 & Single Element Error  & $\pm 0.00186$ & $\pm 0.00969$ & $\pm 0.0264$ & $\pm 0.00840$ & $\pm 0.0372$ & $\pm 0.104$ \\
       \bottomrule
@@ -764,16 +771,16 @@ Similarly, we consider three different pre-reionization scenarios of varying deg
 %\end{figure*}
 \begin{figure*}[t]
 	\centering
-	\includegraphics[width=1.00\textwidth,trim=3cm 2cm 3cm 0cm,clip]{figures/reionContoursPoly7Poly7.pdf}
-	\caption{Pairwise parameter contours for interferometer and single element experiments probing reionization. For the single element experiment, the orange contours correspond to the $95\%$ confidence regions, and the white areas within the orange contours correspond to the $68\%$ confidence region. For the interferometer experiment, the outer solid black contour line bound the $95\%$ confidence region, while the inner black contour bounds the $68\%$ confidence region. The black dot locates the fiducial value to be recovered and thus indicates the bias in each detection. The interferometer experiment used an $N\times N$ \mep{Fill this in} array of antennas with a primary beam of $\theta^\circ$\mep{Fill this in}. Both experiments had an integration time of 300 hours \mep{Check this} and used a $7$th order polynomial in the final foreground subtraction. \mep{Also, is this the final data?}}
+	\includegraphics[width=1.00\textwidth,trim=3cm 2cm 3cm 0cm,clip]{figures/reionContoursPoly7Poly6.pdf}
+	\caption{Pairwise parameter contours for interferometer and single element experiments probing reionization. For the single element experiment, the orange contours correspond to the $95\%$ confidence regions, and the white areas within the orange contours correspond to the $68\%$ confidence region. For the interferometer experiment, the outer solid black contour line bound the $95\%$ confidence region, while the inner black contour bounds the $68\%$ confidence region. The black dot locates the fiducial value to be recovered and thus indicates the bias in each detection. The interferometer experiment used an $N\times N$ \mep{Fill this in} array of antennas with a primary beam of $\theta^\circ$\mep{Fill this in}. Both experiments had an integration time of 300 hours \mep{Check this} and used a $7$th order polynomial in the final foreground subtraction. \mep{Also, is this the final data?} \acl{Update caption}}
 	\label{fig:reionContoursPoly7Poly7}
 \end{figure*}
 
 
 \begin{figure*}[t]
 	\centering
-	\includegraphics[width=1.00\textwidth,trim=3cm 2cm 3cm 0cm,clip]{figures/dipContoursPoly7Poly7.pdf}
-	\caption{Pairwise parameter contours for interferometer and single element experiments probing the pre-reionization dip. See Figure \ref{fig:reionContoursPoly7Poly7} for the simulation set-up.}
+	\includegraphics[width=1.00\textwidth,trim=3cm 2cm 3cm 0cm,clip]{figures/dipContoursPoly7Poly6.pdf}
+	\caption{Pairwise parameter contours for interferometer and single element experiments probing the pre-reionization dip. See Figure \ref{fig:reionContoursPoly7Poly7} for the simulation set-up. \acl{Rewrite caption to update}}
 	\label{fig:dipContoursPoly7Poly7}
 \end{figure*}
 
