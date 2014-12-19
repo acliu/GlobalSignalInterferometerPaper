@@ -928,7 +928,7 @@ Once the Fisher matrix has been computed, the smallest possible error $\Delta \t
 
 So far, we have only concerned ourselves with the variance of the final parameter constraints. However, foreground residuals will cause more than a spread in the parameter fits---they will also bias the fits in a systematic way. This bias is given by
 \begin{equation}
-\delta \theta_i = -\sum_{j} (\F^{-1})_{ij} \frac{\partial \boldsymbol \mu ^t}{\partial \theta_j} \boldsymbol \Pi ^{-1} \delta \widehat{\mathbf{T}}_\textrm{fg}.
+\delta \theta_i = \sum_{j} (\F^{-1})_{ij} \frac{\partial \boldsymbol \mu ^t}{\partial \theta_j} \boldsymbol \Pi ^{-1} \delta \widehat{\mathbf{T}}_\textrm{fg}.
 \end{equation}
 In Section \ref{sec:SimResults}, $\delta \xhat_\textrm{fg}$ is obtained by running Monte Carlo simulations. We generate realizations of the foreground sky, which are then fed through a simulation of a measurement and data analysis. Averaging over simulations, the resulting spectra are then fit to logarithmic polynomials. The residuals (i.e., $\delta \widehat{\mathbf{T}}_\textrm{fg}$) are given by Equation \eqref{eq:FgFit}.
 
