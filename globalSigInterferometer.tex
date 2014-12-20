@@ -302,21 +302,21 @@ where we have assumed that the instrumental noise has zero mean, so that $\langl
 \end{equation}
 On the other hand, for a single element experiment we have only a single baseline of length zero, so the noise variance is
 \begin{equation}
-\boldsymbol \Pi(\nu,\nu) = \frac{\sigma^2}{\big{|} \int  A(\rhat, \nu) d\Omega \big{|}^2}.
+\boldsymbol \Pi(\nu,\nu) = \frac{2 \sigma^2}{\big{|} \int  A(\rhat, \nu) d\Omega \big{|}^2},
 \end{equation}
-Equating these two expression then allows one to solve for the number of short baselines $N_\textrm{short}$ that are needed for an interferometer to have the same thermal noise sensitivity as a single element experiment:
+where the extra factor of $2$ arises from the fact that output voltages are squared in auto-correlation experiments, resulting in a squaring of the Gaussian noise contribution. The variance of the squared noise then depends on the fourth moment of a Gaussian distribution, which gives an extra factor of $2$ when expressed in terms of the variance of the signal $\sigma^2$. Equating our last two expression allows one to solve for the number of short baselines $N_\textrm{short}$ that are needed for an interferometer to have the same thermal noise sensitivity as a single element experiment:
 \begin{equation}
-N_\textrm{short} \approx  \frac{\big{|} \int  A(\rhat, \nu) d\Omega \big{|}^2}{  \big{|} \int  A(\rhat, \nu) \exp\left(i 2\pi \frac{\nu }{c}\mathbf{b}_\textrm{short} \cdot \rhat \right)d\Omega \big{|}^2}.
+N_\textrm{short} \approx  \frac{\big{|} \int  A(\rhat, \nu) d\Omega \big{|}^2}{  2\big{|} \int  A(\rhat, \nu) \exp\left(i 2\pi \frac{\nu }{c}\mathbf{b}_\textrm{short} \cdot \rhat \right)d\Omega \big{|}^2}.
 \end{equation}
 To get a rough sense for the magnitude of $N_\textrm{short}$, suppose we make the flat-sky approximation. This gives
 \begin{equation}
-N_\textrm{short} \approx \frac{\big{|} \widetilde{A}(0)\big{|}^2}{\big{|} \widetilde{A}(\nu \mathbf{b}_\textrm{short} / c)\big{|}^2}.
+N_\textrm{short} \approx \frac{\big{|} \widetilde{A}(0)\big{|}^2}{2 \big{|} \widetilde{A}(\nu \mathbf{b}_\textrm{short} / c)\big{|}^2}.
 \end{equation}
 For Gaussian beams, we obtain
 \begin{equation}
-N_\textrm{short} \approx \exp \left( 4 \pi^2 \theta_b^2 \frac{b_\textrm{short}^2}{\lambda^2} \right).
+N_\textrm{short} \approx \frac{1}{2} \exp \left( 4 \pi^2 \theta_b^2 \frac{b_\textrm{short}^2}{\lambda^2} \right).
 \end{equation}
-Now, if one assumes a closely packed array, then $b_\textrm{short}/ \lambda \sim (2\pi \theta_0)^{-1}$. Inserting this into our expression gives $N_\textrm{short} \sim e$. For an $N \times N$ square grid of antennas, there are $N_\textrm{short} = 2(N-1)^2$ shortest baselines formed by adjacent antenna pairs (half of which are in one direction, while the other half are perpendicular).Solving for $N$ then gives $1 + \sqrt{e/2} \approx 2.2$, and therefore even a small array (say, $3\times 3$ or $4\times 4$) will allow an interferometric measurement of the global signal to possess the same thermal noise sensitivity as a signal element experiment.
+Now, if one assumes a closely packed array, then $b_\textrm{short}/ \lambda \sim (2\pi \theta_0)^{-1}$. Inserting this into our expression gives $N_\textrm{short} \sim e / 2$. For an $N \times N$ square grid of antennas, there are $N_\textrm{short} = 2(N-1)^2$ shortest baselines formed by adjacent antenna pairs (half of which are in one direction, while the other half are perpendicular).Solving for $N$ then gives $1 + \sqrt{e/4} \approx 1.8$, and therefore even a small array (say, $2\times 2$ or $3\times 3$) will allow an interferometric measurement to more than make up for the loss of sensitivity to the global signal from discarding auto-correlations.
 %
 %\acl{Comment on generalizing this, as well as on how redundancy is not a requirement} \mep{I was just wondering about that -- isn't the redundancy necessary for systematic noise reduction?} \mep{Cool calculation. I really like this section.}
 
@@ -599,7 +599,7 @@ The reduction in foreground contamination is more pronounced if observations are
 \begin{figure}[h]
 	\centering
 	\includegraphics[width=0.50\textwidth]{figures/NcomparisonPoly6.pdf}
-	\caption{Foreground residuals from Figure \ref{fig:Ncomparison} after a $6$th order logarithmic polynomial subtraction. The uniformly weighted residuals are now seen to be weaker than the those of the inverse foreground weighted analysis. Inverse foreground weighting is thus seen to imprint extra chromaticity in measured spectra, making spectral foreground subtraction more difficult.}
+	\caption{Foreground residuals from Figure \ref{fig:Ncomparison} after a $6$th order logarithmic polynomial subtraction. The uniformly weighted residuals are now seen to be weaker than those of the inverse foreground weighted analysis. Inverse foreground weighting is thus seen to imprint extra chromaticity in measured spectra, making spectral foreground subtraction more difficult.}
 	\label{fig:NcomparisonPoly6}
 \end{figure}
 
@@ -683,7 +683,7 @@ Aside from residual foregrounds, our forecasts must also incorporate instrumenta
 \end{equation}
 where the indices refer to different baselines, $\Omega_p = \int  A(\mathbf{\hat{r}}) d\Omega$ is the size of the primary beam, $T_\textrm{sys}$ is the system temperature, $\Delta \nu$ is the channel width, and $t_\textrm{int}$ is the total integration time. We take $\Delta \nu = 1\,\textrm{MHz}$ and $t_\textrm{int} = 300\,\textrm{hrs}$. For the system temperature we assume that the measurements are sky-noise dominated, and we set $T_\textrm{sys}$ equal to the primary beam averaged sky temperature.
 
-With the noise covariance of the visibilities $\N$ in hand, we can obtain the covariance matrix $\boldsymbol \Sigma$ of our estimator $\xhat$. To do so, we insert $\N$ into Equation \eqref{eq:NoiseMatrixSigma}. Since $\xhat$ contains estimates of all the spherical harmonic modes that we wish to solve for,   it is an $(\ell_\textrm{max} +1)^2 \times (\ell_\textrm{max}+1)^2$ matrix relating all the errors on the $a_{\ell m}$ estimates to one another. With our focus being the monopole term, we require only the first element on the diagonal of $\boldsymbol \Sigma$. Extracting this element and dividing by $4\pi$ (the square of the conversion between $\hat{a}_{00}$ and $\widehat{T}_0$) gives the variance on $\widehat{T}_0$. Repeating this process for every observation frequency, we can place the resulting variances along the diagonal of yet another covariance matrix $\boldsymbol \Pi$. This is the frequency-frequency noise covariance matrix of our final spectrum, and by populating only its diagonal elements (setting all other elements to zero), we are assuming that noise contributions from different frequencies are uncorrelated. Note that in the case of the single element experiment, the diagonals of $\boldsymbol \Pi$ reduce to $T^2_\textrm{sys}(\nu) \Omega_p / t_\textrm{int} \Delta \nu$, as one might expect.
+With the noise covariance of the visibilities $\N$ in hand, we can obtain the covariance matrix $\boldsymbol \Sigma$ of our estimator $\xhat$. To do so, we insert $\N$ into Equation \eqref{eq:NoiseMatrixSigma}. Since $\xhat$ contains estimates of all the spherical harmonic modes that we wish to solve for,   it is an $(\ell_\textrm{max} +1)^2 \times (\ell_\textrm{max}+1)^2$ matrix relating all the errors on the $a_{\ell m}$ estimates to one another. With our focus being the monopole term, we require only the first element on the diagonal of $\boldsymbol \Sigma$. Extracting this element and dividing by $4\pi$ (the square of the conversion between $\hat{a}_{00}$ and $\widehat{T}_0$) gives the variance on $\widehat{T}_0$. Repeating this process for every observation frequency, we can place the resulting variances along the diagonal of yet another covariance matrix $\boldsymbol \Pi$. This is the frequency-frequency noise covariance matrix of our final spectrum, and by populating only its diagonal elements (setting all other elements to zero), we are assuming that noise contributions from different frequencies are uncorrelated. Note that even though we established this procedure for computing $\boldsymbol \Pi$ with interferometers in mind, it can be easily adapted for the single-element experiments as well. Considering a single baseline of length zero, one obtains  $T^2_\textrm{sys}(\nu) \Omega_p / t_\textrm{int} \Delta \nu$ along the diagonal of $\boldsymbol \Pi$, which simply needs to be enhanced by a factor of $2$ to account for the correlated noise discussed in Section \ref{sec:numElems}.
 
 To evaluate the effectiveness of our global signal interferometer, we employ a Fisher matrix formalism. Our set-up is essentially identical to that of \citet{BernardiLEDA}, and thus we relegate a review of the formalism to Appendix \ref{fisher}. As a toy model for the dark ages, we again follow \citet{BernardiLEDA} and model the dip at $\sim 70\,\textrm{MHz}$ as a Gaussian:
 \begin{equation}
@@ -712,24 +712,24 @@ where $z_r$ is the redshift of the mid-point of reionization, $\Delta z$ is its 
       			 & Interferometer Bias & -26.0 & -655 & -1350 & -0.599 & -189 & 93.1 \\
 			 & Single Element Bias & 1.13 & 20.4 & 58.9 & 0.105 & 35.8 & -16.3 \\	 
       			 & Interferometer Error & $\pm 4.65$ & $\pm 98.2$ & $\pm 237$ & $\pm 0.838$ & $\pm 265$ & $\pm 131$ \\
-      			 & Single Element Error  & $\pm 6.71$ & $\pm 226$ & $\pm 352$ & $\pm 0.400$ & $\pm 146$ & $\pm 81.9$ \\
+      			 & Single Element Error  & $\pm 9.49 $ & $\pm 319$ & $\pm 497$ & $\pm 0.565$ & $\pm 206$ & $\pm 116$ \\
       \midrule
       Moderate & Fiducial Value & 0.027 & 10.5 & 0.8 & 0.1 & 70 & 5 \\
       \cmidrule(l){2-8}
 			 & Interferometer Bias & 0.00474 & 0.0157 & 0.0539 & $1.56\times10^{-4}$ & 0.00152 & -0.00189 \\
 			 & Single Element Bias & 0.00426 & 0.0100 & 0.0476 & $1.07\times10^{-3}$ & 0.0639 & -0.0237 \\	
       			 & Interferometer Error & $\pm 0.00323$ & $\pm 0.0107$ & $\pm 0.0402$ & $\pm 0.00376$ & $\pm 0.0519$ & $\pm 0.0800$ \\
-      			 & Single Element Error  & $\pm 0.00453$ & $\pm 0.0234$ & $\pm 0.0726$ & $\pm 0.00854$ & $\pm 0.123$ & $\pm 0.186$ \\
+      			 & Single Element Error  & $\pm 0.00641$ & $\pm 0.0331$ & $\pm 0.103$ & $\pm 0.0121$ & $\pm 0.174$ & $\pm 0.263$ \\
       \midrule
       Optimistic & Fiducial Value & 0.027 & 8 & 0.5 & 0.2 & 80 & 5 \\
       \cmidrule(l){2-8}
 			 & Interferometer Bias & $7.10\times10^{-4}$ & $-1.27\times10^{-4}$ & 0.00630 & $-9.23\times 10^{-5}$ &$ -3.25\times 10^{-4}$ & $8.86\times 10^{-4}$ \\
 			 & Single Element Bias & $1.26\times10^{-3}$ & $-2.51\times10^{-3}$ & 0.0117 & $-6.01\times10^{-4}$ & $-1.71\times10^{-2}$ & $6.33\times10^{-3}$ \\
       			 & Interferometer Error & $\pm 0.00115$ & $\pm 0.00300$ & $\pm 0.0121$ & $\pm 0.00255$ & $\pm 0.0160$ & $\pm 0.0307$ \\
-      			 & Single Element Error  & $\pm 0.00131$ & $\pm 0.00524$ & $\pm 0.0168$ & $\pm 0.00479$ & $\pm 0.0234$ & $\pm 0.0591$ \\
+      			 & Single Element Error  & $\pm 0.00184$ & $\pm 0.00741$ & $\pm 0.0237$ & $\pm 0.00678$ & $\pm 0.0330$ & $\pm 0.0836$ \\
       \bottomrule
    \end{tabular}
-   \caption{Table of parameters, biases, and $1\sigma$ error bars for different scenarios and experiments.}
+   \caption{Parameters, biases, and $1\sigma$ error bars for different scenarios and experiments.}
    \label{tab:params}
 \end{table*}
 
@@ -770,7 +770,7 @@ Similarly, we consider three different pre-reionization scenarios of varying deg
 \begin{figure*}[t]
 	\centering
 	\includegraphics[width=1.00\textwidth,trim=3cm 2cm 3cm 0cm,clip]{figures/reionContoursPoly7Poly6.pdf}
-	\caption{Pairwise parameter contours for interferometer and single element experiments probing reionization. For the single element experiment, the orange contours correspond to the $95\%$ confidence regions, and the white areas within the orange contours correspond to the $68\%$ confidence region. For the interferometer experiment, the outer solid black contour line bound the $95\%$ confidence region, while the inner black contour bounds the $68\%$ confidence region. The black dot locates the fiducial value to be recovered and thus indicates the bias in each detection. The interferometer experiment used an $5\times 5$ array of antennas with a primary beam FWHM of $38.7^\circ$ at $100\,\textrm{MHz}$. Both experiments had an integration time of 300 hours. For the interferometric measurement, a $7$th order logarithmic polynomial was needed to model the foreground spectra sufficiently well, whereas with the single element experiment only a $6$th order polynomial was required. The two types of experiment are seen to perform comparably, with the interferometer having slightly smaller errors because of the slightly larger-than-necessary---though still modest---size of the array.}
+	\caption{Pairwise parameter contours for interferometer and single element experiments probing reionization. For the single element experiment, the orange contours correspond to the $95\%$ confidence regions, and the white areas within the orange contours correspond to the $68\%$ confidence region. For the interferometer experiment, the outer solid black contour line bound the $95\%$ confidence region, while the inner black contour bounds the $68\%$ confidence region. The black dot locates the fiducial value to be recovered and thus indicates the bias in each detection. The interferometer experiment used an $5\times 5$ array of antennas with a primary beam FWHM of $38.7^\circ$ at $100\,\textrm{MHz}$. Both experiments had an integration time of 300 hours. For the interferometric measurement, a $7$th order logarithmic polynomial was needed to model the foreground spectra sufficiently well, whereas with the single element experiment only a $6$th order polynomial was required. The interferometer is seen to yield slightly smaller errors. This is largely due to our having chosen to model a slightly larger-than-necessary---though still modest---array.}
 	\label{fig:reionContoursPoly7Poly7}
 \end{figure*}
 
@@ -778,7 +778,7 @@ Similarly, we consider three different pre-reionization scenarios of varying deg
 \begin{figure*}[t]
 	\centering
 	\includegraphics[width=1.00\textwidth,trim=3cm 2cm 3cm 0cm,clip]{figures/dipContoursPoly7Poly6.pdf}
-	\caption{Same as Figure \ref{fig:reionContoursPoly7Poly7}, but for experiments targeting the pre-reionization dip. Primary beams are set to have a FWHM of $38.7^\circ$ at $50\,\textrm{MHz}$. Again, the two experiment types have comparable performances.}
+	\caption{Same as Figure \ref{fig:reionContoursPoly7Poly7}, but for experiments targeting the pre-reionization dip. Primary beams are set to have a FWHM of $38.7^\circ$ at $50\,\textrm{MHz}$. Again, the errors from the interferometric set-up are slightly smaller, thanks to our choice of a slightly larger-than-necessary array as our fiducial model.}
 	\label{fig:dipContoursPoly7Poly7}
 \end{figure*}
 
