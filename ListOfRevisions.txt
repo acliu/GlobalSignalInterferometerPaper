@@ -7,3 +7,7 @@ Nick Gnedin’s comment about sims showing shallower absorption trough than Prit
 Cite Mahesh et. al. (http://arxiv.org/abs/1406.2585) zero-baseline interferometer. 
 
 Discuss Gaussian beam and mention PAPER beam sims.
+
+A little worried about our use of flat sky approximation to get rules of thumb, even though
+we make a big deal early on about the importance of curved and finite sky. Solution is probably
+to emphasize finite sky over flat sky.
