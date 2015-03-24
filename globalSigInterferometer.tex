@@ -143,10 +143,6 @@ In this section, we use simplified toy models to build intuition for the types o
 
 Consider first a purely qualitative picture of a two-element interferometer. An interferometer returns a visibility by integrating over a primary-beam attenuated fringe pattern on the sky. If the primary beam did not exist (i.e., if it were constant over the entire sky) and the sky were infinite in extent, it would be impossible to measure a monopole. With those approximations, the fringe pattern would be purely sinusoidal, and integrating such a pattern against a constant (monopole) mode would return zero. However, as shown schematically in Figure \ref{fig:beam_pattern_cartoon}, the enveloping presence of the primary beam and the finite extent of the sky prevent the interferometer's response from integrating to zero. This allows an interferometer to be sensitive to the monopole mode.
 
-An equivalent way to look at the problem is to move into Fourier space and to examine the $uv$ plane, as shown in Figure \ref{fig:uv_cartoon}. An interferometer with baseline length $\b$ will measure the sky at the point $\mathbf{u} = \nu\b/c$ in the $uv$ plane. To measure the monopole, one must recover information from the origin, which corresponds to a zero-length baseline. This is possible because multiplying the sky by the primary beam in image space corresponds to convolving by the primary beam's $uv$ plane footprint in Fourier space. This footprint is typically on the order of the physical size of the antenna element, measured in wavelengths. Its effect is to smear out the point of measurement on the $uv$ plane (i.e. the measurement incorporates information from other nearby $uv$ locations), with narrower image-space beams corresponding to larger smears. As shown by the green circle in Figure \ref{fig:uv_cartoon}, if the baseline is short enough and the image-space beam is narrow enough, then the measured signal will include information from the global signal. 
-
-In the rest of Section \ref{sec:BackOfEnvelopeArrayDesign} we will make this qualitative picture more mathematically precise and develop an array design that not only maximizes sensitivity to the global signal, but also ensures that subsequent foreground subtraction operations are robust. This will require being cognizant of the data analysis strategy. This strategy, which we will develop fully in Section \ref{sec:MathForm}, first analyzes the visibilities on a frequency-by-frequency basis to estimate the strength of the monopole mode at each frequency. The result is a spectrum whose smooth components are then removed in an attempt to remove foregrounds. Essential to the success of this removal is the assumption that the instrument does not impose complicated frequency structures on the true sky spectra. This provides a strong constraint on our instrumental design. In service of this goal, when analyzing interferometric data we will discard data from the auto-correlation of an antenna itself, in order to avoid the noise bias effects that pose extra challenges in calibration of single-element experiments.
- 
 \begin{figure}[h]
 	\centering
 	\includegraphics[width=0.50\textwidth]{figures/beam_pattern_cartoon.pdf}
@@ -154,12 +150,99 @@ In the rest of Section \ref{sec:BackOfEnvelopeArrayDesign} we will make this qua
 	\label{fig:beam_pattern_cartoon}
 \end{figure}
 
+An equivalent way to look at the problem is to move into Fourier space and to examine the $uv$ plane, as shown in Figure \ref{fig:uv_cartoon}. An interferometer with baseline length $\b$ will measure the sky at the point $\mathbf{u} = \nu\b/c$ in the $uv$ plane. To measure the monopole, one must recover information from the origin, which corresponds to a zero-length baseline. This is possible because multiplying the sky by the primary beam in image space corresponds to convolving by the primary beam's $uv$ plane footprint in Fourier space. This footprint is typically on the order of the physical size of the antenna element, measured in wavelengths. Its effect is to smear out the point of measurement on the $uv$ plane (i.e. the measurement incorporates information from other nearby $uv$ locations), with narrower image-space beams corresponding to larger smears. As shown by the green circle in Figure \ref{fig:uv_cartoon}, if the baseline is short enough and the image-space beam is narrow enough, then the measured signal will include information from the global signal.
+
 \begin{figure}[h]
 	\centering
 	\includegraphics[width=0.50\textwidth]{figures/uv_cartoon.pdf}
 	\caption{A schematic illustration of the $uv$ plane for an interferometer. The $uv$ plane is the Fourier dual to image space, and an interferometer with baseline $\b$ makes a measurement at the point $\mathbf{u} = \nu\b / c$. Measuring the monopole signal requires making a measurement at the origin of the $uv$ plane, which is probed by a baseline of zero length. This seems impossible without measuring the auto-correlation of an antenna with itself, until one recalls that a real interferometer does not measure an exact point: the antenna's beam has a $uv$ plane footprint that smears the measurement, so that the measurement contains information from nearby $uv$ points. Since a narrower beam corresponds to a larger convolving kernel, two narrow-beam antennas placed close together would make a measurement that incorporates information from the monopole, as shown by the green circle in the figure.}
 	\label{fig:uv_cartoon}
 \end{figure}
+
+Admittedly, the claim that an interferometer can be sensitive to the monopole of the sky seems at
+first sight to contradict standard results in interferometry. To address this apparent discrepancy,
+let us first review the standard lore. The van Cittert-Zernicke Theorem states that the cross-correlation
+between the electric field at locations $\mathbf{x}_1$ and $\mathbf{x}_2$ is given by
+\begin{equation}
+\langle E(\mathbf{x}_1) E(\mathbf{x}_2)^* \rangle \propto \int d\Omega \, T(\rhat) \exp \left[ - i 2\pi \frac{\nu}{c} \rhat \cdot (\mathbf{x}_1 - \mathbf{x}_2 ) \right],
+\end{equation}
+where we have opted to describe the sky in terms of its brightness temperature rather than the specific intensity to conform to our convention in later sections. With an interferometric baseline, one correlates
+not the electric field at two specific points, but rather, the integrated electric fields over the physical
+areas of the antennas forming the baseline. We therefore measure
+\begin{equation}
+V \propto \int d^2 \mathbf{x}_1 d^2 \mathbf{x}_2 f (\mathbf{x}_1) g(\mathbf{x}_2) \langle E(\mathbf{x}_1) E(\mathbf{x}_2)^* \rangle,
+\end{equation}
+where we have assumed that the antennas are coplanar, allowing us to integrate only over two-dimensional
+versions of $\mathbf{x}_1$ and $\mathbf{x}_2$. The functions $f$ and $g$ describe the electric field sensitivities of the first and second antennas comprising the baseline, respectively. They are assumed to be equal to zero outside the rough physical extent of the
+antennas. Suppose the sky emission is constant (i.e., consisting only of a monopole), so that $T(\rhat) = T_0$. Combining our expressions with this restriction and the explicit notation $\rhat = (l,m,n)$, we obtain
+\begin{equation}
+V \propto T_0 \int \frac{dl dm}{\sqrt{1- l^2 - m^2}} \,\tilde{f}\!\left( l \nu / c , m \nu / c \right) \tilde{g}^* ( l \nu / c , m \nu / c ),
+\end{equation}
+where
+\begin{equation}
+\tilde{f}\left( \frac{l \nu}{c}, \frac{m \nu}{c}  \right) \equiv \int dx dy f(x,y)e^{ - i 2 \pi \frac{\nu}{c} (lx + my)}
+\end{equation}
+is the two-dimensional Fourier transform of $f$, and similarly for $\tilde{g}$, with $\mathbf{x} = (x,y)$.
+
+Now, suppose we operate under the flat-sky approximation. This is equivalent to omitting the
+factor of $\sqrt{1-l^2 - m^2}$ in the denominator of our expression for the visibility $V$.
+If one further extends the limits of the integration to infinity, Parseval's theorem applies and
+one obtains
+\begin{equation}
+\label{eq:fdotg}
+V\Bigg{|}_\textrm{flat, finite} \propto T_0 \int d\mathbf{x} f (\mathbf{x}) g(\mathbf{x}).
+\end{equation}
+If the two antennas that form our baseline do not overlap, then neither will $f$ and $g$, resulting
+in $f (\mathbf{x}) g(\mathbf{x}) = 0$ and thus $V=0$. This is the standard result that suggests
+that it is impossible to measure the monopole with an interferometer. Phrased differently, the
+physical size of the antennas ($f$ and $g$) make it difficult to have a baseline short enough
+for there to be substantial overlap with the $\mathbf{u} = 0$ mode in Figure \ref{fig:uv_cartoon}.
+
+With the full expression for $V$, however, one sees that the response to the monopole does
+not necessarily vanish, even if the antennas are not physically co-located. Abandoning the
+assumptions of a flat, finite sky, one may define
+\begin{equation}
+\widetilde{F} (l, m, \nu) \equiv
+\begin{cases}
+\frac{\tilde{f} (l\nu / c,m\nu / c)}{(1-l^2 - m^2)^{1/4}} \quad & \textrm{if} \quad l^2 + m^2 < 1 \\
+0 \quad &\textrm{otherwise},
+\end{cases}
+\end{equation}
+and similarly for $g$. Parseval's theorem can then be applied to our expression for $V$, despite
+the complications of a curved, finite sky. The result (suppressing the frequency dependence for
+notational simplicity) is
+\begin{equation}
+\label{eq:effFdotG}
+V \propto T_0 \int d\mathbf{x} F(\mathbf{x}) G(\mathbf{x}),
+\end{equation}
+and does not vanish because the effective apertures $F$ and $G$ will in general overlap.
+
+We demonstrate our results numerically with a toy example in Figure \eqref{fig:effAperture}. The top panel
+shows the cross-sections of two circular apertures that each have radius $0.5\,\textrm{m}$. The apertures are packed as
+closely together as possible without overlapping, and in the infinite, flat-sky approximation, Equation
+\eqref{eq:fdotg} implies that an interferometer baseline formed by pairing these two apertures will
+have no sensitivity to the monopole mode. In the bottom panel are the effective aperture functions
+(i.e., the correct ones to use when considering the curved, finite sky) at $150\,\textrm{MHz}$ for the same configuration. The effective apertures clearly overlap, and consequently Equation \eqref{eq:effFdotG} implies a sensitivity to the monopole. In practice, one must carefully model the aperture functions
+and beam patterns to precisely quantify the monopole response, but for now, it suffices to note
+that once finite curved sky effects are incorporated into one's analysis, interferometers are generically
+sensitive to the monopole.
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=0.50\textwidth]{figures/effAperture.pdf}
+	\caption{Top: Cross-section of two circular apertures of radius $0.5\,\textrm{m}$ placed
+	side-by-side. Bottom: Cross-section of the corresponding effective apertures at $150\,\textrm{MHz}$. 
+	Whereas the lack of overlap between the two apertures in the top panel implies that
+	interferometers are insensitive to the monopole, this conclusion is incorrect when finite
+	curved sky effects are taken into account. Incorporating such effects, the effective
+	apertures overlap and give rise to a non-zero response to the monopole.}
+	\label{fig:effAperture}
+\end{figure}
+
+In the rest of Section \ref{sec:BackOfEnvelopeArrayDesign} we will make this rough picture more mathematically precise and develop an array design that not only maximizes sensitivity to the global signal, but also ensures that subsequent foreground subtraction operations are robust. This will require being cognizant of the data analysis strategy. This strategy, which we will develop fully in Section \ref{sec:MathForm}, first analyzes the visibilities on a frequency-by-frequency basis to estimate the strength of the monopole mode at each frequency. The result is a spectrum whose smooth components are then removed in an attempt to remove foregrounds. Essential to the success of this removal is the assumption that the instrument does not impose complicated frequency structures on the true sky spectra. This provides a strong constraint on our instrumental design. In service of this goal, when analyzing interferometric data we will discard data from the auto-correlation of an antenna itself, in order to avoid the noise bias effects that pose extra challenges in calibration of single-element experiments.
+ 
+\acl{A little concerned that we're making a big deal about not using the flat sky here, but then
+use it extensively later}
 
 
 \subsection{Sparse or packed arrays?}
