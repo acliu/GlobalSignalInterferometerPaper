@@ -1,0 +1,9 @@
+List of Revisions:
+
+Andrei Mesinger says pessimistic scenario is most likely, references http://adsabs.harvard.edu/abs/2014MNRAS.440.1662S
+
+Nick Gnedin’s comment about sims showing shallower absorption trough than Pritchard & Loeb due to shock heating in the filamentary structure. (Gnedin & Shaver 2004, 2004ApJ...608..611G and a paper to-be-released in the next couple months)
+
+Cite Mahesh et. al. (http://arxiv.org/abs/1406.2585) zero-baseline interferometer. 
+
+Discuss Gaussian beam and mention PAPER beam sims.
