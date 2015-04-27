@@ -91,7 +91,7 @@ One promising way to directly observe both reionization and the dark ages would 
 	\label{fig:21cmSignal}
 \end{figure*}
 
-Just as with the CMB, the $21\,\textrm{cm}$ line can be characterized by a mean brightness temperature (obtained by averaging the cosmological signal in angle over the entire sky) and anisotropic fluctuations about this mean. However, unlike the CMB, the mean $21\,\textrm{cm}$ brightness temperature does not follow a simple blackbody spectrum. Instead, this ``global $21\,\textrm{cm}$ signal" is richly dependent on the astrophysics of the dark ages and reionization \citep{Shaver1999,PritchardLoeb2010,MorandiBarkana}. Figure \ref{fig:21cmSignal} shows a schematic of a fiducial model of the global 21 cm signal, highlighting the important epochs and corresponding features in the signal. The first epoch, the cosmic ``dark ages,'' arises with the thermal decoupling of the 21 cm spin states from the cosmic microwave background (CMB) and is marked by a shallow absorption feature. As the gas density continues to fall with the universe's expansion, collisions are no longer able to couple the spin states to the gas, and the signal falls back into coupling with the CMB. The next epoch is marked by the formation of the first stars and galaxies, whose Ly$\alpha$ photons strongly couple the spin states to the gas temperature. This first results in a deep absorption feature, as the gas temperature is far below that of the CMB. However, heating from X-ray emission pushes the gas above the CMB temperature, resulting in a 21 cm emission signal. This leads to the final epoch, the ``epoch of reionization,'' where UV photons ionize the gas, gradually erasing the 21 cm signal.
+Just as with the CMB, the $21\,\textrm{cm}$ line can be characterized by a mean brightness temperature (obtained by averaging the cosmological signal in angle over the entire sky) and anisotropic fluctuations about this mean. However, unlike the CMB, the mean $21\,\textrm{cm}$ brightness temperature does not follow a simple blackbody spectrum. Instead, this ``global $21\,\textrm{cm}$ signal" is richly dependent on the astrophysics of the dark ages and reionization \citep{Shaver1999,PritchardLoeb2010,MorandiBarkana}. Figure \ref{fig:21cmSignal} shows a schematic of a fiducial model of the global 21 cm signal, highlighting the important epochs and corresponding features in the signal. The first epoch, the cosmic ``dark ages,'' arises with the thermal decoupling of the 21 cm spin states from the cosmic microwave background (CMB) and is marked by a shallow absorption feature. As the gas density continues to fall with the universe's expansion, collisions are no longer able to couple the spin states to the gas, and the signal falls back into coupling with the CMB. The next epoch is marked by the formation of the first stars and galaxies, whose Ly$\alpha$ photons strongly couple the spin states to the gas temperature. This first results in a deep absorption feature, as the gas temperature is far below that of the CMB. (Although see \citealt{GnedinShaver2004} for an example where shock heating can reduce the depth of the feature). Eventually, heating from X-ray emission pushes the gas above the CMB temperature, resulting in a 21 cm emission signal. This leads to the final epoch, the ``epoch of reionization,'' where UV photons ionize the gas, gradually erasing the 21 cm signal.
 
 A measurement of the 21 cm global signal would also have the potential to rule out other models such as those involving dark matter annihilations or stellar black holes. Dark matter annihilation scenarios provide heating beyond that from X-ray emission and hence dampen the absorption and emission signals at the end of the dark ages and during the epoch of reionization \citep{Valdes2013_DM,Evoli2014}. Similarly, ionizing photons from accreting stellar black holes might also add significant heating. Work by \citet{Mirabel_stellar_bh} suggests that including the effects of black holes would cause the 21 cm emission signal to occur earlier than otherwise expected and would also shorten the width of the absorption feature. A global 21 cm measurement would provide evidence for or against such models.
 
@@ -155,7 +155,7 @@ An equivalent way to look at the problem is to move into Fourier space and to ex
 \begin{figure}[h]
 	\centering
 	\includegraphics[width=0.50\textwidth]{figures/uv_cartoon.pdf}
-	\caption{A schematic illustration of the $uv$ plane for an interferometer. The $uv$ plane is the Fourier dual to image space, and an interferometer with baseline $\b$ makes a measurement at the point $\mathbf{u} = \nu\b / c$. Measuring the monopole signal requires making a measurement at the origin of the $uv$ plane, which is probed by a baseline of zero length. This seems impossible without measuring the auto-correlation of an antenna with itself, until one recalls that a real interferometer does not measure an exact point: the antenna's beam has a $uv$ plane footprint that smears the measurement, so that the measurement contains information from nearby $uv$ points. Since a narrower beam corresponds to a larger convolving kernel, two narrow-beam antennas placed close together would make a measurement that incorporates information from the monopole, as shown by the green circle in the figure. \acl{Add scale invariance argument}}
+	\caption{A schematic illustration of the $uv$ plane for an interferometer. The $uv$ plane is the Fourier dual to image space, and an interferometer with baseline $\b$ makes a measurement at the point $\mathbf{u} = \nu\b / c$. Measuring the monopole signal requires making a measurement at the origin of the $uv$ plane, which is probed by a baseline of zero length. This seems impossible without measuring the auto-correlation of an antenna with itself, until one recalls that a real interferometer does not measure an exact point: the antenna's beam has a $uv$ plane footprint that smears the measurement, so that the measurement contains information from nearby $uv$ points. Since a narrower beam corresponds to a larger convolving kernel, two narrow-beam antennas placed close together would make a measurement that incorporates information from the monopole, as shown by the green circle in the figure. Note that because the shortest possible baseline length is the physical extent of an antenna, which corresponds roughly to the size of the primary beam's $uv$ kernel when expressed in wavelengths, the problem is scale-invariant. The scales on the $uv$ axes shown here are thus arbitrary. \acl{Added last two sentences}}
 	\label{fig:uv_cartoon}
 \end{figure}
 
@@ -224,9 +224,9 @@ is further enhanced by the geometric effect of projecting a spherical hemisphere
 image plane. Such a projection maps large solid angles near the horizon to small portions of the image
 plane, leading to an ``edge brightening" effect, yet again imprinting spatial structure on the signal so that it can be picked up by an interferometer. These
 effects and their importance for an interferometric measurement of the global signal were independently
-noted in \citet{Thyagarajan_et_al2015}.
+noted in \citet{Thyagarajan_et_al2015}. \citet{Mahesh_et_al2014} have also explored the possibility of using a resistive fence to act as a radio-wavelength analog to a beam-splitter, with the fence placed between the two elements of a baseline to increase sensitivity to the monopole. \acl{Added Mahesh citation}
 
-We demonstrate our results numerically with a toy example in Figure \ref{fig:effAperture}. The top panel
+Returning to our scenario of a simple baseline without a resistive fence, we demonstrate our results numerically with a toy example in Figure \ref{fig:effAperture}. The top panel
 shows the cross-sections of two circular apertures that each have radius $0.5\,\textrm{m}$. The apertures are packed as
 closely together as possible without overlapping, and in the infinite, flat-sky approximation, Equation
 \eqref{eq:fdotg} implies that an interferometer baseline formed by pairing these two apertures will
@@ -252,12 +252,9 @@ have no sensitivity to the monopole mode. In the bottom panel are the effective 
 	\label{fig:effAperture_PAPER}
 \end{figure}
 
-\acl{Remember to change the array to $6 \times 6$ if that's indeed what you did.}
-
 In the rest of Section \ref{sec:BackOfEnvelopeArrayDesign} we will make this rough picture more mathematically precise and develop an array design that not only maximizes sensitivity to the global signal, but also ensures that subsequent foreground subtraction operations are robust. This will require being cognizant of the data analysis strategy. This strategy, which we will develop fully in Section \ref{sec:MathForm}, first analyzes the visibilities on a frequency-by-frequency basis to estimate the strength of the monopole mode at each frequency. The result is a spectrum whose smooth components are then removed in an attempt to remove foregrounds. Essential to the success of this removal is the assumption that the instrument does not impose complicated frequency structures on the true sky spectra. This provides a strong constraint on our instrumental design. In service of this goal, when analyzing interferometric data we will discard data from the auto-correlation of an antenna itself, in order to avoid the noise bias effects that pose extra challenges in calibration of single-element experiments.
- 
-\acl{A little concerned that we're making a big deal about not using the flat sky here, but then
-use it extensively later} \mep{Yeah, I remember thinking that as well, but I had decided it was ok since we emphasize that it's only for intuition and that our full calculations include the curved sky. However, with the new material, I think the problem is more conspicuous. I think the only section we still use only the flat sky is ``Sparse or packed arrays", so maybe we can just add a sentence saying why it's ok to use flat-sky here?}
+%\acl{A little concerned that we're making a big deal about not using the flat sky here, but then
+%use it extensively later} \mep{Yeah, I remember thinking that as well, but I had decided it was ok since we emphasize that it's only for intuition and that our full calculations include the curved sky. However, with the new material, I think the problem is more conspicuous. I think the only section we still use only the flat sky is ``Sparse or packed arrays", so maybe we can just add a sentence saying why it's ok to use flat-sky here?}
 
 
 \subsection{Sparse or packed arrays?}
@@ -269,7 +266,16 @@ In the flat-sky approximation, the visibility response $V(\mathbf{b})$ of a base
 \label{eq:Vb}
 V(\mathbf{b}) = \int  T(\boldsymbol \theta) A(\boldsymbol \theta) \exp \left( -i 2 \pi \frac{\nu}{c} \mathbf{b} \cdot \boldsymbol \theta \right) d^2 \mathbf{\theta},
 \end{equation}
-where $ A(\boldsymbol \theta)$ is the primary beam pattern.  Without loss of generality, we may normalize our primary beam such that $A(\mathbf{0}) = 1$.  Note that while we will invoke the flat-sky approximation throughout this section in an effort to enhance physical intuition at the expense of mathematical rigor, the formalism and numerical results of subsequent sections will properly incorporate the curved sky. \mep{Add sentence here about why it's ok to use flat sky?} For notational compactness, we will not explicitly highlight the frequency dependence of $T_0$, $A(\boldsymbol{\theta})$, and $V(\mathbf{b})$, although of course these quantities all implicitly vary with frequency. Setting $T(\boldsymbol \theta) = T_0$ for a monopole signal, one obtains the result
+where $ A(\boldsymbol \theta)$ is the primary beam pattern. Without loss of generality, we may normalize our primary beam such that $A(\mathbf{0}) = 1$. In principle, our use
+of the flat-sky approximation is inappropriate for a discussion of global signal interferometry,
+given the conceptual picture we presented in the previous section. However, we will
+invoke the flat-sky approximation only for the purposes of enhancing physical intuition, and
+the formalism and numerical results of subsequent sections will properly incorporate the
+curved sky. In fact, if one prefers, one may simply replace all the aperture functions
+(which enter through the beam patterns) with the effective aperture functions. The
+rest of the mathematics---including what we do in this section---then carries through without change.\acl{Added to the end of this paragraph}
+
+For notational compactness, we will not explicitly highlight the frequency dependence of $T_0$, $A(\boldsymbol{\theta})$, and $V(\mathbf{b})$, although of course these quantities all implicitly vary with frequency. Setting $T(\boldsymbol \theta) = T_0$ for a monopole signal, one obtains the result
 \begin{equation}
 \label{eq:blMonoResponse}
 V(\mathbf{b}) = T_0 \widetilde{A} \left( \nu \mathbf{b} / c \right),
@@ -329,7 +335,7 @@ Making a slight leap from a single baseline to a full interferometer array, this
 \subsection{Wide beams or narrow beams?}
 \label{sec:beamSize}
 
-The arguments in the previous subsection suggested a particular \emph{relative} placement of antenna elements: antennas should be packed together as tightly as possible. However, the \emph{absolute} scale of the array remains unspecified. Primary beams smaller than $\sim1-2^\circ$ will likely have difficulty distinguishing a representative 21cm global signal from local fluctuations \citep{Bittner+Loeb2011}. However, that constraint still leaves a large range of potential primary beam sizes and baseline lengths. \mep{Updated for reviewer comment} In this section, we answer the question of whether it is better to have a packed array with physically small antenna elements (and therefore short baselines and wide primary beams), or a packed array with larger elements (and therefore longer baselines and narrow primary beams). We will ultimately find that although narrowest beams on longest baselines maximize raw foreground reduction, they also introduce spectral ripples that are difficult to remove. Hence, we will find intermediate beam and baseline sizes to be optimal.
+The arguments in the previous subsection suggested a particular \emph{relative} placement of antenna elements: antennas should be packed together as tightly as possible. However, the \emph{absolute} scale of the array remains unspecified. Primary beams smaller than $\sim1-2^\circ$ will likely have difficulty distinguishing a representative $21\,\textrm{cm}$ global signal from local fluctuations \citep{Bittner+Loeb2011}. However, that constraint still leaves a large range of potential primary beam sizes and baseline lengths. \mep{Updated for reviewer comment} In this section, we answer the question of whether it is better to have a packed array with physically small antenna elements (and therefore short baselines and wide primary beams), or a packed array with larger elements (and therefore longer baselines and narrow primary beams). We will ultimately find that although narrowest beams on longest baselines maximize raw foreground reduction, they also introduce spectral ripples that are difficult to remove. Hence, we will find intermediate beam and baseline sizes to be optimal.
 
 As a first guess, one could imagine inserting our expression for $b_\textrm{opt}$, Equation \eqref{eq:b_opt}, into Equation \eqref{eq:DeviationPowGauss} to yield an equation whose only free parameter is the primary beam size $\theta_0$. Minimizing this equation by varying the beam size then suggests that the beam ought to be made as small as possible. However, since any discussion of an array's absolute size will necessarily tie the array to absolute angular scales on the sky, a more nuanced discussion of foreground properties is required beyond the set-up in the previous subsection, which only required that the angular power spectrum of foregrounds was monotonically decreasing.
 
@@ -835,15 +841,15 @@ where $z_r$ is the redshift of the mid-point of reionization, $\Delta z$ is its 
       \cmidrule(l){2-8}
 			 & Interferometer Bias & -0.00590 & 0.00639 & -0.0733 & $1.50\times10^{-4}$ & 0.00177 & -0.0019 \\
 			 & Single Element Bias & $-9.53 \times 10^{-4}$ & 0.0154 & -0.0263 & $1.15\times10^{-3}$ & 0.0595 & -0.0236 \\	
-      			 & Interferometer Error & $\pm 4.06\times 10^{-3}$ & $\pm 0.0131$ & $\pm 0.0586$ & $\pm 0.00244$ & $\pm 0.0338$ & $\pm 0.0519$ \\
+      			 & Interferometer Error & $\pm 4.06\times 10^{-3}$ & $\pm 0.0131$ & $\pm 0.0586$ & $\pm 2.44 \times 10^{-3}$ & $\pm 0.0338$ & $\pm 0.0519$ \\
       			 & Single Element Error  & $\pm 4.35 \times 10^{-3}$ & $\pm 0.0328$ & $\pm 0.0781$ & $\pm 0.0121$ & $\pm 0.174$ & $\pm 0.263$ \\
       \midrule
       Optimistic & Fiducial Value & 0.027 & 8 & 0.5 & 0.2 & 80 & 5 \\
       \cmidrule(l){2-8}
 			 & Interferometer Bias & $1.95\times10^{-4}$ & $4.10\times10^{-3}$ & 0.00183 & $-8.62\times 10^{-5}$ &$ -3.80\times 10^{-4}$ & $8.63\times 10^{-4}$ \\
 			 & Single Element Bias & $1.26\times10^{-3}$ & $-2.50\times10^{-3}$ & 0.0117 & $-6.50\times10^{-4}$ & $-0.0156$ & $6.42\times10^{-3}$ \\
-      			 & Interferometer Error & $\pm 1.10 \times 10^{-3}$ & $\pm 5.88 \times 10^{-3}$ & $\pm 0.0158$ & $\pm 0.00165$ & $\pm 0.0104$ & $\pm 0.0199$ \\
-      			 & Single Element Error  & $\pm 1.21 \times 10^{-3}$ & $\pm 6.82 \times 10^{-3}$ & $\pm 0.0189$ & $\pm 0.00678$ & $\pm 0.0330$ & $\pm 0.0836$ \\
+      			 & Interferometer Error & $\pm 1.10 \times 10^{-3}$ & $\pm 5.88 \times 10^{-3}$ & $\pm 0.0158$ & $\pm 1.65\times 10^{-3}$ & $\pm 0.0104$ & $\pm 0.0199$ \\
+      			 & Single Element Error  & $\pm 1.21 \times 10^{-3}$ & $\pm 6.82 \times 10^{-3}$ & $\pm 0.0189$ & $\pm 6.78\times 10^{-3}$ & $\pm 0.0330$ & $\pm 0.0836$ \\
       \bottomrule
    \end{tabular}
    \caption{\acl{Need to check that I transcribed the new numbers correctly} Parameters, biases, and $1\sigma$ error bars for different scenarios and experiments.}
@@ -1007,7 +1013,7 @@ Balancing sensitivity requirements and foreground mitigation considerations, we 
 %Putting our array design and data analysis method into numerical simulation, we find that a measurement by an interferometer is comparable to a single element experiment. Both methods require 7th order polynomials for foreground models and will be able to constrain [parameters] to within [values]. \mep{add more quantitative stuff once new figs arrive} Therefore, an interferometric measurement of the global 21 cm signal is worth exploring as an alternative to a single element experiment for finding stringent constraints on the dark ages and epoch of reionization. 
 
 \section{Acknowledgements}
-It brings the authors great pleasure to thank Zaki Ali, Carina Cheng, Casey Law, Dan Marrone, Tim Pearson, Dick Plambeck, Jonathan Pritchard, Ravi Subrahmanyan, Eric Switzer, Nithyanandan Thyagarajan, Harish Vedantham for useful discussions. This research used resources of the National Energy Research
+It brings the authors great pleasure to thank Zaki Ali, John Carlstrom, Carina Cheng, Casey Law, Dan Marrone, Tim Pearson, Dick Plambeck, Jonathan Pritchard, Ravi Subrahmanyan, Eric Switzer, Nithyanandan Thyagarajan, Harish Vedantham for useful discussions. This research used resources of the National Energy Research
 Scientific Computing Center, a DOE Office of Science User Facility 
 supported by the Office of Science of the U.S. Department of Energy 
 under Contract No. DE-AC02-05CH11231. This work was supported in part by the NSF CAREER award No. 1352519 and the NSF AST grant No. 1129258.
