@@ -159,8 +159,7 @@ An equivalent way to look at the problem is to move into Fourier space and to ex
 	\label{fig:uv_cartoon}
 \end{figure}
 
-Admittedly, the claim that an interferometer can be sensitive to the monopole of the sky seems at
-first sight to contradict standard results in interferometry. To address this apparent discrepancy,
+At first sight, the result that an interferometer can be sensitive to the monopole of the sky seems to contradict standard ideas in interferometry. To help clarify this point of confusion,
 let us first review the standard lore. The van Cittert-Zernicke Theorem states that the cross-correlation
 between the electric field at locations $\mathbf{x}_1$ and $\mathbf{x}_2$ is given by
 \begin{equation}
@@ -184,7 +183,7 @@ where
 \end{equation}
 is the two-dimensional Fourier transform of $f$, and similarly for $\tilde{g}$, with $\mathbf{x} = (x,y)$.
 
-Now, suppose we operate under the flat-sky approximation. This is equivalent to omitting the
+Now, suppose we operate under the flat-sky approximation, which as we shall see, is inappropriate for global signal interferometry. This is equivalent to omitting the
 factor of $\sqrt{1-l^2 - m^2}$ in the denominator of our expression for the visibility $V$.
 If one further extends the limits of the integration to infinity, Parseval's theorem applies and
 one obtains
@@ -217,8 +216,8 @@ V \propto T_0 \int d\mathbf{x} F(\mathbf{x}) G(\mathbf{x}),
 \end{equation}
 and does not vanish because the effective apertures $F$ and $G$ will in general overlap. In words,
 an interferometer is sensitive to the monopole mode because a monopole does not appear as a
-constant as far as the interferometer is concerned. From the interferometer's viewpoint, the finite
-extent of the sky means that it is effectively making a measurement on an infinite plane, but one that is identically zero beyond a circle of fixed radius given by the horizon. The interferometer therefore
+constant as far as the interferometer is concerned. \emph{From the interferometer's viewpoint, the finite
+extent of the sky means that it is effectively making a measurement on an infinite plane, but one that is identically zero beyond a circle of fixed radius given by the horizon.} The interferometer therefore
 sees a constant sky as having spatial structure, allowing for a non-zero response. This response
 is further enhanced by the geometric effect of projecting a spherical hemisphere down to a two-dimensional
 image plane. Such a projection maps large solid angles near the horizon to small portions of the image
@@ -229,26 +228,26 @@ noted in \citet{Thyagarajan_et_al2015}.
 We demonstrate our results numerically with a toy example in Figure \ref{fig:effAperture}. The top panel
 shows the cross-sections of two circular apertures that each have radius $0.5\,\textrm{m}$. The apertures are packed as
 closely together as possible without overlapping, and in the infinite, flat-sky approximation, Equation
-\eqref{eq:fdotg} implies that an interferometer baseline formed by pairing these two apertures will
+\eqref{eq:fdotg} implies that an interferometric baseline formed by pairing these two apertures will
 have no sensitivity to the monopole mode. In the bottom panel are the effective aperture functions
 (i.e., the correct ones to use when considering the curved, finite sky) at $150\,\textrm{MHz}$ for the same configuration. The effective apertures clearly overlap, and consequently Equation \eqref{eq:effFdotG} implies a sensitivity to the monopole. Another example is provided in Figure \ref{fig:effAperture_PAPER}, where we move beyond a toy model and use realistic antenna models \citep{JonnieBeam} from the Donald C. Backer Precision Array for Probing the Epoch of Reionization (PAPER; \citealt{Parsons2010}). Physically, the PAPER antennas are $\sim 2 \,\textrm{m}$ in extent. Placing two antennas as close as possible results in the effective aperture functions shown in Figure \ref{fig:effAperture_PAPER}. Again, the non-zero overlap results in sensitivity to the monopole mode.
 
 \begin{figure}[h]
 	\centering
 	\includegraphics[width=0.50\textwidth]{figures/effAperture.pdf}
-	\caption{Top: Cross-section of two circular apertures of radius $0.5\,\textrm{m}$ placed
-	side-by-side. Bottom: Cross-section of the corresponding effective apertures at $150\,\textrm{MHz}$. 
+	\caption{Top: Cross-section of two circular apertures (shown in blue and orange) of radius $0.5\,\textrm{m}$ placed
+	side-by-side, with their product (identically zero everywhere) in green. Bottom: Cross-section of the corresponding effective apertures at $150\,\textrm{MHz}$, with the (now non-zero) product again shown in green.
 	Whereas the lack of overlap between the two apertures in the top panel implies that
 	interferometers are insensitive to the monopole, this conclusion is incorrect when finite
 	curved sky effects are taken into account. Incorporating such effects, the effective
-	apertures overlap and give rise to a non-zero response to the monopole.}
+	apertures overlap and give rise to a non-zero response to the monopole, which can be obtained by integrating the green curve.}
 	\label{fig:effAperture}
 \end{figure}
 
 \begin{figure}[h]
 	\centering
 	\includegraphics[width=0.50\textwidth]{figures/effAperture_PAPER.pdf}
-	\caption{Similar to the bottom plot in Figure \ref{fig:effAperture}, but using realistic beam models from the PAPER array. The antennas are once again placed side-by-side. The results shown here are the effective apertures for the two antennas at $150\,\textrm{MHz}$, arbitrarily peak-normalized to unity. Again, the overlap implies a sensitivity to the monopole.}
+	\caption{Similar to the bottom plot in Figure \ref{fig:effAperture}, but using realistic beam models from the PAPER array. The antennas are once again placed side-by-side. The results shown here are the effective apertures for the two antennas at $150\,\textrm{MHz}$, arbitrarily peak-normalized to unity. Again, the overlap implies a sensitivity to the monopole, with the response being proportional to the integral over the product of the two effective apertures (shown in green).}
 	\label{fig:effAperture_PAPER}
 \end{figure}
 
