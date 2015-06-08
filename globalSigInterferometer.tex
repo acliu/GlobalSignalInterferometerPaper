@@ -43,9 +43,13 @@
 
 \newcommand{\jcap}{JCAP}
 
-\newcommand{\acl}[1]{{\color{red} \textbf{[ACL:  #1]}}}
-\definecolor{applegreen}{rgb}{0.55, 0.71, 0.0}
-\newcommand{\mep}[1]{{\color{applegreen} \textbf{[MEP:  #1]}}}
+%\newcommand{\acl}[1]{{\color{red} \textbf{[ACL:  #1]}}}
+%\definecolor{applegreen}{rgb}{0.55, 0.71, 0.0}
+%\newcommand{\mep}[1]{{\color{applegreen} \textbf{[MEP:  #1]}}}
+
+\newcommand{\acl}[1]{}
+\newcommand{\mep}[1]{}
+
 
 \renewcommand{\topfraction}{0.85}
 \renewcommand{\bottomfraction}{0.1}
@@ -317,7 +321,7 @@ where $b \equiv | \mathbf{b} |$.  Minimizing this expression by differentiating 
 Based on the discussion of aperture sizes in Section \ref{sec:PictorialToyIntro}, we immediately
 recognize the factor of $(2 \sqrt{2} \pi \theta_b)^{-1}$ as being the characteristic ``radius" of a receiving element in units of wavelength. Now, the remaining factor $\sqrt{\alpha}$ is of order unity and less than
 $2$. Since one cannot place antenna elements closer than their diameters,\footnote{Note that
-when dealing with elements like dipole antennas (as opposed to aperture-like elements such as dishes), there is not such a strict correspondence between antennas size and the width of the primary beam. With careful antenna design, it may therefore be possible to abide by Equation \eqref{eq:b_opt}. \acl{Just a marker to remind myself that I added this, and changed the text surrounding the footnote.}} we cannot in fact
+when dealing with elements like dipole antennas (as opposed to aperture-like elements such as dishes), the electrical response can be larger than the physical antenna size. With careful antenna design, it may therefore be possible to abide by Equation \eqref{eq:b_opt}. \acl{Just a marker to remind myself that I added this, and changed the text surrounding the footnote.}} we cannot in fact
 achieve the optimal baseline length suggested by Equation \eqref{eq:b_opt}. However, we can
 come close to this by placing the antennas as close together as is physically possible. Essentially, our
 optimization suggests such a compact configuration because the foreground power does not decrease
@@ -709,7 +713,7 @@ with $\Delta \Omega$ being the solid angle encompassed by each pixel of our sky 
 
 In Figure \ref{fig:Ncomparison}, we compare the global signal estimators that result from analyzing simulated data using $\Hmat = \Nfg^{-1}$ to those that are obtained with $\Hmat = \mathbf{I}$. For the foreground model in Equation \eqref{eq:Rmatrix}, we use the Haslam map at $408\,\textrm{MHz}$. Note that even though the Haslam map will have the wrong amplitude for observations in our frequency band, the overall amplitude of our foreground map will always cancel out in our final estimator, since $\Hmat$ appears both in Equation \eqref{eqn:xhat} and in our normalization $\M$. In other words, only the angular \emph{shape} of the foreground sky matters. The instrumental simulations used for Figure \ref{fig:Ncomparison} are identical to those of Section \ref{sec:beamSize}, except with the FWHM of the primary beams set to $88^\circ$. With a broader beam, one exaggerates the effect of setting $\Hmat = \Nfg^{-1}$. This is because a larger field of view captures more of the strongly anisotropic nature of foregrounds, which makes a selective downweighting of the brighter parts of the sky more important. Figure \ref{fig:Ncomparison} shows that such a downweighting does in fact reduce the brightness of the foregrounds, but only by a small amount. Part of this is because of the small size of our array, which limits the number of long baselines that are available for resolving fine spatial structures on the sky. However, incorporating longer baselines into our measurement quickly runs afoul of the constraint imposed by Equation \eqref{eq:AngularScaleProbed}.
 
-The reduction in foreground contamination is more pronounced if observations are centered on the galactic plane. There, the foregrounds vary strongly with galactic latitude, making downweightings much more important, and reductions of up to a factor of $\sim 2$ are possible. In practice, however, one tends to avoid observing in the galactic plane anyway. Therefore, the benefits of $\Hmat = \Nfg^{-1}$ are likely to be minimal, particularly when one moves back to using the narrower beams suggested in Section \ref{sec:beamSize}, which can more easily isolate patches of the sky that are more approximately isotropic.
+The reduction in foreground contamination is more pronounced if observations are centered on the galactic plane. There, the foregrounds vary strongly with galactic latitude, making downweightings much more important, and reductions of up to a factor of $\sim 2$ are possible. In practice, however, one tends to avoid observing in the galactic plane anyway. Therefore, the benefits of $\Hmat = \Nfg^{-1}$ are likely to be minimal, particularly when one moves back to using the narrower (but not too narrow) beams suggested in Section \ref{sec:beamSize}, which can more easily isolate patches of the sky that are more approximately isotropic.
 
 \begin{figure}[h]
 	\centering
@@ -819,6 +823,42 @@ T_\textrm{reion}(\nu) = \frac{T_{21}}{2} \sqrt{\frac{1+z}{10}}\left[ 1 +  \tanh 
 \end{equation}
 where $z_r$ is the redshift of the mid-point of reionization, $\Delta z$ is its rough duration, $T_{21}$ is an overall amplitude, and $z = (1420 \,\textrm{MHz} / \nu) - 1$.
 % Requires the booktabs if the memoir class is not being used
+%\begin{table*}[htbp]
+%   \centering
+%   %\topcaption{Table captions are better up top} % requires the topcapt package
+%   \begin{tabular}{@{} llcccccc @{}} % Column formatting, @{} suppresses leading/trailing space
+%      \toprule
+%      & & \multicolumn{3}{c}{Reionization} & \multicolumn{3}{c}{Pre-reionization Dip} \\
+%      \cmidrule(lr){3-5} % Partial rule. (r) trims the line a little bit on the right; (l) & (lr) also possible
+%      \cmidrule(lr){6-8} 
+%      Model &  & $T_{21}$ [K] & $z_r$ & $\Delta z$ & $A$ [K] & $\nu_0$ [MHz] & $\sigma$ [MHz]\\
+%      \midrule
+%      Pessimistic & Fiducial Value & 0.010 & 12 & 3 & 0.01 & 60 & 10 \\
+%      \cmidrule(l){2-8} 
+%      			 & Interferometer Bias & 0.285 & 3.07 & 0.0394 & -0.599 & -177 & 86.8 \\
+%			 & Single Element Bias & 0.250 & 0.766 & -0.368 & 0.092 & 30.7 & -14.1 \\	 
+%      			 & Interferometer Error & $\pm 0.1113$ & $\pm 2.97$ & $\pm 2.99$ & $\pm 0.545$ & $\pm 172$ & $\pm 85.5$ \\
+%      			 & Single Element Error  & $\pm 0.209 $ & $\pm 2.69$ & $\pm 2.92$ & $\pm 0.565$ & $\pm 206$ & $\pm 116$ \\
+%      \midrule
+%      Moderate & Fiducial Value & 0.027 & 10.5 & 0.8 & 0.1 & 70 & 5 \\
+%      \cmidrule(l){2-8}
+%			 & Interferometer Bias & -0.00590 & 0.00639 & -0.0733 & $1.50\times10^{-4}$ & 0.00177 & -0.0019 \\
+%			 & Single Element Bias & $-9.53 \times 10^{-4}$ & 0.0154 & -0.0263 & $1.15\times10^{-3}$ & 0.0595 & -0.0236 \\	
+%      			 & Interferometer Error & $\pm 4.06\times 10^{-3}$ & $\pm 0.0131$ & $\pm 0.0586$ & $\pm 2.44 \times 10^{-3}$ & $\pm 0.0338$ & $\pm 0.0519$ \\
+%      			 & Single Element Error  & $\pm 4.35 \times 10^{-3}$ & $\pm 0.0328$ & $\pm 0.0781$ & $\pm 0.0121$ & $\pm 0.174$ & $\pm 0.263$ \\
+%      \midrule
+%      Optimistic & Fiducial Value & 0.027 & 8 & 0.5 & 0.2 & 80 & 5 \\
+%      \cmidrule(l){2-8}
+%			 & Interferometer Bias & $1.95\times10^{-4}$ & $4.10\times10^{-3}$ & 0.00183 & $-8.62\times 10^{-5}$ &$ -3.80\times 10^{-4}$ & $8.63\times 10^{-4}$ \\
+%			 & Single Element Bias & $1.26\times10^{-3}$ & $-2.50\times10^{-3}$ & 0.0117 & $-6.50\times10^{-4}$ & $-0.0156$ & $6.42\times10^{-3}$ \\
+%      			 & Interferometer Error & $\pm 1.10 \times 10^{-3}$ & $\pm 5.88 \times 10^{-3}$ & $\pm 0.0158$ & $\pm 1.65\times 10^{-3}$ & $\pm 0.0104$ & $\pm 0.0199$ \\
+%      			 & Single Element Error  & $\pm 1.21 \times 10^{-3}$ & $\pm 6.82 \times 10^{-3}$ & $\pm 0.0189$ & $\pm 6.78\times 10^{-3}$ & $\pm 0.0330$ & $\pm 0.0836$ \\
+%      \bottomrule
+%   \end{tabular}
+%   \caption{\acl{Need to check that I transcribed the new numbers correctly} Parameters, biases, and $1\sigma$ error bars for different scenarios and experiments.}
+%   \label{tab:params}
+%\end{table*}
+
 \begin{table*}[htbp]
    \centering
    %\topcaption{Table captions are better up top} % requires the topcapt package
@@ -831,24 +871,24 @@ where $z_r$ is the redshift of the mid-point of reionization, $\Delta z$ is its 
       \midrule
       Pessimistic & Fiducial Value & 0.010 & 12 & 3 & 0.01 & 60 & 10 \\
       \cmidrule(l){2-8} 
-      			 & Interferometer Bias & 0.285 & 3.07 & 0.0394 & -0.599 & -177 & 86.8 \\
-			 & Single Element Bias & 0.250 & 0.766 & -0.368 & 0.092 & 30.7 & -14.1 \\	 
-      			 & Interferometer Error & $\pm 0.1113$ & $\pm 2.97$ & $\pm 2.99$ & $\pm 0.545$ & $\pm 172$ & $\pm 85.5$ \\
-      			 & Single Element Error  & $\pm 0.209 $ & $\pm 2.69$ & $\pm 2.92$ & $\pm 0.565$ & $\pm 206$ & $\pm 116$ \\
+      			 & Interferometer Bias & $2.85\times 10^{-1}$ & $3.07$ & $3.94 \times 10^{-2}$ & $-5.99\times 10^{-1}$ & $-1.77\times 10^2$ & $8.68 \times 10^1$ \\
+			 & Single Element Bias & $2.50\times 10^{-1}$ & $7.66\times 10^{-1}$  & $-3.68\times 10^{-1}$  & $9.2\times 10^{-2}$ & $3.07 \times 10^{1}$  & $-1.41 \times 10^1$ \\	 
+      			 & Interferometer Error & $\pm 1.11 \times 10^{-1}$ & $\pm 2.97$ & $\pm 2.99$ & $\pm 5.45 \times 10^{-1}$ & $\pm 1.72 \times 10^{2}$ & $\pm 8.55\times 10^1$ \\
+      			 & Single Element Error  & $\pm 2.09\times 10^{-1} $ & $\pm 2.69$ & $\pm 2.92$ & $\pm 5.65\times 10^{-1}$ & $\pm 2.06 \times 10^{2} $ & $\pm 1.16 \times 10^{2}$ \\
       \midrule
       Moderate & Fiducial Value & 0.027 & 10.5 & 0.8 & 0.1 & 70 & 5 \\
       \cmidrule(l){2-8}
-			 & Interferometer Bias & -0.00590 & 0.00639 & -0.0733 & $1.50\times10^{-4}$ & 0.00177 & -0.0019 \\
-			 & Single Element Bias & $-9.53 \times 10^{-4}$ & 0.0154 & -0.0263 & $1.15\times10^{-3}$ & 0.0595 & -0.0236 \\	
-      			 & Interferometer Error & $\pm 4.06\times 10^{-3}$ & $\pm 0.0131$ & $\pm 0.0586$ & $\pm 2.44 \times 10^{-3}$ & $\pm 0.0338$ & $\pm 0.0519$ \\
-      			 & Single Element Error  & $\pm 4.35 \times 10^{-3}$ & $\pm 0.0328$ & $\pm 0.0781$ & $\pm 0.0121$ & $\pm 0.174$ & $\pm 0.263$ \\
+			 & Interferometer Bias & $-5.90\times 10^{-3}$ & $6.39\times 10^{-3}$ & $-7.33\times 10^{-2}$ & $1.50\times10^{-4}$ & $1.77\times 10^{-3}$ & $-1.9\times 10^{-3}$ \\
+			 & Single Element Bias & $-9.53 \times 10^{-4}$ & $1.54\times 10^{-2}$ & $-2.63\times 10^{-2}$ & $1.15\times10^{-3}$ & $5.95\times 10^{-2}$ & $-2.36\times 10^{-2}$ \\	
+      			 & Interferometer Error & $\pm 4.06\times 10^{-3}$ & $\pm 1.31\times 10^{-2}$ & $\pm 5.86\times 10^{-2}$ & $\pm 2.44 \times 10^{-3}$ & $\pm 3.38\times 10^{-2}$ & $\pm 5.19\times 10^{-2}$ \\
+      			 & Single Element Error  & $\pm 4.35 \times 10^{-3}$ & $\pm 3.28 \times 10^{-2}$ & $\pm 7.81\times 10^{-2}$ & $\pm 1.21\times 10^{-2}$ & $\pm 1.74\times 10^{-1}$ & $\pm 2.63\times 10^{-1}$ \\
       \midrule
       Optimistic & Fiducial Value & 0.027 & 8 & 0.5 & 0.2 & 80 & 5 \\
       \cmidrule(l){2-8}
-			 & Interferometer Bias & $1.95\times10^{-4}$ & $4.10\times10^{-3}$ & 0.00183 & $-8.62\times 10^{-5}$ &$ -3.80\times 10^{-4}$ & $8.63\times 10^{-4}$ \\
-			 & Single Element Bias & $1.26\times10^{-3}$ & $-2.50\times10^{-3}$ & 0.0117 & $-6.50\times10^{-4}$ & $-0.0156$ & $6.42\times10^{-3}$ \\
-      			 & Interferometer Error & $\pm 1.10 \times 10^{-3}$ & $\pm 5.88 \times 10^{-3}$ & $\pm 0.0158$ & $\pm 1.65\times 10^{-3}$ & $\pm 0.0104$ & $\pm 0.0199$ \\
-      			 & Single Element Error  & $\pm 1.21 \times 10^{-3}$ & $\pm 6.82 \times 10^{-3}$ & $\pm 0.0189$ & $\pm 6.78\times 10^{-3}$ & $\pm 0.0330$ & $\pm 0.0836$ \\
+			 & Interferometer Bias & $1.95\times10^{-4}$ & $4.10\times10^{-3}$ & $1.83\times 10^{-3}$ & $-8.62\times 10^{-5}$ &$ -3.80\times 10^{-4}$ & $8.63\times 10^{-4}$ \\
+			 & Single Element Bias & $1.26\times10^{-3}$ & $-2.50\times10^{-3}$ & $1.17 \times 10^{-2}$ & $-6.50\times10^{-4}$ & $-1.56 \times 10^{-2}$ & $6.42\times10^{-3}$ \\
+      			 & Interferometer Error & $\pm 1.10 \times 10^{-3}$ & $\pm 5.88 \times 10^{-3}$ & $\pm 1.58\times 10^{-2}$ & $\pm 1.65\times 10^{-3}$ & $\pm 1.04\times 10^{-2}$ & $\pm 1.99\times 10^{-2}$ \\
+      			 & Single Element Error  & $\pm 1.21 \times 10^{-3}$ & $\pm 6.82 \times 10^{-3}$ & $\pm 1.89 \times 10^{-2}$ & $\pm 6.78\times 10^{-3}$ & $\pm 3.3 \times 10^{-2}$ & $\pm 8.36 \times 10^{-2}$ \\
       \bottomrule
    \end{tabular}
    \caption{\acl{Need to check that I transcribed the new numbers correctly} Parameters, biases, and $1\sigma$ error bars for different scenarios and experiments.}
