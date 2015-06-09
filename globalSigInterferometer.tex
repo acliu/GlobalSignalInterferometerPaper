@@ -90,7 +90,7 @@ One promising way to directly observe both reionization and the dark ages would 
 
 \begin{figure*}[!]
 	\centering
-	\includegraphics[width=1.00\textwidth]{figures/fidModel.png}
+	\includegraphics[width=1.00\textwidth] {fidModel.png}
 	\caption{A fiducial model of the global 21 cm signal, as modeled in \citet{PritchardLoeb2010}. Although this model should capture the essential features of the signal, the precise details have yet to be confirmed and depend on the nature of the first stars and galaxies.}
 	\label{fig:21cmSignal}
 \end{figure*}
@@ -106,7 +106,7 @@ In addition, foreground contamination is a serious concern. Consider Figure \ref
 
 \begin{figure}[!]
 	\centering
-	\includegraphics[width=0.5\textwidth]{figures/Haslam_150MHz.pdf}
+	\includegraphics[width=0.5\textwidth] {Haslam_150MHz.pdf}
 	\caption{An empirically motivated model of Galactic synchrotron emission from \citet{angelicaGSM}. Foregrounds such as Galactic synchrotron radiation dominate the cosmological signal and must be removed from the data.}
 	\label{fig:GSM}
 \end{figure}
@@ -149,7 +149,7 @@ Consider first a purely qualitative picture of a two-element interferometer. An 
 
 \begin{figure}[t]
 	\centering
-	\includegraphics[width=0.50\textwidth]{figures/beam_pattern_cartoon.pdf}
+	\includegraphics[width=0.50\textwidth] {beam_pattern_cartoon.pdf}
 	\caption{A schematic illustration of a two-element interferometer. The two antennas, separated by a baseline length $\b$, measure a fringe pattern on the sky, shown as a cosine function on an arc. This pattern would integrate to zero over the sky if there were no primary beam and the sky were infinite in extent. However, both these assumptions are violated in practice: the curved sky is finite, and the antennas also produce a beam pattern that attenuates sensitivity to certain parts of the sky (e.g., the horizon for zenith-pointing elements). The result is a pattern that does not integrate to zero and an interferometer that is sensitive to the monopole mode.}
 	\label{fig:beam_pattern_cartoon}
 \end{figure}
@@ -158,7 +158,7 @@ An equivalent way to look at the problem is to move into Fourier space and to ex
 
 \begin{figure}[h]
 	\centering
-	\includegraphics[width=0.50\textwidth]{figures/uv_cartoon.pdf}
+	\includegraphics[width=0.50\textwidth] {uv_cartoon.pdf}
 	\caption{A schematic illustration of the $uv$ plane for an interferometer. The $uv$ plane is the Fourier dual to image space, and an interferometer with baseline $\b$ makes a measurement at the point $\mathbf{u} = \nu\b / c$. Measuring the monopole signal requires making a measurement at the origin of the $uv$ plane, which is probed by a baseline of zero length. This seems impossible without measuring the auto-correlation of an antenna with itself, until one recalls that a real interferometer does not measure an exact point: the antenna's beam has a $uv$ plane footprint that smears the measurement, so that the measurement contains information from nearby $uv$ points. Since a narrower beam corresponds to a larger convolving kernel, two narrow-beam antennas placed close together would make a measurement that incorporates information from the monopole, as shown by the green circle in the figure. Antenna size scales both the center point and the extent of the uv kernel, thus leaving the response to the global signal approximately the same. The scales on the $uv$ axes shown here are thus somewhat arbitrary. \acl{Added last two sentences}}
 	\label{fig:uv_cartoon}
 \end{figure}
@@ -205,6 +205,7 @@ With the full expression for $V$, however, one sees that the response to the mon
 not necessarily vanish, even if the antennas are not physically co-located. Abandoning the
 assumptions of a flat, finite sky, one may define
 \begin{equation}
+\label{eq:FspaceEffectiveAperture}
 \widetilde{F} (l, m, \nu) \equiv
 \begin{cases}
 \frac{\tilde{f} (l\nu / c,m\nu / c)}{(1-l^2 - m^2)^{1/4}} \quad & \textrm{if} \quad l^2 + m^2 < 1 \\
@@ -218,9 +219,9 @@ notational simplicity) is
 \label{eq:effFdotG}
 V \propto T_0 \int d\mathbf{x} F(\mathbf{x}) G(\mathbf{x}),
 \end{equation}
-and does not vanish because the effective apertures $F$ and $G$ will in general overlap. In words,
+and does not vanish because the effective apertures $F$ and $G$ will in general overlap. \emph{In words,
 an interferometer is sensitive to the monopole mode because a monopole does not appear as a
-constant as far as the interferometer is concerned. \emph{From the interferometer's viewpoint, the finite
+constant as far as the interferometer is concerned. From the interferometer's viewpoint, the finite
 extent of the sky means that it is effectively making a measurement on an infinite plane, but one that is identically zero beyond a circle of fixed radius given by the horizon.} The interferometer therefore
 sees a constant sky as having spatial structure, allowing for a non-zero response. This response
 is further enhanced by the geometric effect of projecting a spherical hemisphere down to a two-dimensional
@@ -234,11 +235,12 @@ shows the cross-sections of two circular apertures that each have radius $0.5\,\
 closely together as possible without overlapping, and in the infinite, flat-sky approximation, Equation
 \eqref{eq:fdotg} implies that an interferometric baseline formed by pairing these two apertures will
 have no sensitivity to the monopole mode. In the bottom panel are the effective aperture functions
-(i.e., the correct ones to use when considering the curved, finite sky) at $150\,\textrm{MHz}$ for the same configuration. The effective apertures clearly overlap, and consequently Equation \eqref{eq:effFdotG} implies a sensitivity to the monopole. Another example is provided in Figure \ref{fig:effAperture_PAPER}, where we move beyond a toy model and use realistic antenna models \citep{JonnieBeam} from the Donald C. Backer Precision Array for Probing the Epoch of Reionization (PAPER; \citealt{Parsons2010}). Physically, the PAPER antennas are $\sim 2 \,\textrm{m}$ in extent. Placing two antennas as close as possible results in the effective aperture functions shown in Figure \ref{fig:effAperture_PAPER}. Again, the non-zero overlap results in sensitivity to the monopole mode.
+(i.e., the correct ones to use when considering the curved, finite sky) at $150\,\textrm{MHz}$ for the same configuration. The effective apertures clearly overlap, and consequently Equation \eqref{eq:effFdotG} implies a sensitivity to the monopole.\footnote{The bottom panel of Figure \ref{fig:effAperture} looks superficially like the Fourier transform of the top panel, but we emphasize that this is \emph{not} what is being plotted. To obtain the bottom panel, one Fourier transforms the top panel, applies the truncation and edge brightening implied by Equation \eqref{eq:FspaceEffectiveAperture}, and then inverse Fourier transforms back to the original space, yielding the effective aperture functions used in Equation \eqref{eq:effFdotG}.} 
+Another example is provided in Figure \ref{fig:effAperture_PAPER}, where we move beyond a toy model and use realistic antenna models \citep{JonnieBeam} from the Donald C. Backer Precision Array for Probing the Epoch of Reionization (PAPER; \citealt{Parsons2010}). Physically, the PAPER antennas are $\sim 2 \,\textrm{m}$ in extent. Placing two antennas as close as possible results in the effective aperture functions shown in Figure \ref{fig:effAperture_PAPER}. Again, the non-zero overlap results in sensitivity to the monopole mode.
 
 \begin{figure}[t]
 	\centering
-	\includegraphics[width=0.50\textwidth]{figures/effAperture.pdf}
+	\includegraphics[width=0.50\textwidth] {effAperture.pdf}
 	\caption{Top: Cross-section of two circular apertures (shown in blue and orange) of radius $0.5\,\textrm{m}$ placed
 	side-by-side, with their product (identically zero everywhere) in green. Bottom: Cross-section of the corresponding effective apertures at $150\,\textrm{MHz}$, with the (now non-zero) product again shown in green.
 	Whereas the lack of overlap between the two apertures in the top panel implies that
@@ -250,7 +252,7 @@ have no sensitivity to the monopole mode. In the bottom panel are the effective 
 
 \begin{figure}[h]
 	\centering
-	\includegraphics[width=0.50\textwidth]{figures/effAperture_PAPER.pdf}
+	\includegraphics[width=0.50\textwidth] {effAperture_PAPER.pdf}
 	\caption{Similar to the bottom plot in Figure \ref{fig:effAperture}, but using realistic beam models from the PAPER array. The antennas are once again placed side-by-side. The results shown here are the effective apertures for the two antennas at $150\,\textrm{MHz}$, arbitrarily peak-normalized to unity. Again, the overlap implies a sensitivity to the monopole, with the response being proportional to the integral over the product of the two effective apertures (shown in green).}
 	\label{fig:effAperture_PAPER}
 \end{figure}
@@ -378,21 +380,21 @@ In Figure \ref{fig:unsub_T0_beamSize} we show simulations of an interferometric 
 
 \begin{figure}[h]
 	\centering
-	\includegraphics[width=0.50\textwidth]{figures/unsub_T0_beamSize.pdf}
+	\includegraphics[width=0.50\textwidth] {unsub_T0_beamSize.pdf}
 	\caption{\acl{Changed figure and caption} The foreground bias $\Delta T_0$ as a function of frequency $\nu$ from simulations of an interferometric recovery of the global signal, averaged over $10,000$ random realizations of the simulated foregrounds. The data is shown for three different $6\times6$ square grid arrays of tightly-packed antennae. The blue, orange, and green arrays are composed of antennae with full-width-half-max (FWHM) beam sizes of $13.4^\circ$, $38.7^\circ$, and $60^\circ$ at $100\,\textrm{MHz}$, respectively. Note that narrower beams have less pre-subtraction foreground bias, as expected.}
 	\label{fig:unsub_T0_beamSize}
 \end{figure}
 
 \begin{figure}[h]
 	\centering
-	\includegraphics[width=0.50\textwidth]{figures/subPoly8_T0_beamSize.pdf}
+	\includegraphics[width=0.50\textwidth] {subPoly8_T0_beamSize.pdf}
 	\caption{\acl{Changed figure and caption} The foreground residuals after subtracting off a $8$th degree polynomial in log space. The data are shown for the same arrays as from Figure \ref{fig:unsub_T0_beamSize}. Note that unlike in the case of the raw foreground bias, the array with the narrowest beams no longer has the least foreground contamination. Instead, the intermediate-size beam results in the lowest foreground residuals. This is due to the fact that narrower beams come with longer baselines that introduce chromatic ripples that are difficult to subtract.}
 	\label{fig:subPoly8_T0_beamSize}
 \end{figure}
 
 \begin{figure}[h]
 	\centering
-	\includegraphics[width=0.50\textwidth]{figures/subPoly9_T0_beamSize.pdf}
+	\includegraphics[width=0.50\textwidth] {subPoly9_T0_beamSize.pdf}
 	\caption{\acl{Changed figure and caption} Same as Figure \ref{fig:subPoly8_T0_beamSize}, except with an $9$th degree polynomial in log space.}
 	\label{fig:subPoly9_T0_beamSize}
 \end{figure}
@@ -665,7 +667,7 @@ Importantly, however, our argument relied on the fall-off of $\widetilde{A}$. If
 %
 %\begin{figure}[h]
 %	\centering
-%	%\includegraphics[width=0.55\textwidth]{figures/oldFigures/W_matrix_filler.pdf}
+%	%\includegraphics[width=0.55\textwidth] {oldFigures/W_matrix_filler.pdf}
 %	\caption{\mep{Of course, this will have to be updated when the new data comes in. Probably to show several figures for different arrays?}\mep{Uh.... Weird stuff happens if I try to make the figure bigger. It's not wrapping the text and is trying to keep the figure in the column somehow?? Not sure what's up with the formatting style here.}\acl{Is this better? Or did you actually want to make this a figure that spans both columns? If so, change ``figure" to ``figure*" when you do \textbackslash begin.}}
 %	\label{fig:WindowFunction}
 %\end{figure}
@@ -717,14 +719,14 @@ The reduction in foreground contamination is more pronounced if observations are
 
 \begin{figure}[h]
 	\centering
-	\includegraphics[width=0.50\textwidth]{figures/NcomparisonNoSub.pdf}
+	\includegraphics[width=0.50\textwidth] {NcomparisonNoSub.pdf}
 	\caption{\acl{Updated figure and caption} The foreground bias $\Delta T_0$ as a function of frequency, comparing the data analysis method that weights visibilities by the inverse of the foreground amplitude (the solid blue line) with one that weights visibilities uniformly (the dashed orange line). The experimental setup consists of a closely-packed $6\times 6$ array of antennas with a primary beam of $88^\circ$, with observations centered on the NGP. Adding the foreground-motivated weighting does reduce the foreground bias, but not in any significant way.}
 	\label{fig:Ncomparison}
 \end{figure}
 
 \begin{figure}[h]
 	\centering
-	\includegraphics[width=0.50\textwidth]{figures/NcomparisonPoly4.pdf}
+	\includegraphics[width=0.50\textwidth] {NcomparisonPoly4.pdf}
 	\caption{\acl{Updated figure and caption} Foreground residuals from Figure \ref{fig:Ncomparison} after a $4$th order logarithmic polynomial subtraction. The uniformly weighted residuals are now seen to be weaker than those of the inverse foreground weighted analysis. Inverse foreground weighting is thus seen to imprint extra chromaticity in measured spectra, making spectral foreground subtraction more difficult.}
 	\label{fig:NcomparisonPoly4}
 \end{figure}
@@ -899,7 +901,7 @@ where $z_r$ is the redshift of the mid-point of reionization, $\Delta z$ is its 
 
 \begin{figure}[h]
 	\centering
-	\includegraphics[width=0.5\textwidth]{figures/reionScenarios.pdf}
+	\includegraphics[width=0.5\textwidth] {reionScenarios.pdf}
 	\caption{Fiducial model of the brightness temperature during reionization as a function of frequency, following three scenarios: Pessimistic (blue), Moderate (orange), and Optimistic (green). Increasing optimism corresponds to reionization occurring more rapidly and at lower redshifts, making detection easier.}
 	\label{fig:reionScenarios}
 \end{figure}
@@ -907,7 +909,7 @@ where $z_r$ is the redshift of the mid-point of reionization, $\Delta z$ is its 
 
 \begin{figure}[h]
 	\centering
-	\includegraphics[width=0.5\textwidth]{figures/dipScenarios.pdf}
+	\includegraphics[width=0.5\textwidth] {dipScenarios.pdf}
 	\caption{Fiducial model of the brightness temperature during the pre-reionization dip as a function of frequency, following three scenarios: Pessimistic (blue), Moderate (orange), and Optimistic (green). Increasing optimism corresponds to a deeper dip occurring at lower redshifts, making detection easier.}
 	\label{fig:dipScenarios}
 \end{figure}
@@ -929,20 +931,20 @@ With the pre-reionization dip we again consider three scenarios of varying degre
 
 %\begin{figure*}[h]
 %	\centering
-%	\includegraphics[width=1.00\textwidth,trim=3cm 2cm 3cm 0cm,clip]{figures/reionContoursPoly7Poly6.pdf}
+%	\includegraphics[width=1.00\textwidth,trim=3cm 2cm 3cm 0cm,clip] {reionContoursPoly7Poly6.pdf}
 %	\caption{\acl{Fill this in. Polynomial order was 7, and integration time was 300 hours. Also need to rerun for smaller array and smaller beam}}
 %	\label{fig:reionContoursPoly7Poly6}
 %\end{figure*}
 \begin{figure*}[t]
 	\centering
-	\includegraphics[width=1.00\textwidth,trim=3cm 2cm 3cm 0cm,clip]{figures/reionContoursPoly6Poly5.pdf}
+	\includegraphics[width=1.00\textwidth,trim=3cm 2cm 3cm 0cm,clip] {reionContoursPoly6Poly5.pdf}
 	\caption{\acl{Updated this} Pairwise parameter contours for interferometer and single element experiments probing reionization. For the interferometer, the orange contours correspond to the $95\%$ confidence regions, and the white areas within the orange contours correspond to the $68\%$ confidence region. For the single-element experiment, the outer solid black contour line bounds the $95\%$ confidence region, while the inner black contour bounds the $68\%$ confidence region. The black dot locates the fiducial value to be recovered and thus indicates the bias in each detection. The interferometer experiment used an $6\times 6$ array of antennas with a primary beam FWHM of $38.7^\circ$ at $100\,\textrm{MHz}$. Both experiments had an integration time of 300 hours. For the interferometric measurement, a $6$th order logarithmic polynomial was needed to model the foreground spectra sufficiently well, whereas with the single element experiment only a $5$th order polynomial was required.}
 	\label{fig:reionContoursPoly7Poly7}
 \end{figure*}
 
 \begin{figure*}[t]
 	\centering
-	\includegraphics[width=1.00\textwidth,trim=3cm 2cm 3cm 0cm,clip]{figures/dipContoursPoly7Poly6.pdf}
+	\includegraphics[width=1.00\textwidth,trim=3cm 2cm 3cm 0cm,clip] {dipContoursPoly7Poly6.pdf}
 	\caption{\acl{Updated the figure and the caption} Same as Figure \ref{fig:reionContoursPoly7Poly7}, but for experiments targeting the pre-reionization dip. Primary beams are set to have a FWHM of $38.7^\circ$ at $50\,\textrm{MHz}$. The errors from the interferometric set-up are slightly smaller, thanks to our choice of a slightly larger-than-necessary array as our fiducial model.}
 	\label{fig:dipContoursPoly7Poly6}
 \end{figure*}
@@ -995,20 +997,20 @@ In summary, the results here suggest that an interferometric measurement of the 
 %
 %\begin{figure}[h]
 %	\centering
-%	%\includegraphics[width=0.55\textwidth]{figures/oldFigures/contours_A_nu0.pdf}
+%	%\includegraphics[width=0.55\textwidth] {oldFigures/contours_A_nu0.pdf}
 %	\caption{\acl{Fill this in.  Probably also want to make this a horizontal stripe of constraints.}}
 %	\label{fig:contours}
 %\end{figure}
 %
 %\begin{figure}[h]
 %	\centering
-%	%\includegraphics[width=0.55\textwidth]{figures/oldFigures/contours_A_sigma.pdf}
+%	%\includegraphics[width=0.55\textwidth] {oldFigures/contours_A_sigma.pdf}
 %	\caption{\acl{Fill this in}}
 %\end{figure}
 %
 %\begin{figure}[h]
 %	\centering
-%	%\includegraphics[width=0.55\textwidth]{figures/oldFigures/contours_nu0_sigma.pdf}
+%	%\includegraphics[width=0.55\textwidth] {oldFigures/contours_nu0_sigma.pdf}
 %	\caption{\acl{Fill this in}}
 %\end{figure}
 
@@ -1052,7 +1054,7 @@ Balancing sensitivity requirements and foreground mitigation considerations, we 
 %
 %Putting our array design and data analysis method into numerical simulation, we find that a measurement by an interferometer is comparable to a single element experiment. Both methods require 7th order polynomials for foreground models and will be able to constrain [parameters] to within [values]. \mep{add more quantitative stuff once new figs arrive} Therefore, an interferometric measurement of the global 21 cm signal is worth exploring as an alternative to a single element experiment for finding stringent constraints on the dark ages and epoch of reionization. 
 
-\newpage
+%\newpage
 \section{Acknowledgements}
 It brings the authors great pleasure to thank Zaki Ali, John Carlstrom, Carina Cheng, Casey Law, Dan Marrone, Tim Pearson, Dick Plambeck, Jonathan Pritchard, Ravi Subrahmanyan, Eric Switzer, Nithyanandan Thyagarajan, and Harish Vedantham for useful discussions. This research used resources of the National Energy Research
 Scientific Computing Center, a DOE Office of Science User Facility 
