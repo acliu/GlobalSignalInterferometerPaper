@@ -116,7 +116,7 @@ To access the cosmological signal, one must subtract or fit out the foregrounds.
 
 There are currently a large number of experiments seeking to make a first detection and characterization of the global $21\,\textrm{cm}$ signal.  The Experiment to Detect the Global EoR Signal (EDGES) uses an extremely well-calibrated single element \citep{rogersCalib} to integrate over large parts of the sky, producing a global spectrum from $100$ to $200\,\textrm{MHz}$.  Modeling foreground spectra as a sum of low-order polynomials, EDGES has placed a lower limit of $\Delta z > 0.06$ on the duration of reionization \citep{bowmanRogersMeasurement}.  Similar in concept but operating at a lower frequency range of $55$ to $99\,\textrm{MHz}$ is the Sonda Cosmol\'{o}gica de las Islas para la Detecci\'{o}n de Hidr\'{o}geno Neutro (SCI-HI) experiment.  This frequency range corresponds to the redshift range $13.3 < z < 24.9$, providing access to the prominent dip in the signal prior to reionization.  Using a similar polynomial foreground subtraction technique to EDGES, SCI-HI is able to achieve a foreground residual level of $\sim 10\,\textrm{K}$ at $\sim 70 \,\textrm{MHz}$ \citep{voytekSCIHI}. Other single-element systems include the Shaped Antenna measurement of the background RAdio Spectrum (SARAS; \citealt{PatraSARAS}) and Broadband Instrument for Global HydrOgen ReioNisation Signal (BIGHORNS; \citealt{BIGHORNS}).
 
-To escape radio frequency interference (RFI), most of these experiments are deployed in remote locations. For example, EDGES observes from the Murchison Radio-astronomy Observatory in Western Australia, while SCI-HI has been deployed at Isla Guadalupe in Mexico, with plans to observe at Isla Socorro and/or Isla Clari\'{o}n in the future.  To achieve even better RFI isolation, as well as to escape ionospheric distortions, the Dark Ages Radio Explorer (DARE) satellite has been proposed \citep{BurnsDARE,DAREMCMC}.  DARE consists of a short dipole antenna in lunar orbit, which allows the Moon to be used an RFI shield.  DARE probes a frequency range of $40$ to $120\,\textrm{MHz}$, again providing direct access to the pre-reionization epoch.
+To escape radio frequency interference (RFI), most of these experiments are deployed in remote locations. For example, EDGES observes from the Murchison Radio-astronomy Observatory in Western Australia, while SCI-HI has been deployed at Isla Guadalupe in Mexico, with plans to observe at Isla Socorro and/or Isla Clari\'{o}n in the future.  To achieve even better RFI isolation, as well as to escape ionospheric distortions, the Dark Ages Radio Explorer (DARE) satellite has been proposed \citep{BurnsDARE,DAREMCMC}.  DARE consists of a short dipole antenna in lunar orbit, which allows the Moon to be used as an RFI shield.  DARE probes a frequency range of $40$ to $120\,\textrm{MHz}$, again providing direct access to the pre-reionization epoch.
 
 Moving beyond single element experiments, \citet{Mahesh_et_al2014} and \citet{Singh_et_al2015} have explored the possibility of extracting an auto-correlation from a cross-correlation of two elements by using a resistive fence to act as a radio-wavelength analog to a beam-splitter. Placing the fence between the two elements of a baseline effectively creates a zero-baseline interferometer, which is sensitive to the monopole. Continuing to increase the number of elements, the Large-aperture Experiment to detect the Dark Ages (LEDA) makes use of a full interferometric array of antennas to simultaneously model the sky and calibration parameters \citep{BernardiLEDA}.  Fundamentally, however, its measurement of the global signal is still expected to come from total power measurements (i.e., auto-correlations) from single elements treated independently.  This differs from the approach taken by \citet{McKinley_et_al2013} and \citet{VedanthamLOFAR2}, where the LOw Frequency ARray (LOFAR) was operated as a true interferometer not just for calibration purposes, but also for the cosmological measurement itself.  At a basic level, one might imagine that interferometers are sensitive only to spatially fluctuating signals on the sky (if one follows the standard procedure of avoiding noise bias by discarding auto-correlations in the data), and are therefore insensitive to the global signal.  However, an externally imposed spatial dependence can introduce sufficient spatial structure for a global signal to be measurable by an interferometer.  \citet{VedanthamLOFAR2} took advantage of this fact by observing fields containing the Moon, effectively using lunar occultations to introduce the necessary spatial dependence for an interferometric measurement of the global signal.  So far, this approach has yielded a reasonably high signal-to-noise characterization of the foreground contaminants between $\nu =35$ and $80\,\textrm{MHz}$.
 
@@ -147,7 +147,7 @@ In this section, we use simplified toy models to build intuition for the types o
 \label{sec:PictorialToyIntro}
 Consider first a purely qualitative picture of a two-element interferometer. An interferometer returns a visibility by integrating over a primary-beam attenuated fringe pattern on the sky. If the primary beam did not exist (i.e., if it were constant over the entire sky) and the sky were infinite in extent, it would be impossible to measure a monopole. With those approximations, the fringe pattern would be purely sinusoidal, and integrating such a pattern against a constant (monopole) mode would return zero. However, as shown schematically in Figure \ref{fig:beam_pattern_cartoon}, the enveloping presence of the primary beam and the finite extent of the sky prevent the interferometer's response from integrating to zero. This allows an interferometer to be sensitive to the monopole mode.
 
-\begin{figure}[h]
+\begin{figure}[t]
 	\centering
 	\includegraphics[width=0.50\textwidth]{figures/beam_pattern_cartoon.pdf}
 	\caption{A schematic illustration of a two-element interferometer. The two antennas, separated by a baseline length $\b$, measure a fringe pattern on the sky, shown as a cosine function on an arc. This pattern would integrate to zero over the sky if there were no primary beam and the sky were infinite in extent. However, both these assumptions are violated in practice: the curved sky is finite, and the antennas also produce a beam pattern that attenuates sensitivity to certain parts of the sky (e.g., the horizon for zenith-pointing elements). The result is a pattern that does not integrate to zero and an interferometer that is sensitive to the monopole mode.}
@@ -236,7 +236,7 @@ closely together as possible without overlapping, and in the infinite, flat-sky 
 have no sensitivity to the monopole mode. In the bottom panel are the effective aperture functions
 (i.e., the correct ones to use when considering the curved, finite sky) at $150\,\textrm{MHz}$ for the same configuration. The effective apertures clearly overlap, and consequently Equation \eqref{eq:effFdotG} implies a sensitivity to the monopole. Another example is provided in Figure \ref{fig:effAperture_PAPER}, where we move beyond a toy model and use realistic antenna models \citep{JonnieBeam} from the Donald C. Backer Precision Array for Probing the Epoch of Reionization (PAPER; \citealt{Parsons2010}). Physically, the PAPER antennas are $\sim 2 \,\textrm{m}$ in extent. Placing two antennas as close as possible results in the effective aperture functions shown in Figure \ref{fig:effAperture_PAPER}. Again, the non-zero overlap results in sensitivity to the monopole mode.
 
-\begin{figure}[h]
+\begin{figure}[t]
 	\centering
 	\includegraphics[width=0.50\textwidth]{figures/effAperture.pdf}
 	\caption{Top: Cross-section of two circular apertures (shown in blue and orange) of radius $0.5\,\textrm{m}$ placed
@@ -436,7 +436,7 @@ For Gaussian beams, we obtain
 \begin{equation}
 N_\textrm{short} \approx \frac{1}{2} \exp \left( 4 \pi^2 \theta_b^2 \frac{b_\textrm{short}^2}{\lambda^2} \right).
 \end{equation}
-\acl{Edited here for factor of 2. We might also want to talk about how sensitive this is to antenna design.}. Here, we see that $N_\textrm{short}$ scales very strongly with baseline length. While this is due
+\acl{Edited here for factor of 2. We might also want to talk about how sensitive this is to antenna design.} Here, we see that $N_\textrm{short}$ scales very strongly with baseline length. While this is due
 in part to our use of a Gaussian beam, the strong scaling is fundamentally due to the fact that
 sensitivity to the global signal drops rather rapidly with increasing baseline length. Again defining a closely packed array to be one with $b_\textrm{short}/ \lambda \sim \sqrt{8 \ln 2} (2 \sqrt{2} \pi \theta_0)^{-1}$, our expression gives $N_\textrm{short} = 8$. For an $N \times N$ square grid of antennas,\footnote{Our translation from $N_\textrm{short}$ to $N$ makes the crucial assumption that independent baselines have independent instrumental noise contributions. Recent calculations (A. Neben, private communication) have suggested that this may not be a good approximation, particularly for tightly packed arrays that are designed to be sensitive to the global signal. However, since the number of antennas required is reasonably small, a straightforward solution to this problem is to simply construct a large number of two-element mini-interferometers rather than a larger single interferometer, with the mini-interferometers placed far away from each other to reduce correlated noise effects.} there are $N_\textrm{short} = 2(N-1)^2$ shortest baselines formed by adjacent antenna pairs (half of which are in one direction, while the other half are perpendicular). Solving for $N$ then gives $N=3$, and therefore even a small array will allow an interferometric measurement to more than make up for the loss of sensitivity to the global signal from discarding auto-correlations.
 
@@ -938,7 +938,6 @@ With the pre-reionization dip we again consider three scenarios of varying degre
 	\label{fig:reionContoursPoly7Poly7}
 \end{figure*}
 
-
 \begin{figure*}[t]
 	\centering
 	\includegraphics[width=1.00\textwidth,trim=3cm 2cm 3cm 0cm,clip]{figures/dipContoursPoly7Poly6.pdf}
@@ -1051,13 +1050,14 @@ Balancing sensitivity requirements and foreground mitigation considerations, we 
 %
 %Putting our array design and data analysis method into numerical simulation, we find that a measurement by an interferometer is comparable to a single element experiment. Both methods require 7th order polynomials for foreground models and will be able to constrain [parameters] to within [values]. \mep{add more quantitative stuff once new figs arrive} Therefore, an interferometric measurement of the global 21 cm signal is worth exploring as an alternative to a single element experiment for finding stringent constraints on the dark ages and epoch of reionization. 
 
+\newpage
 \section{Acknowledgements}
-It brings the authors great pleasure to thank Zaki Ali, John Carlstrom, Carina Cheng, Casey Law, Dan Marrone, Tim Pearson, Dick Plambeck, Jonathan Pritchard, Ravi Subrahmanyan, Eric Switzer, Nithyanandan Thyagarajan, Harish Vedantham for useful discussions. This research used resources of the National Energy Research
+It brings the authors great pleasure to thank Zaki Ali, John Carlstrom, Carina Cheng, Casey Law, Dan Marrone, Tim Pearson, Dick Plambeck, Jonathan Pritchard, Ravi Subrahmanyan, Eric Switzer, Nithyanandan Thyagarajan, and Harish Vedantham for useful discussions. This research used resources of the National Energy Research
 Scientific Computing Center, a DOE Office of Science User Facility 
 supported by the Office of Science of the U.S. Department of Energy 
 under Contract No. DE-AC02-05CH11231. This work was supported in part by the NSF CAREER award No. 1352519 and the NSF AST grant No. 1129258.
 
-
+\pagebreak
 \appendix
 \section{Proof of minimum-variance property of global signal estimator}
 \label{minVarProof}
