@@ -90,7 +90,7 @@ One promising way to directly observe both reionization and the dark ages would 
 
 \begin{figure*}[!]
 	\centering
-	\includegraphics[width=1.00\textwidth] {fidModel.png}
+	\includegraphics[width=1.00\textwidth] {figures/fidModel.png}
 	\caption{A fiducial model of the global 21 cm signal, as modeled in \citet{PritchardLoeb2010}. Although this model should capture the essential features of the signal, the precise details have yet to be confirmed and depend on the nature of the first stars and galaxies.}
 	\label{fig:21cmSignal}
 \end{figure*}
@@ -106,7 +106,7 @@ In addition, foreground contamination is a serious concern. Consider Figure \ref
 
 \begin{figure}[!]
 	\centering
-	\includegraphics[width=0.5\textwidth] {Haslam_150MHz.pdf}
+	\includegraphics[width=0.5\textwidth] {figures/Haslam_150MHz.pdf}
 	\caption{An empirically motivated model of Galactic synchrotron emission from \citet{angelicaGSM}. Foregrounds such as Galactic synchrotron radiation dominate the cosmological signal and must be removed from the data.}
 	\label{fig:GSM}
 \end{figure}
@@ -149,7 +149,7 @@ Consider first a purely qualitative picture of a two-element interferometer. An 
 
 \begin{figure}[t]
 	\centering
-	\includegraphics[width=0.50\textwidth] {beam_pattern_cartoon.pdf}
+	\includegraphics[width=0.50\textwidth] {figures/beam_pattern_cartoon.pdf}
 	\caption{A schematic illustration of a two-element interferometer. The two antennas, separated by a baseline length $\b$, measure a fringe pattern on the sky, shown as a cosine function on an arc. This pattern would integrate to zero over the sky if there were no primary beam and the sky were infinite in extent. However, both these assumptions are violated in practice: the curved sky is finite, and the antennas also produce a beam pattern that attenuates sensitivity to certain parts of the sky (e.g., the horizon for zenith-pointing elements). The result is a pattern that does not integrate to zero and an interferometer that is sensitive to the monopole mode.}
 	\label{fig:beam_pattern_cartoon}
 \end{figure}
@@ -158,7 +158,7 @@ An equivalent way to look at the problem is to move into Fourier space and to ex
 
 \begin{figure}[h]
 	\centering
-	\includegraphics[width=0.50\textwidth] {uv_cartoon.pdf}
+	\includegraphics[width=0.50\textwidth] {figures/uv_cartoon.pdf}
 	\caption{A schematic illustration of the $uv$ plane for an interferometer. The $uv$ plane is the Fourier dual to image space, and an interferometer with baseline $\b$ makes a measurement at the point $\mathbf{u} = \nu\b / c$. Measuring the monopole signal requires making a measurement at the origin of the $uv$ plane, which is probed by a baseline of zero length. This seems impossible without measuring the auto-correlation of an antenna with itself, until one recalls that a real interferometer does not measure an exact point: the antenna's beam has a $uv$ plane footprint that smears the measurement, so that the measurement contains information from nearby $uv$ points. Since a narrower beam corresponds to a larger convolving kernel, two narrow-beam antennas placed close together would make a measurement that incorporates information from the monopole, as shown by the green circle in the figure. Antenna size scales both the center point and the extent of the uv kernel, thus leaving the response to the global signal approximately the same. The scales on the $uv$ axes shown here are thus somewhat arbitrary. \acl{Added last two sentences}}
 	\label{fig:uv_cartoon}
 \end{figure}
@@ -240,7 +240,7 @@ Another example is provided in Figure \ref{fig:effAperture_PAPER}, where we move
 
 \begin{figure}[t]
 	\centering
-	\includegraphics[width=0.50\textwidth] {effAperture.pdf}
+	\includegraphics[width=0.50\textwidth] {figures/effAperture.pdf}
 	\caption{Top: Cross-section of two circular apertures (shown in blue and orange) of radius $0.5\,\textrm{m}$ placed
 	side-by-side, with their product (identically zero everywhere) in green. Bottom: Cross-section of the corresponding effective apertures at $150\,\textrm{MHz}$, with the (now non-zero) product again shown in green.
 	Whereas the lack of overlap between the two apertures in the top panel implies that
@@ -252,7 +252,7 @@ Another example is provided in Figure \ref{fig:effAperture_PAPER}, where we move
 
 \begin{figure}[h]
 	\centering
-	\includegraphics[width=0.50\textwidth] {effAperture_PAPER.pdf}
+	\includegraphics[width=0.50\textwidth] {figures/effAperture_PAPER.pdf}
 	\caption{Similar to the bottom plot in Figure \ref{fig:effAperture}, but using realistic beam models from the PAPER array. The antennas are once again placed side-by-side. The results shown here are the effective apertures for the two antennas at $150\,\textrm{MHz}$, arbitrarily peak-normalized to unity. Again, the overlap implies a sensitivity to the monopole, with the response being proportional to the integral over the product of the two effective apertures (shown in green).}
 	\label{fig:effAperture_PAPER}
 \end{figure}
@@ -340,7 +340,7 @@ Making a slight leap from a single baseline to a full interferometer array, this
 \subsection{Wide beams or narrow beams?}
 \label{sec:beamSize}
 
-The arguments in the previous subsection suggested a particular \emph{relative} placement of antenna elements: antennas should be packed together as tightly as possible. However, the \emph{absolute} scale of the array remains unspecified. Primary beams smaller than $\sim1-2^\circ$ will likely have difficulty distinguishing a representative $21\,\textrm{cm}$ global signal from local fluctuations \citep{Bittner+Loeb2011}. However, that constraint still leaves a large range of potential primary beam sizes and baseline lengths. \mep{Updated for reviewer comment} In this section, we answer the question of whether it is better to have a packed array with physically small antenna elements (and therefore short baselines and wide primary beams), or a packed array with larger elements (and therefore longer baselines and narrow primary beams). We will ultimately find that although narrowest beams on longest baselines maximize raw foreground reduction, they also introduce spectral ripples that are difficult to remove. Hence, we will find intermediate beam and baseline sizes to be optimal.
+The arguments in the previous subsection suggested a particular \emph{relative} placement of antenna elements: antennas should be packed together as tightly as possible. However, the \emph{absolute} scale of the array remains unspecified. Primary beams smaller than $\sim1-2^\circ$ will likely have difficulty distinguishing a representative $21\,\textrm{cm}$ global signal from local fluctuations \citep{BittnerLoeb2011}. However, that constraint still leaves a large range of potential primary beam sizes and baseline lengths. \mep{Updated for reviewer comment} In this section, we answer the question of whether it is better to have a packed array with physically small antenna elements (and therefore short baselines and wide primary beams), or a packed array with larger elements (and therefore longer baselines and narrow primary beams). We will ultimately find that although narrowest beams on longest baselines maximize raw foreground reduction, they also introduce spectral ripples that are difficult to remove. Hence, we will find intermediate beam and baseline sizes to be optimal.
 
 As a first guess, one could imagine inserting our expression for $b_\textrm{opt}$, Equation \eqref{eq:b_opt}, into Equation \eqref{eq:DeviationPowGauss} to yield an equation whose only free parameter is the primary beam size $\theta_0$. Minimizing this equation by varying the beam size then suggests that the beam ought to be made as small as possible. However, since any discussion of an array's absolute size will necessarily tie the array to absolute angular scales on the sky, a more nuanced discussion of foreground properties is required beyond the set-up in the previous subsection, which only required that the angular power spectrum of foregrounds was monotonically decreasing.
 
@@ -380,21 +380,21 @@ In Figure \ref{fig:unsub_T0_beamSize} we show simulations of an interferometric 
 
 \begin{figure}[h]
 	\centering
-	\includegraphics[width=0.50\textwidth] {unsub_T0_beamSize.pdf}
+	\includegraphics[width=0.50\textwidth] {figures/unsub_T0_beamSize.pdf}
 	\caption{\acl{Changed figure and caption} The foreground bias $\Delta T_0$ as a function of frequency $\nu$ from simulations of an interferometric recovery of the global signal, averaged over $10,000$ random realizations of the simulated foregrounds. The data is shown for three different $6\times6$ square grid arrays of tightly-packed antennae. The blue, orange, and green arrays are composed of antennae with full-width-half-max (FWHM) beam sizes of $13.4^\circ$, $38.7^\circ$, and $60^\circ$ at $100\,\textrm{MHz}$, respectively. Note that narrower beams have less pre-subtraction foreground bias, as expected.}
 	\label{fig:unsub_T0_beamSize}
 \end{figure}
 
 \begin{figure}[h]
 	\centering
-	\includegraphics[width=0.50\textwidth] {subPoly8_T0_beamSize.pdf}
+	\includegraphics[width=0.50\textwidth] {figures/subPoly8_T0_beamSize.pdf}
 	\caption{\acl{Changed figure and caption} The foreground residuals after subtracting off a $8$th degree polynomial in log space. The data are shown for the same arrays as from Figure \ref{fig:unsub_T0_beamSize}. Note that unlike in the case of the raw foreground bias, the array with the narrowest beams no longer has the least foreground contamination. Instead, the intermediate-size beam results in the lowest foreground residuals. This is due to the fact that narrower beams come with longer baselines that introduce chromatic ripples that are difficult to subtract.}
 	\label{fig:subPoly8_T0_beamSize}
 \end{figure}
 
 \begin{figure}[h]
 	\centering
-	\includegraphics[width=0.50\textwidth] {subPoly9_T0_beamSize.pdf}
+	\includegraphics[width=0.50\textwidth] {figures/subPoly9_T0_beamSize.pdf}
 	\caption{\acl{Changed figure and caption} Same as Figure \ref{fig:subPoly8_T0_beamSize}, except with an $9$th degree polynomial in log space.}
 	\label{fig:subPoly9_T0_beamSize}
 \end{figure}
@@ -719,14 +719,14 @@ The reduction in foreground contamination is more pronounced if observations are
 
 \begin{figure}[h]
 	\centering
-	\includegraphics[width=0.50\textwidth] {NcomparisonNoSub.pdf}
+	\includegraphics[width=0.50\textwidth] {figures/NcomparisonNoSub.pdf}
 	\caption{\acl{Updated figure and caption} The foreground bias $\Delta T_0$ as a function of frequency, comparing the data analysis method that weights visibilities by the inverse of the foreground amplitude (the solid blue line) with one that weights visibilities uniformly (the dashed orange line). The experimental setup consists of a closely-packed $6\times 6$ array of antennas with a primary beam of $88^\circ$, with observations centered on the NGP. Adding the foreground-motivated weighting does reduce the foreground bias, but not in any significant way.}
 	\label{fig:Ncomparison}
 \end{figure}
 
 \begin{figure}[h]
 	\centering
-	\includegraphics[width=0.50\textwidth] {NcomparisonPoly4.pdf}
+	\includegraphics[width=0.50\textwidth] {figures/NcomparisonPoly4.pdf}
 	\caption{\acl{Updated figure and caption} Foreground residuals from Figure \ref{fig:Ncomparison} after a $4$th order logarithmic polynomial subtraction. The uniformly weighted residuals are now seen to be weaker than those of the inverse foreground weighted analysis. Inverse foreground weighting is thus seen to imprint extra chromaticity in measured spectra, making spectral foreground subtraction more difficult.}
 	\label{fig:NcomparisonPoly4}
 \end{figure}
@@ -813,7 +813,7 @@ where the indices refer to different baselines, $\Omega_p = \int  A(\mathbf{\hat
 
 With the noise covariance of the visibilities $\N$ in hand, we can obtain the covariance matrix $\boldsymbol \Sigma$ of our estimator $\xhat$. To do so, we insert $\N$ into Equation \eqref{eq:NoiseMatrixSigma}. Since $\xhat$ contains estimates of all the spherical harmonic modes that we wish to solve for,   it is an $(\ell_\textrm{max} +1)^2 \times (\ell_\textrm{max}+1)^2$ matrix relating all the errors on the $a_{\ell m}$ estimates to one another. With our focus being the monopole term, we require only the first element on the diagonal of $\boldsymbol \Sigma$. Extracting this element and dividing by $4\pi$ (the square of the conversion between $\hat{a}_{00}$ and $\widehat{T}_0$) gives the variance on $\widehat{T}_0$. Repeating this process for every observation frequency, we can place the resulting variances along the diagonal of yet another covariance matrix $\boldsymbol \Pi$. This is the frequency-frequency noise covariance matrix of our final spectrum, and by populating only its diagonal elements (setting all other elements to zero), we are assuming that noise contributions from different frequencies are uncorrelated. Note that even though we established this procedure for computing $\boldsymbol \Pi$ with interferometers in mind, it can be easily adapted for the single-element experiments as well. Considering a single baseline of length zero, one obtains  $T^2_\textrm{sys}(\nu) \Omega_p / t_\textrm{int} \Delta \nu$ along the diagonal of $\boldsymbol \Pi$, which simply needs to be enhanced by a factor of $2$ to account for the correlated noise discussed in Section \ref{sec:numElems}.
 
-To evaluate the effectiveness of our global signal interferometer, we employ a Fisher matrix formalism. Our set-up is essentially identical to that of \citet{Pritchard+Loeb2010} and \citet{BernardiLEDA}, \mep{added citation} and thus we relegate a review of the formalism to Appendix \ref{fisher}. As a toy model for the dark ages, we again follow \citet{BernardiLEDA} and model the dip at $\sim 70\,\textrm{MHz}$ as a Gaussian:
+To evaluate the effectiveness of our global signal interferometer, we employ a Fisher matrix formalism. Our set-up is essentially identical to that of \citet{PritchardLoeb2010} and \citet{BernardiLEDA}, \mep{added citation} and thus we relegate a review of the formalism to Appendix \ref{fisher}. As a toy model for the dark ages, we again follow \citet{BernardiLEDA} and model the dip at $\sim 70\,\textrm{MHz}$ as a Gaussian:
 \begin{equation}
 \label{eq:Dip}
 T_\textrm{dip}(\nu) = -A \textrm{exp}\left ( -\frac{(\nu - \nu_0)^2}{2\sigma^2} \right ),
@@ -901,7 +901,7 @@ where $z_r$ is the redshift of the mid-point of reionization, $\Delta z$ is its 
 
 \begin{figure}[h]
 	\centering
-	\includegraphics[width=0.5\textwidth] {reionScenarios.pdf}
+	\includegraphics[width=0.5\textwidth] {figures/reionScenarios.pdf}
 	\caption{Fiducial model of the brightness temperature during reionization as a function of frequency, following three scenarios: Pessimistic (blue), Moderate (orange), and Optimistic (green). Increasing optimism corresponds to reionization occurring more rapidly and at lower redshifts, making detection easier.}
 	\label{fig:reionScenarios}
 \end{figure}
@@ -909,7 +909,7 @@ where $z_r$ is the redshift of the mid-point of reionization, $\Delta z$ is its 
 
 \begin{figure}[h]
 	\centering
-	\includegraphics[width=0.5\textwidth] {dipScenarios.pdf}
+	\includegraphics[width=0.5\textwidth] {figures/dipScenarios.pdf}
 	\caption{Fiducial model of the brightness temperature during the pre-reionization dip as a function of frequency, following three scenarios: Pessimistic (blue), Moderate (orange), and Optimistic (green). Increasing optimism corresponds to a deeper dip occurring at lower redshifts, making detection easier.}
 	\label{fig:dipScenarios}
 \end{figure}
@@ -937,14 +937,14 @@ With the pre-reionization dip we again consider three scenarios of varying degre
 %\end{figure*}
 \begin{figure*}[t]
 	\centering
-	\includegraphics[width=1.00\textwidth,trim=3cm 2cm 3cm 0cm,clip] {reionContoursPoly6Poly5.pdf}
+	\includegraphics[width=1.00\textwidth,trim=3cm 2cm 3cm 0cm,clip] {figures/reionContoursPoly6Poly5.pdf}
 	\caption{\acl{Updated this} Pairwise parameter contours for interferometer and single element experiments probing reionization. For the interferometer, the orange contours correspond to the $95\%$ confidence regions, and the white areas within the orange contours correspond to the $68\%$ confidence region. For the single-element experiment, the outer solid black contour line bounds the $95\%$ confidence region, while the inner black contour bounds the $68\%$ confidence region. The black dot locates the fiducial value to be recovered and thus indicates the bias in each detection. The interferometer experiment used an $6\times 6$ array of antennas with a primary beam FWHM of $38.7^\circ$ at $100\,\textrm{MHz}$. Both experiments had an integration time of 300 hours. For the interferometric measurement, a $6$th order logarithmic polynomial was needed to model the foreground spectra sufficiently well, whereas with the single element experiment only a $5$th order polynomial was required.}
 	\label{fig:reionContoursPoly7Poly7}
 \end{figure*}
 
 \begin{figure*}[t]
 	\centering
-	\includegraphics[width=1.00\textwidth,trim=3cm 2cm 3cm 0cm,clip] {dipContoursPoly7Poly6.pdf}
+	\includegraphics[width=1.00\textwidth,trim=3cm 2cm 3cm 0cm,clip] {figures/dipContoursPoly7Poly6.pdf}
 	\caption{\acl{Updated the figure and the caption} Same as Figure \ref{fig:reionContoursPoly7Poly7}, but for experiments targeting the pre-reionization dip. Primary beams are set to have a FWHM of $38.7^\circ$ at $50\,\textrm{MHz}$. The errors from the interferometric set-up are slightly smaller, thanks to our choice of a slightly larger-than-necessary array as our fiducial model.}
 	\label{fig:dipContoursPoly7Poly6}
 \end{figure*}
@@ -1084,7 +1084,7 @@ where we have set each expression to zero in order to perform a minimization. No
 
 \section{Global signal Fisher matrix forecasting methods}
 \label{fisher}
-In this Appendix, we review the Fisher matrix formalism used in \citet{Pritchard+Loeb2010} and \citet{BernardiLEDA} \mep{Added citation} to forecast the error bars and biases in a global signal measurement. We do not claim any originality here, and include a description of the formalism only for completeness and consistency of notation.
+In this Appendix, we review the Fisher matrix formalism used in \citet{PritchardLoeb2010} and \citet{BernardiLEDA} \mep{Added citation} to forecast the error bars and biases in a global signal measurement. We do not claim any originality here, and include a description of the formalism only for completeness and consistency of notation.
 
 Suppose we group our final estimate of the global signal $\widehat{T}_0 (\nu)$ into a vector $\widehat{\mathbf{T}}$, so that each component corresponds to the measured global signal value at a particular frequency. With this notation, the Fisher information matrix is defined as
 \begin{equation}
